@@ -10,7 +10,7 @@ namespace GameProg.Player
     [RequireComponent(typeof(Animator))]
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] [Range(0.1f,3f)] private float moveSpeed = 1f;
+        [SerializeField] [Range(0.1f,10f)] private float moveSpeed = 5f;
         
         //Idle animation
         [SerializeField] private AnimatorController _idleAnimation;
@@ -20,6 +20,7 @@ namespace GameProg.Player
         
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
+        private Rigidbody2D _rigidbody2D;
         
         private PlayerControls _playerControls;
         private Vector2 _movementInput;
@@ -30,9 +31,11 @@ namespace GameProg.Player
             //get References
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
+            _rigidbody2D = GetComponent<Rigidbody2D>();
             
             if(_spriteRenderer == null) Debug.LogError("SpriteRenderer component not found");
             if(_animator == null) Debug.LogError("Animator component not found");
+            if(_rigidbody2D == null) Debug.LogError("Rigidbody2D component not found");
             if(_idleAnimation == null) Debug.LogError("Idle animation not set");
             if(_walkAnimation == null) Debug.LogError("Walk animation not set");
             
@@ -89,10 +92,12 @@ namespace GameProg.Player
             while (true)
             {
                 //move player
-                transform.position += new Vector3(
+                Vector3 vel = new Vector3(
                     _movementInput.x * moveSpeed * Time.deltaTime, 
                     _movementInput.y * moveSpeed * Time.deltaTime, 
                     0f);
+                
+                _rigidbody2D.MovePosition(transform.position + vel);
                 
                 //flip sprite if moving left
                 if (_movementInput.x < 0)
