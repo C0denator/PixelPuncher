@@ -1,12 +1,25 @@
 using System.Collections;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 namespace GameProg.Player
 {
+    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Animator))]
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] [Range(0.1f,3f)] private float moveSpeed = 1f;
+        
+        //Idle animation
+        [SerializeField] private AnimatorController _idleAnimation;
+        
+        //Walk animation
+        [SerializeField] private AnimatorController _walkAnimation;
+        
+        private SpriteRenderer _spriteRenderer;
+        private Animator _animator;
         
         private PlayerControls _playerControls;
         private Vector2 _movementInput;
@@ -14,6 +27,16 @@ namespace GameProg.Player
 
         private void Start()
         {
+            //get References
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _animator = GetComponent<Animator>();
+            
+            if(_spriteRenderer == null) Debug.LogError("SpriteRenderer component not found");
+            if(_animator == null) Debug.LogError("Animator component not found");
+            if(_idleAnimation == null) Debug.LogError("Idle animation not set");
+            if(_walkAnimation == null) Debug.LogError("Walk animation not set");
+            
+                
             //enable player controls
             _playerControls = new PlayerControls();
             _playerControls.Player.Movement.Enable();
@@ -23,6 +46,9 @@ namespace GameProg.Player
             //subscribe to movement input
             _playerControls.Player.Movement.performed += HandleOnMovementPerformed;
             _playerControls.Player.Movement.canceled += HandleOnMovementCanceled;
+            
+            //set idle animation
+            _animator.runtimeAnimatorController = _idleAnimation;
         }
         
         private void HandleOnMovementPerformed(InputAction.CallbackContext context)
@@ -50,10 +76,16 @@ namespace GameProg.Player
             {
                 Debug.LogWarning("Move coroutine is not running");
             }
+            
+            //set idle animation
+            _animator.runtimeAnimatorController = _idleAnimation;
         }
         
         private IEnumerator MoveCoroutine()
         {
+            //set walk animation
+            _animator.runtimeAnimatorController = _walkAnimation;
+            
             while (true)
             {
                 //move player
@@ -61,6 +93,16 @@ namespace GameProg.Player
                     _movementInput.x * moveSpeed * Time.deltaTime, 
                     _movementInput.y * moveSpeed * Time.deltaTime, 
                     0f);
+                
+                //flip sprite if moving left
+                if (_movementInput.x < 0)
+                {
+                    _spriteRenderer.flipX = true;
+                }
+                else if (_movementInput.x > 0)
+                {
+                    _spriteRenderer.flipX = false;
+                }
                 
                 yield return null;
             }
