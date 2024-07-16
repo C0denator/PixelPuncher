@@ -12,12 +12,6 @@ namespace GameProg.Player
     {
         [SerializeField] [Range(0.1f,10f)] private float moveSpeed = 5f;
         
-        //Idle animation
-        [SerializeField] private AnimatorController _idleAnimation;
-        
-        //Walk animation
-        [SerializeField] private AnimatorController _walkAnimation;
-        
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
         private Rigidbody2D _rigidbody2D;
@@ -25,6 +19,9 @@ namespace GameProg.Player
         private PlayerControls _playerControls;
         private Vector2 _movementInput;
         private Coroutine _moveCoroutine;
+
+        private float _velocity;
+        private static readonly int Velocity = Animator.StringToHash("Velocity");
 
         private void Start()
         {
@@ -36,8 +33,6 @@ namespace GameProg.Player
             if(_spriteRenderer == null) Debug.LogError("SpriteRenderer component not found");
             if(_animator == null) Debug.LogError("Animator component not found");
             if(_rigidbody2D == null) Debug.LogError("Rigidbody2D component not found");
-            if(_idleAnimation == null) Debug.LogError("Idle animation not set");
-            if(_walkAnimation == null) Debug.LogError("Walk animation not set");
             
                 
             //enable player controls
@@ -49,9 +44,6 @@ namespace GameProg.Player
             //subscribe to movement input
             _playerControls.Player.Movement.performed += HandleOnMovementPerformed;
             _playerControls.Player.Movement.canceled += HandleOnMovementCanceled;
-            
-            //set idle animation
-            _animator.runtimeAnimatorController = _idleAnimation;
         }
         
         private void HandleOnMovementPerformed(InputAction.CallbackContext context)
@@ -80,14 +72,15 @@ namespace GameProg.Player
                 Debug.LogWarning("Move coroutine is not running");
             }
             
-            //set idle animation
-            _animator.runtimeAnimatorController = _idleAnimation;
+            //set velocity to 0
+            _velocity = 0;
+            _animator.SetFloat(Velocity, _velocity);
+            
+            
         }
         
         private IEnumerator MoveCoroutine()
         {
-            //set walk animation
-            _animator.runtimeAnimatorController = _walkAnimation;
             
             while (true)
             {
@@ -108,6 +101,10 @@ namespace GameProg.Player
                 {
                     _spriteRenderer.flipX = false;
                 }
+                
+                //set velocity for animator
+                _velocity = _movementInput.magnitude;
+                _animator.SetFloat(Velocity, _velocity);
                 
                 yield return null;
             }
