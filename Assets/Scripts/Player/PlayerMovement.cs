@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +10,8 @@ namespace GameProg.Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] [Range(0.1f,10f)] private float moveSpeed = 5f;
+        [SerializeField] [Range(20f,50f)] private float dashSpeed = 5f;
+        [SerializeField] [Range(0.1f,0.5f)] private float dashLength = 0.5f;
         
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
@@ -19,9 +20,11 @@ namespace GameProg.Player
         private PlayerControls _playerControls;
         private Vector2 _movementInput;
         private Coroutine _moveCoroutine;
-
+        
+        private bool _isDashing;
         private float _velocity;
         private static readonly int Velocity = Animator.StringToHash("Velocity");
+        private static readonly int IsDashing = Animator.StringToHash("isDashing");
 
         private void Start()
         {
@@ -44,6 +47,11 @@ namespace GameProg.Player
             //subscribe to movement input
             _playerControls.Player.Movement.performed += HandleOnMovementPerformed;
             _playerControls.Player.Movement.canceled += HandleOnMovementCanceled;
+            
+            //subscribe to dash input
+            _playerControls.Player.Dash.performed += HandleOnDashPerformed;
+            
+            _isDashing = false;
         }
         
         private void HandleOnMovementPerformed(InputAction.CallbackContext context)
@@ -72,11 +80,17 @@ namespace GameProg.Player
                 Debug.LogWarning("Move coroutine is not running");
             }
             
-            //set velocity to 0
-            _velocity = 0;
-            _animator.SetFloat(Velocity, _velocity);
+            //set animator-velocity to 0
+            _animator.SetFloat(Velocity, 0);
             
-            
+        }
+        
+        private void HandleOnDashPerformed(InputAction.CallbackContext context)
+        {
+            if (!_isDashing && _movementInput != Vector2.zero)
+            {
+                StartCoroutine(DashCoroutine());
+            }
         }
         
         private IEnumerator MoveCoroutine()
@@ -84,6 +98,9 @@ namespace GameProg.Player
             
             while (true)
             {
+                //do nothing when the player is dashing
+                if (_isDashing) yield return null;
+                
                 //move player
                 Vector3 vel = new Vector3(
                     _movementInput.x * moveSpeed * Time.deltaTime, 
@@ -103,11 +120,37 @@ namespace GameProg.Player
                 }
                 
                 //set velocity for animator
-                _velocity = _movementInput.magnitude;
-                _animator.SetFloat(Velocity, _velocity);
+                _animator.SetFloat(Velocity, _movementInput.magnitude);
                 
                 yield return null;
             }
+        }
+        
+        private IEnumerator DashCoroutine()
+        {
+            _isDashing = true;
+            _animator.SetBool(IsDashing, true);
+            
+            Vector2 direction = _movementInput.normalized;
+            
+            Debug.Log("Dashing started, Direction: "+direction);
+            
+            //dash until dashLength is reached
+            float time = 0;
+            
+            while (time < dashLength)
+            {
+                time += Time.deltaTime;
+                Vector2 move = direction * (dashSpeed * Time.deltaTime);
+                _rigidbody2D.MovePosition((Vector2)transform.position + move);
+                
+                yield return null;
+            }
+            
+            _isDashing = false;
+            _animator.SetBool(IsDashing, false);
+            
+            
         }
     }
 }
