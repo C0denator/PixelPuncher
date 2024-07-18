@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -133,7 +134,7 @@ namespace GameProg.Player
             
             Vector2 direction = _movementInput.normalized;
             
-            Debug.Log("Dashing started, Direction: "+direction);
+            //Debug.Log("Dashing started, Direction: "+direction);
             
             //dash until dashLength is reached
             float time = 0;
@@ -151,6 +152,16 @@ namespace GameProg.Player
             _animator.SetBool(IsDashing, false);
             
             
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            Debug.Log("Player started colliding with: "+other.gameObject.name);
+        }
+
+        private void OnCollisionExit2D(Collision2D other)
+        {
+            Debug.Log("Player stopped colliding with: "+other.gameObject.name);
         }
     }
 }
