@@ -4,6 +4,8 @@ namespace GameProg.General
 {
     public class GameMaster : MonoBehaviour
     {
+        [SerializeField] private Music music;
+        
         // Start is called before the first frame update
         void Start()
         {
@@ -17,6 +19,11 @@ namespace GameProg.General
             {
                 Debug.LogError("Scene name is empty");
                 return;
+            }
+            
+            if (sceneName == "World1")
+            {
+                music.PlayClip("world1");
             }
             
             //switch scene

@@ -992,11 +992,13 @@ MonoBehaviour:
   startAudioClip:
     name: 
     audioClip: {fileID: 0}
-  fadeTime: 3
-  fadeOnStart: 0
+  fadeTime: 1
+  fadeOnStart: 1
   playableAudioClips:
   - name: menu
     audioClip: {fileID: 8300000, guid: 2ab05979328a6674e8287d96add0ff91, type: 3}
+  - name: world1
+    audioClip: {fileID: 8300000, guid: 1f6b7e3cb978ab34d888c56b825450d1, type: 3}
 --- !u!4 &1605064127
 Transform:
   m_ObjectHideFlags: 0
@@ -1041,6 +1043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42dcf8874c0f5d4890aea41e81f9bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  music: {fileID: 1605064126}
 --- !u!4 &1609093749
 Transform:
   m_ObjectHideFlags: 0
