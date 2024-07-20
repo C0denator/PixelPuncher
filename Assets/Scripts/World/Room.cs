@@ -15,11 +15,12 @@ namespace GameProg.World
         [SerializeField] private CompositeCollider2D spaceCollider; //the inside of the room
 
         public World World { get; private set; }
+        public RoomType RoomType => roomType;
 
         private bool _wasVisited;
     
         // Start is called before the first frame update
-        void Start()
+        public void InitializeRoom()
         {
             //get references
             World = GetComponentInParent<World>();
@@ -38,16 +39,16 @@ namespace GameProg.World
             if(World == null) Debug.LogError("World component not found in parent");
             if(wallsRenderer == null) Debug.LogError("TilemapRenderer component not found");
             if(spaceCollider == null) Debug.LogError("SpaceCollider component not found");
+            if(doors.Count == 0) Debug.LogWarning("No doors found in room "+name);
             
-            //is starting room? then set current room
-            if (roomType == RoomType.Start)
+        }
+        
+        public void InitializeDoors()
+        {
+            //initialize doors
+            for(int i = 0; i < doors.Count; i++)
             {
-                World.CurrentRoom = this;
-                Show();
-            }
-            else
-            {
-                Hide();
+                doors[i].Initialize();
             }
         }
 

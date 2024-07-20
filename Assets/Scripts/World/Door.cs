@@ -20,7 +20,7 @@ namespace GameProg.World
             Initialize();
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             //get references
             roomA = GetComponentInParent<Room>();
@@ -49,13 +49,14 @@ namespace GameProg.World
                         if (collider.gameObject != gameObject)
                         {
                             found = true;
-                            Debug.Log("Found overlapping door: "+collider.gameObject.name);
                             
                             //get the door component
                             Door otherDoor = collider.GetComponent<Door>();
                             
                             //set the room of the other door to this roomB
                             roomB = otherDoor.roomA;
+                            
+                            Debug.Log("Found overlapping door: "+collider.gameObject.name);
 
                             if (roomB == null)
                             {
@@ -63,15 +64,15 @@ namespace GameProg.World
                                 return;
                             }
                             
-                            //delete the other door
-                            Destroy(collider.gameObject);
-                            
                             //delete any tile touching the door
                             Tilemap tilemapA = roomA.Walls;
                             tilemapA.SetTile(tilemapA.WorldToCell(transform.position), null);
                             
                             Tilemap tilemapB = roomB.Walls;
                             tilemapB.SetTile(tilemapB.WorldToCell(otherDoor.transform.position), null);
+                            
+                            //delete the other door
+                            DestroyImmediate(collider.gameObject);
                             
                             //break the loop
                             break;
