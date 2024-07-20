@@ -156,12 +156,22 @@ namespace GameProg.Player
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            //Debug.Log("Player started colliding with: "+other.gameObject.name);
+            Debug.Log("Player started colliding with: "+other.gameObject.name);
         }
 
         private void OnCollisionExit2D(Collision2D other)
         {
-            //Debug.Log("Player stopped colliding with: "+other.gameObject.name);
+            Debug.Log("Player stopped colliding with: "+other.gameObject.name);
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            Debug.Log("Player started trigger with: "+other.gameObject.name);
+        }
+        
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            Debug.Log("Player stopped trigger with: "+other.gameObject.name);
         }
     }
 }

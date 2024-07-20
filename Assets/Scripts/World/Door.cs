@@ -1,5 +1,7 @@
+using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace GameProg.World
 {
@@ -14,6 +16,11 @@ namespace GameProg.World
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
 
         private void Start()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
         {
             //get references
             roomA = GetComponentInParent<Room>();
@@ -31,6 +38,7 @@ namespace GameProg.World
             if (roomB == null)
             {
                 Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, _boxCollider2D.size, 0);
+                bool found = false;
                 
                 //look if one gameobject has the tag "Door"
                 foreach (var collider in colliders)
@@ -40,6 +48,7 @@ namespace GameProg.World
                         //is the gameobject not this gameobject?
                         if (collider.gameObject != gameObject)
                         {
+                            found = true;
                             Debug.Log("Found overlapping door: "+collider.gameObject.name);
                             
                             //get the door component
@@ -47,18 +56,37 @@ namespace GameProg.World
                             
                             //set the room of the other door to this roomB
                             roomB = otherDoor.roomA;
-                            
-                            if(roomB == null) Debug.LogError("Other door has no room component");
+
+                            if (roomB == null)
+                            {
+                                Debug.LogError("Other door has no room component");
+                                return;
+                            }
                             
                             //delete the other door
                             Destroy(collider.gameObject);
+                            
+                            //delete any tile touching the door
+                            Tilemap tilemapA = roomA.Walls;
+                            tilemapA.SetTile(tilemapA.WorldToCell(transform.position), null);
+                            
+                            Tilemap tilemapB = roomB.Walls;
+                            tilemapB.SetTile(tilemapB.WorldToCell(otherDoor.transform.position), null);
                             
                             //break the loop
                             break;
                         }
                     }
                 }
+                
+                //if no other door was found, destroy this door
+                if (!found)
+                {
+                    Debug.Log("No overlapping door found, destroying this door");
+                    Destroy(gameObject);
+                }
             }
+            
             
             //open or close depending on the animator state
             if (animator.GetBool(IsOpen))
@@ -87,6 +115,26 @@ namespace GameProg.World
             
             //play animation
             animator.SetBool(IsOpen, false);
+        }
+        
+        public void CheckVisibility()
+        {
+            //check for null
+            if (roomA == null || roomB == null)
+            {
+                Debug.LogError("RoomA or RoomB not set");
+                return;
+            }
+            
+            //check if one of the rooms is the current room
+            if(roomA.World.CurrentRoom == roomA || roomA.World.CurrentRoom == roomB)
+            {
+                _spriteRenderer.enabled = true;
+            }
+            else
+            {
+                _spriteRenderer.enabled = false;
+            }
         }
         
         private void OnCollisionEnter2D(Collision2D other)

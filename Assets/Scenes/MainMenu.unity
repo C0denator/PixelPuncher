@@ -992,7 +992,7 @@ MonoBehaviour:
   startAudioClip:
     name: 
     audioClip: {fileID: 0}
-  fadeTime: 1
+  fadeTime: 3
   fadeOnStart: 1
   playableAudioClips:
   - name: menu
