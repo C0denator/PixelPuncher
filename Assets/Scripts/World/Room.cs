@@ -56,6 +56,22 @@ namespace GameProg.World
         {
             return spaceCollider.OverlapPoint(playerPosition);
         }
+        
+        public void LockDoors()
+        {
+            for(int i = 0; i < doors.Count; i++)
+            {
+                doors[i].Close();
+            }
+        }
+        
+        public void OpenDoors()
+        {
+            for(int i = 0; i < doors.Count; i++)
+            {
+                doors[i].Open();
+            }
+        }
 
         public void Hide()
         {

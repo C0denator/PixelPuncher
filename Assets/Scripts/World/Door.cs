@@ -12,10 +12,10 @@ namespace GameProg.World
         [SerializeField] [CanBeNull] private Room roomB; //the room this door leads to
         private Animator animator;
         private SpriteRenderer _spriteRenderer;
-        private BoxCollider2D _boxCollider2D;
+        [SerializeField] private BoxCollider2D _boxCollider2D;
 
         private bool _markedForDeletion = false; //if true, the door will be deleted in the next frame
-                                                 //(fixed a bug where doors would still be used after being deleted)
+        //(fixed a bug where doors would still be used after being deleted)
         
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
 
@@ -110,6 +110,9 @@ namespace GameProg.World
 
         public void Open()
         {
+            //return if the door is marked for deletion
+            if (_markedForDeletion) return;
+            
             //disable collider
             _boxCollider2D.enabled = false;
             
@@ -119,6 +122,9 @@ namespace GameProg.World
         
         public void Close()
         {
+            //return if the door is marked for deletion
+            if (_markedForDeletion) return;
+            
             //enable collider
             _boxCollider2D.enabled = true;
             
@@ -149,14 +155,54 @@ namespace GameProg.World
             }
         }
         
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             Debug.Log("Door started colliding with: "+other.gameObject.name);
+            //return if the door is marked for deletion
+            if (_markedForDeletion) return;
         }
 
-        private void OnCollisionExit2D(Collision2D other)
+        private void OnTriggerExit2D(Collider2D other)
         {
             Debug.Log("Door stopped colliding with: "+other.gameObject.name);
+            //return if the door is marked for deletion
+            if (_markedForDeletion) return;
+            
+            //has the other gameobject the tag "Player"?
+            if (other.gameObject.CompareTag("Player"))
+            {
+                //is the player in a room, that is not the current room?
+                if (!roomA.World.CurrentRoom.IsPlayerInRoom(other.transform.position))
+                {
+                    if(roomA == roomA.World.CurrentRoom) //if A was the former current room
+                    {
+                        //set B as the new current room
+                        roomA.World.CurrentRoom = roomB;
+                        
+                        //show the new current room
+                        if (roomB != null)
+                        {
+                            roomB.Show();
+                        }
+                        else
+                        {
+                            Debug.LogError("RoomB is null");
+                        }
+                    }
+                    else if(roomB == roomA.World.CurrentRoom) //if B was the former current room
+                    {
+                        //set A as the new current room
+                        roomA.World.CurrentRoom = roomA;
+                        
+                        //show the new current room
+                        roomA.Show();
+                    }
+                    else
+                    {
+                        Debug.LogError("Current room is neither A nor B");
+                    }
+                }
+            }
         }
         
     }

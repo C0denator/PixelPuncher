@@ -27,6 +27,8 @@ namespace GameProg.World
                 }
             }
             
+            Debug.Log("Found "+rooms.Count+" rooms");
+            
             //set the starting room as current room
             foreach (var room in rooms)
             {
@@ -54,6 +56,9 @@ namespace GameProg.World
                 if (room.RoomType == RoomType.Start)
                 {
                     room.Show();
+                    
+                    //open doors in starting room
+                    room.OpenDoors();
                 }
                 else
                 {
