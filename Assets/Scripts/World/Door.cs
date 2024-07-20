@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace GameProg.World
@@ -12,6 +13,9 @@ namespace GameProg.World
         private Animator animator;
         private SpriteRenderer _spriteRenderer;
         private BoxCollider2D _boxCollider2D;
+
+        private bool _markedForDeletion = false; //if true, the door will be deleted in the next frame
+                                                 //(fixed a bug where doors would still be used after being deleted)
         
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
 
@@ -22,6 +26,9 @@ namespace GameProg.World
 
         public void Initialize()
         {
+            //return if the door is marked for deletion
+            if (_markedForDeletion) return;
+            
             //get references
             roomA = GetComponentInParent<Room>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -72,7 +79,8 @@ namespace GameProg.World
                             tilemapB.SetTile(tilemapB.WorldToCell(otherDoor.transform.position), null);
                             
                             //delete the other door
-                            DestroyImmediate(collider.gameObject);
+                            otherDoor._markedForDeletion = true;
+                            Destroy(collider.gameObject);
                             
                             //break the loop
                             break;
@@ -120,6 +128,9 @@ namespace GameProg.World
         
         public void CheckVisibility()
         {
+            //return if the door is marked for deletion
+            if (_markedForDeletion) return;
+            
             //check for null
             if (roomA == null || roomB == null)
             {
