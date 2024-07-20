@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 44ad92228dbe8874ca280fe19faf3ea6
+guid: 499a359f31c9a524e90f549d3f55683a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: World1_Tileset_V2_0
+      name: World1_Tileset_V2 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2698d482719b65c4bbc844846d867a94
-      internalID: 811491676
+      spriteID: 92b3a2d7c72feec4bafca6c012abacf4
+      internalID: -1295961657
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_1
+      name: World1_Tileset_V2 1_1
       rect:
         serializedVersion: 2
         x: 12
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4070072230bf62641afce928d62716ec
-      internalID: -2117746545
+      spriteID: fad9f70d5c0b5e54db77607333869c2f
+      internalID: -1085049596
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_2
+      name: World1_Tileset_V2 1_2
       rect:
         serializedVersion: 2
         x: 24
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4000319f05abddd46abe1180212d24f1
-      internalID: 720019992
+      spriteID: 24d18b1f0e93e4c459558406b14e0b75
+      internalID: 2007605536
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_3
+      name: World1_Tileset_V2 1_3
       rect:
         serializedVersion: 2
         x: 36
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 857ce76e5b86d6c41a044e3efbf6469c
-      internalID: -1383881705
+      spriteID: acdc1b1c9b321e941bb0daab4a214b9f
+      internalID: -1917799534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_4
+      name: World1_Tileset_V2 1_4
       rect:
         serializedVersion: 2
         x: 48
@@ -195,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f5c2d5470e7b86409f966e97933be2d
-      internalID: -967626448
+      spriteID: b74abead62d4a0147b3c1cf619097cae
+      internalID: -1822028069
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_5
+      name: World1_Tileset_V2 1_5
       rect:
         serializedVersion: 2
         x: 0
@@ -216,14 +216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5be57c43e1400e64c9a7e9aaa620da87
-      internalID: 1801824281
+      spriteID: 1e452f246d149d74abdbed91abef00a3
+      internalID: 514907195
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_6
+      name: World1_Tileset_V2 1_6
       rect:
         serializedVersion: 2
         x: 12
@@ -237,14 +237,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 400f1984e33a60a469c8bdcaff15f733
-      internalID: 1317047035
+      spriteID: 973bf98c752fcfb4a8abaaccceee0532
+      internalID: -361358292
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_7
+      name: World1_Tileset_V2 1_7
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 36
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1030184d989dbfc4ab890f5874218e38
+      internalID: -299275919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: World1_Tileset_V2 1_8
       rect:
         serializedVersion: 2
         x: 36
@@ -258,14 +279,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa6fb43acc5ba0d4c9bc454bd12b5330
-      internalID: -1787060577
+      spriteID: 777022e713e91cd48b1eba72411d2523
+      internalID: -1892872106
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_8
+      name: World1_Tileset_V2 1_9
       rect:
         serializedVersion: 2
         x: 48
@@ -279,14 +300,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0de935e3e4aa364d934827d0ed5197f
-      internalID: -421376205
+      spriteID: 84c955183aecc4442bc09db2be3d1e9e
+      internalID: 259959026
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_9
+      name: World1_Tileset_V2 1_10
       rect:
         serializedVersion: 2
         x: 0
@@ -300,14 +321,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbe397d2379f31d46aef253d8cd8cb6a
-      internalID: -133531290
+      spriteID: ae90c1628940111418cbd1364f3df6ed
+      internalID: -1263524253
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_10
+      name: World1_Tileset_V2 1_11
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 24
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df98b18d50e14e94f9f4e839b56c81cf
+      internalID: 35694412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: World1_Tileset_V2 1_12
       rect:
         serializedVersion: 2
         x: 24
@@ -321,14 +363,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72a43554b28aac04e880bb284af00043
-      internalID: -1701736286
+      spriteID: be293b4686e79ed4fb7dfd8d30240830
+      internalID: 1354751511
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_11
+      name: World1_Tileset_V2 1_13
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 24
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50b003e3a710bc94cbd78f2c608c9586
+      internalID: -1463735071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: World1_Tileset_V2 1_14
       rect:
         serializedVersion: 2
         x: 48
@@ -342,14 +405,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9a554c6b5b4bb14d91e55ea3e745e34
-      internalID: -929210185
+      spriteID: 7c8b58246ad866e46a4173cb27671943
+      internalID: -692477247
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_12
+      name: World1_Tileset_V2 1_15
       rect:
         serializedVersion: 2
         x: 0
@@ -363,14 +426,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 776fb7cf1e1e8d546a3e5abf0cec572f
-      internalID: 1187308852
+      spriteID: 5b3bf56d831c6e54ea240c82bb2e50b2
+      internalID: -1341081308
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_13
+      name: World1_Tileset_V2 1_16
       rect:
         serializedVersion: 2
         x: 12
@@ -384,14 +447,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c07f63b090a44d74a865192a9ff21572
-      internalID: 1164413862
+      spriteID: 56de3ab9f3883834ab818db8024e2a70
+      internalID: -46926420
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_14
+      name: World1_Tileset_V2 1_17
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 12
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ad2bb06a6fbc914e8f5e5e2521d3f51
+      internalID: -730016703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: World1_Tileset_V2 1_18
       rect:
         serializedVersion: 2
         x: 36
@@ -405,14 +489,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e619a4392e139fd4e9f390e84e02fa23
-      internalID: 1150161878
+      spriteID: 26cd7b2b352649947a3db064f20a1c3f
+      internalID: 451367973
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_15
+      name: World1_Tileset_V2 1_19
       rect:
         serializedVersion: 2
         x: 48
@@ -426,14 +510,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c49e53aa5728594b8bc866d27b45f8d
-      internalID: 473667007
+      spriteID: 2ef2f8343a13a5c499a4d6b60c0edc2a
+      internalID: 145755564
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_16
+      name: World1_Tileset_V2 1_20
       rect:
         serializedVersion: 2
         x: 0
@@ -447,14 +531,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46a2002acda75ec4b8804cdf3e0053fe
-      internalID: -1752202972
+      spriteID: 547e011195c08d94084a67c46315b8eb
+      internalID: -659626066
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_17
+      name: World1_Tileset_V2 1_21
       rect:
         serializedVersion: 2
         x: 12
@@ -468,14 +552,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6bbbe246fca8db74285a460504379529
-      internalID: -351771149
+      spriteID: bdd6c93a78793214a9fe409ec6f6c2bc
+      internalID: 568440150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_18
+      name: World1_Tileset_V2 1_22
       rect:
         serializedVersion: 2
         x: 24
@@ -489,14 +573,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e43b550c4dba4f4e9024d68cafebef0
-      internalID: -2094816077
+      spriteID: 110a9366d09d9104ba4594fa8eaad12c
+      internalID: 1423582743
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_19
+      name: World1_Tileset_V2 1_23
       rect:
         serializedVersion: 2
         x: 36
@@ -510,14 +594,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00d5d067e9ce09143a993e2a5757f46a
-      internalID: 1900980116
+      spriteID: 76ea7bbc45c6f2a44be9e10373932a39
+      internalID: -470023780
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: World1_Tileset_V2_20
+      name: World1_Tileset_V2 1_24
       rect:
         serializedVersion: 2
         x: 48
@@ -531,8 +615,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af4da35ed5b36e746b8944f2934b37d4
-      internalID: -1659520344
+      spriteID: dd00cd5d2ee82d54d9bfa1b0cf4a3fa6
+      internalID: 1833929574
       vertices: []
       indices: 
       edges: []
@@ -548,27 +632,31 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      World1_Tileset_V2_0: 811491676
-      World1_Tileset_V2_1: -2117746545
-      World1_Tileset_V2_10: -1701736286
-      World1_Tileset_V2_11: -929210185
-      World1_Tileset_V2_12: 1187308852
-      World1_Tileset_V2_13: 1164413862
-      World1_Tileset_V2_14: 1150161878
-      World1_Tileset_V2_15: 473667007
-      World1_Tileset_V2_16: -1752202972
-      World1_Tileset_V2_17: -351771149
-      World1_Tileset_V2_18: -2094816077
-      World1_Tileset_V2_19: 1900980116
-      World1_Tileset_V2_2: 720019992
-      World1_Tileset_V2_20: -1659520344
-      World1_Tileset_V2_3: -1383881705
-      World1_Tileset_V2_4: -967626448
-      World1_Tileset_V2_5: 1801824281
-      World1_Tileset_V2_6: 1317047035
-      World1_Tileset_V2_7: -1787060577
-      World1_Tileset_V2_8: -421376205
-      World1_Tileset_V2_9: -133531290
+      World1_Tileset_V2 1_0: -1295961657
+      World1_Tileset_V2 1_1: -1085049596
+      World1_Tileset_V2 1_10: -1263524253
+      World1_Tileset_V2 1_11: 35694412
+      World1_Tileset_V2 1_12: 1354751511
+      World1_Tileset_V2 1_13: -1463735071
+      World1_Tileset_V2 1_14: -692477247
+      World1_Tileset_V2 1_15: -1341081308
+      World1_Tileset_V2 1_16: -46926420
+      World1_Tileset_V2 1_17: -730016703
+      World1_Tileset_V2 1_18: 451367973
+      World1_Tileset_V2 1_19: 145755564
+      World1_Tileset_V2 1_2: 2007605536
+      World1_Tileset_V2 1_20: -659626066
+      World1_Tileset_V2 1_21: 568440150
+      World1_Tileset_V2 1_22: 1423582743
+      World1_Tileset_V2 1_23: -470023780
+      World1_Tileset_V2 1_24: 1833929574
+      World1_Tileset_V2 1_3: -1917799534
+      World1_Tileset_V2 1_4: -1822028069
+      World1_Tileset_V2 1_5: 514907195
+      World1_Tileset_V2 1_6: -361358292
+      World1_Tileset_V2 1_7: -299275919
+      World1_Tileset_V2 1_8: -1892872106
+      World1_Tileset_V2 1_9: 259959026
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
