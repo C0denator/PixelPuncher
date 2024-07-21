@@ -16,6 +16,7 @@ namespace GameProg.World
 
         public World World { get; private set; }
         public RoomType RoomType => roomType;
+        public List<Door> Doors => doors;
 
         private bool _wasVisited;
     
@@ -116,6 +117,11 @@ namespace GameProg.World
                 
                 doors[i].CheckVisibility();
             }
+        }
+        
+        public bool IsCollidingWithRoom(Room otherRoom)
+        {
+            return spaceCollider.bounds.Intersects(otherRoom.spaceCollider.bounds);
         }
 
         private void OnValidate()
