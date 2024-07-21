@@ -52,7 +52,10 @@ namespace GameProg.World
                 {
                     foreach (var door in room.Doors)
                     {
-                        availableDoors.Add(door);
+                        if (!door.WasUsedInGeneration)
+                        {
+                            availableDoors.Add(door); 
+                        }
                     }
                 }
                 
@@ -102,6 +105,9 @@ namespace GameProg.World
                                 //found valid room
                                 roomGenerated = true;
                                 generatedRoomsCount++;
+                                
+                                randomDoor.WasUsedInGeneration = true;
+                                newRoom.Doors[i].WasUsedInGeneration = true;
                                 
                                 //set sorting order
                                 newRoom.wallsRenderer.sortingOrder = 100 - generatedRoomsCount;

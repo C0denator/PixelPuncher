@@ -8,8 +8,8 @@ namespace GameProg.World
 {
     public class Door : MonoBehaviour
     {
-        [SerializeField] private Room roomA; //the room this door belongs to
-        [SerializeField] [CanBeNull] private Room roomB; //the room this door leads to
+        public Room roomA; //the room this door belongs to
+        [CanBeNull] public Room roomB; //the room this door leads to
         private Animator animator;
         private SpriteRenderer _spriteRenderer;
         [SerializeField] private BoxCollider2D _boxCollider2D;
@@ -18,6 +18,8 @@ namespace GameProg.World
         //(fixed a bug where doors would still be used after being deleted)
         
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
+        
+        public bool WasUsedInGeneration;
         
 
         public void Initialize()

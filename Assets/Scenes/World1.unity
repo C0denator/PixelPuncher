@@ -174,7 +174,9 @@ MonoBehaviour:
   startRoom: {fileID: 1754421886716813612, guid: ca15ba8a26a32e544b47f7082ff9cb40, type: 3}
   roomPrefabs:
   - {fileID: 1754421886716813612, guid: 05e33ac4385024440a559fda8c2deec9, type: 3}
-  numberOfRooms: 3
+  - {fileID: 1754421886716813612, guid: cd688802e9dee6342a94f82927961675, type: 3}
+  - {fileID: 1754421886716813612, guid: 5ad5f530e1bdcbf4eb40405ad85e2750, type: 3}
+  numberOfRooms: 10
 --- !u!1 &1726045561
 GameObject:
   m_ObjectHideFlags: 0

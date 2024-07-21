@@ -20,6 +20,7 @@ namespace GameProg.World
 
         public bool WasVisited;
         
+        
         public System.Action OnRoomEnter;
         public System.Action OnRoomExit;
     
