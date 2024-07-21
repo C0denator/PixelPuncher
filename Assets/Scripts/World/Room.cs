@@ -23,7 +23,6 @@ namespace GameProg.World
         public System.Action OnRoomEnter;
         public System.Action OnRoomExit;
     
-        // Start is called before the first frame update
         public void InitializeRoom()
         {
             //get references
@@ -52,13 +51,6 @@ namespace GameProg.World
             //initialize doors
             for(int i = 0; i < doors.Count; i++)
             {
-                if(doors[i] == null)
-                {
-                    doors.RemoveAt(i);
-                    i--;
-                    continue;
-                }
-                
                 doors[i].Initialize();
             }
         }

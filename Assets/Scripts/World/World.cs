@@ -89,8 +89,9 @@ namespace GameProg.World
                             //move the new room, so that the door is at the same position as the random door
                             Vector3 offset = randomDoor.transform.position - newRoom.Doors[i].transform.position;
                             newRoom.transform.position += offset;
-
-                            yield return null;
+                            
+                            //wait for the physics system to update
+                            yield return new WaitForFixedUpdate();
                             
                             //check if the new room is colliding with any other room
                             if (!IsRoomCollidingWithAnyRoom(newRoom))
@@ -155,6 +156,7 @@ namespace GameProg.World
                 if (room.RoomType == RoomType.Start)
                 {
                     CurrentRoom = room;
+                    break;
                 }
             }
 
@@ -169,8 +171,9 @@ namespace GameProg.World
             {
                 room.InitializeDoors();
             }
-
-            yield return null;
+            
+            //wait for Destroy() to finish
+            yield return new WaitForEndOfFrame();
             
             //remove missing references in door lists
             foreach (var room in generatedRooms)
