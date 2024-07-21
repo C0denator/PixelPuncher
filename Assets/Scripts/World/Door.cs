@@ -140,8 +140,8 @@ namespace GameProg.World
             //check for null
             if (roomA == null || roomB == null)
             {
-                Debug.LogError("RoomA or RoomB not set");
-                return;
+                Debug.Log("RoomA or RoomB not set. Hiding this door now");
+                _spriteRenderer.enabled = false;
             }
             
             //check if one of the rooms is the current room

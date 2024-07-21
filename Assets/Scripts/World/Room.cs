@@ -30,7 +30,7 @@ namespace GameProg.World
             foreach (Transform child in transform)
             {
                 Door door = child.GetComponent<Door>();
-                if (door != null)
+                if (door != null && !doors.Contains(door))
                 {
                     doors.Add(door);
                 }
@@ -48,6 +48,13 @@ namespace GameProg.World
             //initialize doors
             for(int i = 0; i < doors.Count; i++)
             {
+                if(doors[i] == null)
+                {
+                    doors.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                
                 doors[i].Initialize();
             }
         }
