@@ -39,6 +39,9 @@ namespace GameProg.World
             this.generatedRooms.Add(start);
             start.transform.position = Vector3.zero;
             
+            //set order in layer to 100
+            start.wallsRenderer.sortingOrder = 100;
+            
             
             //generate rooms until the desired number of rooms is reached
             while (generatedRoomsCount < numberOfRooms){
@@ -98,11 +101,14 @@ namespace GameProg.World
                             {
                                 //found valid room
                                 roomGenerated = true;
+                                generatedRoomsCount++;
+                                
+                                //set sorting order
+                                newRoom.wallsRenderer.sortingOrder = 100 - generatedRoomsCount;
                                 
                                 //add the new room to the list of generated rooms
                                 generatedRooms.Add(newRoom);
                                 
-                                generatedRoomsCount++;
                                 Debug.Log("Room generated!");
                                 
                                 break;

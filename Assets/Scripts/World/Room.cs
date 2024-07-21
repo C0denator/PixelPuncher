@@ -10,7 +10,7 @@ namespace GameProg.World
     {
         [SerializeField] private RoomType roomType;
         [SerializeField] private List<Door> doors;
-        [FormerlySerializedAs("tilemapRenderer")] [SerializeField] private TilemapRenderer wallsRenderer;
+        public TilemapRenderer wallsRenderer;
         public Tilemap Walls;
         [SerializeField] private CompositeCollider2D spaceCollider; //the inside of the room
 
