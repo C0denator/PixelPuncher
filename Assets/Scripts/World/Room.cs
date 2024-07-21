@@ -18,7 +18,10 @@ namespace GameProg.World
         public RoomType RoomType => roomType;
         public List<Door> Doors => doors;
 
-        private bool _wasVisited;
+        public bool WasVisited;
+        
+        public System.Action OnRoomEnter;
+        public System.Action OnRoomExit;
     
         // Start is called before the first frame update
         public void InitializeRoom()
@@ -129,9 +132,9 @@ namespace GameProg.World
             if (roomType == RoomType.Combat)
             {
                 //does the gameobject already have a CombatSettings component? if not create one
-                if (GetComponent<CombatSettings>() == null)
+                if (GetComponent<CombatController>() == null)
                 {
-                    gameObject.AddComponent<CombatSettings>();
+                    gameObject.AddComponent<CombatController>();
                 }
             }
         }

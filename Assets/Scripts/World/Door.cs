@@ -56,7 +56,7 @@ namespace GameProg.World
                             //get the door component
                             Door otherDoor = collider.GetComponent<Door>();
                             
-                            //set the room of the other door to this roomB
+                            //set the roomB of the other door to this roomB
                             roomB = otherDoor.roomA;
                             
                             Debug.Log("Found overlapping door: "+collider.gameObject.name);
@@ -74,6 +74,12 @@ namespace GameProg.World
                             Tilemap tilemapB = roomB.Walls;
                             tilemapB.SetTile(tilemapB.WorldToCell(otherDoor.transform.position), null);
                             
+                            //add this door to the list of other room
+                            otherDoor.roomA.Doors.Add(this);
+                            
+                            //remove the other door from the list of the other room
+                            otherDoor.roomA.Doors.Remove(otherDoor);
+                            
                             //delete the other door
                             otherDoor._markedForDeletion = true;
                             Destroy(collider.gameObject);
@@ -88,6 +94,8 @@ namespace GameProg.World
                 if (!found)
                 {
                     Debug.Log("No overlapping door found, destroying this door");
+                    //roomA.Doors.Remove(this);
+                    _markedForDeletion = true;
                     Destroy(gameObject);
                 }
             }
@@ -170,33 +178,35 @@ namespace GameProg.World
                 //is the player in a room, that is not the current room?
                 if (!roomA.World.CurrentRoom.IsPlayerInRoom(other.transform.position))
                 {
-                    if(roomA == roomA.World.CurrentRoom) //if A was the former current room
+                    Room formerRoom = null;
+                    Room newRoom = null;
+                    
+                    if (roomA == roomA.World.CurrentRoom) //if A was the former current room
                     {
-                        //set B as the new current room
-                        roomA.World.CurrentRoom = roomB;
-                        
-                        //show the new current room
-                        if (roomB != null)
-                        {
-                            roomB.Show();
-                        }
-                        else
-                        {
-                            Debug.LogError("RoomB is null");
-                        }
+                        formerRoom = roomA;
+                        newRoom = roomB;
                     }
                     else if(roomB == roomA.World.CurrentRoom) //if B was the former current room
                     {
-                        //set A as the new current room
-                        roomA.World.CurrentRoom = roomA;
-                        
-                        //show the new current room
-                        roomA.Show();
+                        formerRoom = roomB;
+                        newRoom = roomA;
                     }
                     else
                     {
                         Debug.LogError("Current room is neither A nor B");
                     }
+                    
+                    formerRoom!.WasVisited = true;
+                    
+                    //set the new room as current room
+                    roomA.World.CurrentRoom = newRoom;
+                    
+                    //show new room
+                    newRoom!.Show();
+                    
+                    //fire events
+                    formerRoom.OnRoomExit?.Invoke();
+                    newRoom.OnRoomEnter?.Invoke();
                 }
             }
         }

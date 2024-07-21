@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,7 +9,8 @@ namespace GameProg.World
 {
     public class World : MonoBehaviour
     {
-        [SerializeField] private GameObject player;
+        [SerializeField] private GameObject playerPrefab;
+        [SerializeField] [CanBeNull] private GameObject player;
         [FormerlySerializedAs("rooms")] [SerializeField] private List<Room> generatedRooms;
         public Room CurrentRoom;
         [Header("World Generation")]
@@ -18,6 +20,8 @@ namespace GameProg.World
         
         //getters
         public GameObject Player => player;
+        
+        public static event Action OnWorldGenerated;
 
         private void Start()
         {
@@ -34,9 +38,6 @@ namespace GameProg.World
             Room start = Instantiate(startRoom, transform);
             this.generatedRooms.Add(start);
             start.transform.position = Vector3.zero;
-            
-            //move player in the middle of the start room
-            player.transform.position = start.transform.position;
             
             
             //generate rooms until the desired number of rooms is reached
@@ -89,7 +90,7 @@ namespace GameProg.World
                             Vector3 offset = randomDoor.transform.position - newRoom.Doors[i].transform.position;
                             newRoom.transform.position += offset;
 
-                            yield return new WaitForSeconds(0.5f);
+                            yield return null;
                             
                             //check if the new room is colliding with any other room
                             if (!IsRoomCollidingWithAnyRoom(newRoom))
@@ -169,6 +170,21 @@ namespace GameProg.World
                 room.InitializeDoors();
             }
 
+            yield return null;
+            
+            //remove missing references in door lists
+            foreach (var room in generatedRooms)
+            {
+                for (int i = 0; i < room.Doors.Count; i++)
+                {
+                    if (room.Doors[i] == null)
+                    {
+                        room.Doors.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+
             //show all starting rooms, hide the rest
             foreach (var room in generatedRooms)
             {
@@ -184,6 +200,12 @@ namespace GameProg.World
                     room.Hide();
                 }
             }
+            
+            //spawn the player in the starting room
+            player = Instantiate(playerPrefab, startRoom.transform.position, Quaternion.identity);
+            
+            //fire event
+            OnWorldGenerated?.Invoke();
             
             yield return null;
         }
