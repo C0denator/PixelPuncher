@@ -18,11 +18,7 @@ namespace GameProg.World
         //(fixed a bug where doors would still be used after being deleted)
         
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
-
-        private void Start()
-        {
-            Initialize();
-        }
+        
 
         public void Initialize()
         {

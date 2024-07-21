@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -21,49 +22,11 @@ namespace GameProg.World
         private void Start()
         {
             //generate world
-            GenerateWorld();
+            StartCoroutine(GenerateWorld());
             
-            Debug.Log("Generated "+(generatedRooms.Count-1)+" rooms");
-            
-            //set the starting room as current room
-            foreach (var room in generatedRooms)
-            {
-                if (room.RoomType == RoomType.Start)
-                {
-                    CurrentRoom = room;
-                }
-            }
-            
-            //initialize rooms
-            foreach (var room in generatedRooms)
-            {
-                room.InitializeRoom();
-            }
-            
-            //initialize doors
-            foreach (var room in generatedRooms)
-            {
-                room.InitializeDoors();
-            }
-            
-            //show all starting rooms, hide the rest
-            foreach (var room in generatedRooms)
-            {
-                if (room.RoomType == RoomType.Start)
-                {
-                    room.Show();
-                    
-                    //open doors in starting room
-                    room.OpenDoors();
-                }
-                else
-                {
-                    room.Hide();
-                }
-            }
         }
 
-        private void GenerateWorld()
+        private IEnumerator GenerateWorld()
         {
             int generatedRoomsCount = 0;
             
@@ -92,7 +55,7 @@ namespace GameProg.World
                 bool roomGenerated = false;
                 
                 //for all available doors
-                while (availableDoors.Count > 0) //todo: decrement availableDoors.Count
+                while (availableDoors.Count > 0)
                 {
                     Debug.Log("Trying to generate a new room. Available doors count: "+availableDoors.Count);
                     
@@ -107,7 +70,7 @@ namespace GameProg.World
                     }
                     
                     //for all available room prefabs
-                    while (availableRoomPrefabs.Count > 0) //todo: decrement availableRoomPrefabs.Count
+                    while (availableRoomPrefabs.Count > 0)
                     {
                         //get a random room prefab
                         Room roomPrefab = availableRoomPrefabs[UnityEngine.Random.Range(0, availableRoomPrefabs.Count)];
@@ -121,7 +84,27 @@ namespace GameProg.World
                         for (int i = 0; i < newRoom.Doors.Count; i++)
                         {
                             Debug.Log("Checking door "+i);
-                            //stuff
+                            
+                            //move the new room, so that the door is at the same position as the random door
+                            Vector3 offset = randomDoor.transform.position - newRoom.Doors[i].transform.position;
+                            newRoom.transform.position += offset;
+
+                            yield return new WaitForSeconds(0.5f);
+                            
+                            //check if the new room is colliding with any other room
+                            if (!IsRoomCollidingWithAnyRoom(newRoom))
+                            {
+                                //found valid room
+                                roomGenerated = true;
+                                
+                                //add the new room to the list of generated rooms
+                                generatedRooms.Add(newRoom);
+                                
+                                generatedRoomsCount++;
+                                Debug.Log("Room generated!");
+                                
+                                break;
+                            }
                         }
                         
                         //was a room generated?
@@ -154,17 +137,55 @@ namespace GameProg.World
                 }
                 
                 //was a room generated?
-                if (roomGenerated)
-                {
-                    generatedRoomsCount++;
-                }
-                else
+                if (!roomGenerated)
                 {
                     Debug.LogError("No room generated: No available doors left");
                     break;
+                    
                 }
                 
             }
+            
+            Debug.Log("Generated "+(generatedRooms.Count-1)+" rooms");
+
+            //set the starting room as current room
+            foreach (var room in generatedRooms)
+            {
+                if (room.RoomType == RoomType.Start)
+                {
+                    CurrentRoom = room;
+                }
+            }
+
+            //initialize rooms
+            foreach (var room in generatedRooms)
+            {
+                room.InitializeRoom();
+            }
+
+            //initialize doors
+            foreach (var room in generatedRooms)
+            {
+                room.InitializeDoors();
+            }
+
+            //show all starting rooms, hide the rest
+            foreach (var room in generatedRooms)
+            {
+                if (room.RoomType == RoomType.Start)
+                {
+                    room.Show();
+
+                    //open doors in starting room
+                    room.OpenDoors();
+                }
+                else
+                {
+                    room.Hide();
+                }
+            }
+            
+            yield return null;
         }
         
         private bool IsRoomCollidingWithAnyRoom(Room room)
