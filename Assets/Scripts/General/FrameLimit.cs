@@ -13,5 +13,13 @@ namespace GameProg.General
             
             Application.targetFrameRate = targetFrameRate;
         }
+        
+        private void OnValidate()
+        {
+            //apply the target frame rate
+            Application.targetFrameRate = targetFrameRate;
+        }
     }
+    
+    
 }

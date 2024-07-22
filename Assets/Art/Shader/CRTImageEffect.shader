@@ -4,6 +4,11 @@ Shader "Custom/CRTShader"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Curvature ("Curvature", Range(0, 1)) = 0.5
+        _VignetteIntensity ("Vignette Intensity", Range(0, 1)) = 0.5
+        _VignetteSmoothness ("Vignette Smoothness", Range(0, 1)) = 0.5
+        _ScanlineIntensity ("Scanline Intensity", Range(0, 1)) = 0.5
+        _ScanlineSpeed ("Scanline Speed", Range(0, 10)) = 1.0
+        _ScanlineTime ("_ScanlineTime", Float) = 3.0
     }
     SubShader
     {
@@ -33,6 +38,11 @@ Shader "Custom/CRTShader"
             sampler2D _MainTex;
             float4 _MainTex_TexelSize;
             float _Curvature;
+            float _VignetteIntensity;
+            float _VignetteSmoothness;
+            float _ScanlineIntensity;
+            float _ScanlineSpeed;
+            float _ScanlineTime;
 
             v2f vert (appdata_t v)
             {
@@ -53,6 +63,17 @@ Shader "Custom/CRTShader"
                 uv = (uv + 1.0) * 0.5;
 
                 float4 color = tex2D(_MainTex, uv);
+
+                // Apply vignette effect
+                float2 position = i.uv - 0.5;
+                float dist = length(position);
+                float vignette = smoothstep(0.5 - _VignetteSmoothness, 0.5 + _VignetteSmoothness, 1.0 - dist * _VignetteIntensity);
+                color.rgb *= vignette;
+
+                // Apply scanline effect
+                float scanline = sin((i.uv.y + _ScanlineTime * _ScanlineSpeed) * 100.0) * 0.5 + 0.5;
+                color.rgb *= lerp(1.0, scanline, _ScanlineIntensity);
+
                 return color;
             }
             ENDCG

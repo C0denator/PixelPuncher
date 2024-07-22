@@ -8,14 +8,13 @@ namespace GameProg.General
     public class CRTPostProcessing : MonoBehaviour
     {
         public Material crtMaterial;
-        [Range(0, 1)]
-        public float curvature = 0.5f;
+        private static readonly int ScanlineTime = Shader.PropertyToID("_ScanlineTime");
 
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
             if (crtMaterial != null)
             {
-                crtMaterial.SetFloat("_Curvature", curvature);
+                crtMaterial.SetFloat(ScanlineTime, Time.time);
                 Graphics.Blit(source, destination, crtMaterial);
             }
             else
