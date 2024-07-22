@@ -184,6 +184,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8832164338254463890, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -224,12 +228,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 8262197766633336578, guid: 1b7772aaff631024e8be102c03ccb63a, type: 3}
-  reload: {fileID: 0}
-  bulletSpeed: 10
-  fireRate: 0.5
+  bulletSpeed: 20
+  secondsBetweenShots: 0.5
   damage: 1
-  hasMaganize: 0
-  maganizeAmount: 10
+  hasMagazine: 1
+  reloadTime: 2
+  magazineAmount: 6
+  currentMagazine: 0
 --- !u!1 &1281834129 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8370123616100767719, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}

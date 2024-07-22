@@ -61,11 +61,27 @@ namespace GameProg.Player
             _playerControls.Player.Shoot.performed += HandleShoot;
             _playerControls.Player.Shoot.Enable();
             
+            //subscribe to the reload event
+            if (_currentWeaponScript != null)
+            {
+                _currentWeaponScript.OnReloadStart += HandleOnReloadStart;
+                _currentWeaponScript.OnReloadFinished += HandleOnReloadFinished;
+            }
         }
         
         private void HandleShoot(InputAction.CallbackContext context)
         {
             _currentWeaponScript.HandleShoot();
+        }
+
+        private void HandleOnReloadStart()
+        {
+            _reloadBar.StartReload(_currentWeaponScript.ReloadTime);
+        }
+        
+        private void HandleOnReloadFinished()
+        {
+            _reloadBar.FinishReload();
         }
     }
 }

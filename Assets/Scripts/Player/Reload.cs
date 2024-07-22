@@ -1,3 +1,4 @@
+using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
 
 namespace GameProg.Player
@@ -35,23 +36,27 @@ namespace GameProg.Player
             }
         }
         
-        public void OnReloadFinished()
-        {
-            Debug.Log("Reloading finished");
-            
-            //hide the reload bar
-            reloadBar.enabled = false;
-        }
-        
-        public void StartReload()
+        public void StartReload(float time)
         {
             Debug.Log("Reloading started");
+            
+            //set the reload time
+            reloadTime = time;
+            animator.speed = 1f / reloadTime;
             
             //start animation
             animator.SetTrigger(ReloadStart);
             
             //show the reload bar
             reloadBar.enabled = true;
+        }
+        
+        public void FinishReload()
+        {
+            Debug.Log("Reloading finished");
+            
+            //hide the reload bar
+            reloadBar.enabled = false;
         }
     }
 }
