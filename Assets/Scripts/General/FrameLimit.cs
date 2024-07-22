@@ -5,6 +5,7 @@ namespace GameProg.General
     public class FrameLimit : MonoBehaviour
     {
         [SerializeField] private int targetFrameRate = 60;
+        [SerializeField] private float DeltaTime;
         
         private void Awake()
         {
@@ -18,6 +19,12 @@ namespace GameProg.General
         {
             //apply the target frame rate
             Application.targetFrameRate = targetFrameRate;
+        }
+        
+        private void Update()
+        {
+            //calculate the delta time
+            DeltaTime = Time.deltaTime;
         }
     }
     

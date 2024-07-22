@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 
 namespace GameProg.Player
 {
@@ -13,7 +10,8 @@ namespace GameProg.Player
         [SerializeField] private Camera playerCamera;
         [SerializeField] [Range(0.1f,10f)] private float moveSpeed = 5f;
         [SerializeField] [Range(20f,50f)] private float dashSpeed = 5f;
-        [SerializeField] [Range(0.1f,0.5f)] private float dashLength = 0.5f;
+        [SerializeField] [Range(0.1f,0.5f)] private float dashDuration = 0.5f;
+        [SerializeField] [Range(0f,3f)] private float dashCooldown = 1f;
         
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
@@ -21,9 +19,12 @@ namespace GameProg.Player
         
         private PlayerControls _playerControls;
         private Vector2 _movementInput;
-        private Coroutine _moveCoroutine;
         
         private bool _isDashing;
+        private float _elapsedDashTime;
+        private float _elapsedDashCooldown;
+        private Vector2 _dashDirection;
+        
         private float _velocity;
         private static readonly int Velocity = Animator.StringToHash("Velocity");
         private static readonly int IsDashing = Animator.StringToHash("isDashing");
@@ -55,6 +56,8 @@ namespace GameProg.Player
             _playerControls.Player.Dash.performed += HandleOnDashPerformed;
             
             _isDashing = false;
+            _elapsedDashTime = 0;
+            _elapsedDashCooldown = 0;
             
             //switch to player camera
             playerCamera.gameObject.SetActive(true);
@@ -79,31 +82,53 @@ namespace GameProg.Player
             }
         }
 
+        private void FixedUpdate()
+        {
+            //dash logic
+            if (_isDashing)
+            {
+                _elapsedDashTime += Time.fixedDeltaTime;
+                
+                if (_elapsedDashTime >= dashDuration) //dash is over
+                {
+                    _isDashing = false;
+                    _animator.SetBool(IsDashing, false);
+                    _elapsedDashTime = 0;
+                }
+                else //dash still active
+                {
+                    //move player
+                    Vector2 move = _dashDirection * (dashSpeed * Time.fixedDeltaTime);
+                    _rigidbody2D.MovePosition((Vector2)transform.position + move);
+                    
+                    return;
+                }
+            }else if (_elapsedDashCooldown < dashCooldown)
+            {
+                //increase cooldown counter
+                _elapsedDashCooldown += Time.fixedDeltaTime;
+            }
+            
+            //move player
+            Vector3 vel = new Vector3(
+                _movementInput.x * moveSpeed * Time.fixedDeltaTime,
+                _movementInput.y * moveSpeed * Time.fixedDeltaTime,
+                0f);
+            _rigidbody2D.MovePosition(transform.position + vel);
+                
+            //set velocity for animator
+            _animator.SetFloat(Velocity, _movementInput.magnitude);
+            
+        }
+
         private void HandleOnMovementPerformed(InputAction.CallbackContext context)
         {
             _movementInput = context.ReadValue<Vector2>();
-            
-            //start MoveCoroutine
-            if (_moveCoroutine == null)
-            {
-                _moveCoroutine = StartCoroutine(MoveCoroutine());
-            }
         }
         
         private void HandleOnMovementCanceled(InputAction.CallbackContext context)
         {
             _movementInput = Vector2.zero;
-            
-            //stop MoveCoroutine
-            if (_moveCoroutine != null)
-            {
-                StopCoroutine(_moveCoroutine);
-                _moveCoroutine = null;
-            }
-            else
-            {
-                Debug.LogWarning("Move coroutine is not running");
-            }
             
             //set animator-velocity to 0
             _animator.SetFloat(Velocity, 0);
@@ -112,70 +137,15 @@ namespace GameProg.Player
         
         private void HandleOnDashPerformed(InputAction.CallbackContext context)
         {
-            if (!_isDashing && _movementInput != Vector2.zero)
+            if (!_isDashing && _movementInput != Vector2.zero && _elapsedDashCooldown >= dashCooldown)
             {
-                StartCoroutine(DashCoroutine());
+                _isDashing = true;
+                _elapsedDashTime = 0;
+                _elapsedDashCooldown = 0;
+                _animator.SetBool(IsDashing, true);
+                
+                _dashDirection = _movementInput.normalized;
             }
-        }
-        
-        private IEnumerator MoveCoroutine()
-        {
-            
-            while (true)
-            {
-                //do nothing when the player is dashing
-                if (_isDashing) yield return null;
-                
-                //move player
-                Vector3 vel = new Vector3(
-                    _movementInput.x * moveSpeed * Time.deltaTime, 
-                    _movementInput.y * moveSpeed * Time.deltaTime, 
-                    0f);
-                
-                _rigidbody2D.MovePosition(transform.position + vel);
-                
-                //flip sprite if moving left
-                /*if (_movementInput.x < 0)
-                {
-                    _spriteRenderer.flipX = true;
-                }
-                else if (_movementInput.x > 0)
-                {
-                    _spriteRenderer.flipX = false;
-                }*/
-                
-                //set velocity for animator
-                _animator.SetFloat(Velocity, _movementInput.magnitude);
-                
-                yield return null;
-            }
-        }
-        
-        private IEnumerator DashCoroutine()
-        {
-            _isDashing = true;
-            _animator.SetBool(IsDashing, true);
-            
-            Vector2 direction = _movementInput.normalized;
-            
-            //Debug.Log("Dashing started, Direction: "+direction);
-            
-            //dash until dashLength is reached
-            float time = 0;
-            
-            while (time < dashLength)
-            {
-                time += Time.deltaTime;
-                Vector2 move = direction * (dashSpeed * Time.deltaTime);
-                _rigidbody2D.MovePosition((Vector2)transform.position + move);
-                
-                yield return null;
-            }
-            
-            _isDashing = false;
-            _animator.SetBool(IsDashing, false);
-            
-            
         }
 
         private void OnCollisionEnter2D(Collision2D other)

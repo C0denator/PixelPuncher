@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetFrameRate: 60
+  DeltaTime: 0
 --- !u!20 &2816199197607054025
 Camera:
   m_ObjectHideFlags: 0
@@ -360,7 +361,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crtMaterial: {fileID: 2100000, guid: 491b97ced486f5543aafe0370d9510a7, type: 2}
-  curvature: 0.5
 --- !u!1 &8370123616100767719
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +416,8 @@ MonoBehaviour:
   playerCamera: {fileID: 2816199197607054025}
   moveSpeed: 7.5
   dashSpeed: 40.3
-  dashLength: 0.212
+  dashDuration: 0.15
+  dashCooldown: 1
 --- !u!114 &4077290391495653953
 MonoBehaviour:
   m_ObjectHideFlags: 0

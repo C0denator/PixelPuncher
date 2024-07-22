@@ -62,7 +62,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
-    - _Curvature: 0.046
+    - _Curvature: 0.022
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _Distortion: 0.464
@@ -75,12 +75,17 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ScanlineIntensity: 0.449
+    - _ScanlineIntensity: 0.392
+    - _ScanlineSpeed: 10
+    - _ScanlineTime: 2.8296514
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Time: 2
     - _UVSec: 0
     - _Vignette: 0.449
+    - _VignetteIntensity: 1
+    - _VignetteSmoothness: 0.254
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
