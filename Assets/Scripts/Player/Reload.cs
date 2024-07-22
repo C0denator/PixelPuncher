@@ -7,7 +7,8 @@ namespace GameProg.Player
         private SpriteRenderer reloadBar;
         private Animator animator;
         public float reloadTime = 2f;
-        
+        private static readonly int ReloadStart = Animator.StringToHash("Reload");
+
         // Start is called before the first frame update
         void Start()
         {
@@ -42,9 +43,12 @@ namespace GameProg.Player
             reloadBar.enabled = false;
         }
         
-        public void OnReloadStarted()
+        public void StartReload()
         {
             Debug.Log("Reloading started");
+            
+            //start animation
+            animator.SetTrigger(ReloadStart);
             
             //show the reload bar
             reloadBar.enabled = true;

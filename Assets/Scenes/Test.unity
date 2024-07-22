@@ -176,6 +176,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1779911024952880988, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 8370123616100767719, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
       propertyPath: m_Name
       value: Player
@@ -183,8 +187,68 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8370123616100767719, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1281834136}
+    - targetCorrespondingSourceObject: {fileID: 1779911024952880988, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1146631424}
   m_SourcePrefab: {fileID: 100100000, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+--- !u!114 &712711037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3932257444009140572, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+  m_PrefabInstance: {fileID: 602410739}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2ffd5057ebc9f41afb2354cfbe1adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1146631420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1779911024952880988, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+  m_PrefabInstance: {fileID: 602410739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1146631424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146631420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58e8b888f7de2b6449c5add79ec2197b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 8262197766633336578, guid: 1b7772aaff631024e8be102c03ccb63a, type: 3}
+  reload: {fileID: 0}
+  bulletSpeed: 10
+  fireRate: 0.5
+  damage: 1
+  hasMaganize: 0
+  maganizeAmount: 10
+--- !u!1 &1281834129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8370123616100767719, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+  m_PrefabInstance: {fileID: 602410739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1281834136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281834129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a75c1c3d2ba50e14bbc00b49693310c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _reloadBar: {fileID: 712711037}
+  _currentWeapon: {fileID: 1146631420}
 --- !u!1001 &1761311955
 PrefabInstance:
   m_ObjectHideFlags: 0
