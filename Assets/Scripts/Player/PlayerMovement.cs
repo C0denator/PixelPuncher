@@ -54,7 +54,26 @@ namespace GameProg.Player
             
             _isDashing = false;
         }
-        
+
+        private void Update()
+        {
+            //get mouse position
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            
+            //get direction from player to mouse
+            Vector3 direction = mousePos - transform.position;
+            
+            //flip sprite if mouse is on the left side
+            if (direction.x < 0)
+            {
+                _spriteRenderer.flipX = true;
+            }
+            else
+            {
+                _spriteRenderer.flipX = false;
+            }
+        }
+
         private void HandleOnMovementPerformed(InputAction.CallbackContext context)
         {
             _movementInput = context.ReadValue<Vector2>();
@@ -111,14 +130,14 @@ namespace GameProg.Player
                 _rigidbody2D.MovePosition(transform.position + vel);
                 
                 //flip sprite if moving left
-                if (_movementInput.x < 0)
+                /*if (_movementInput.x < 0)
                 {
                     _spriteRenderer.flipX = true;
                 }
                 else if (_movementInput.x > 0)
                 {
                     _spriteRenderer.flipX = false;
-                }
+                }*/
                 
                 //set velocity for animator
                 _animator.SetFloat(Velocity, _movementInput.magnitude);
