@@ -52,6 +52,7 @@ MonoBehaviour:
   roomA: {fileID: 0}
   roomB: {fileID: 0}
   _boxCollider2D: {fileID: 3364853111628791718}
+  WasUsedInGeneration: 0
 --- !u!212 &7295544910262094345
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -92,7 +93,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 200
   m_Sprite: {fileID: -673804057, guid: da2451067f5c6b34a99ab699f46f09fc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

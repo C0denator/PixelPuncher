@@ -10,6 +10,7 @@ namespace GameProg.Player
     [RequireComponent(typeof(Animator))]
     public class PlayerMovement : MonoBehaviour
     {
+        [SerializeField] private Camera playerCamera;
         [SerializeField] [Range(0.1f,10f)] private float moveSpeed = 5f;
         [SerializeField] [Range(20f,50f)] private float dashSpeed = 5f;
         [SerializeField] [Range(0.1f,0.5f)] private float dashLength = 0.5f;
@@ -37,6 +38,7 @@ namespace GameProg.Player
             if(_spriteRenderer == null) Debug.LogError("SpriteRenderer component not found");
             if(_animator == null) Debug.LogError("Animator component not found");
             if(_rigidbody2D == null) Debug.LogError("Rigidbody2D component not found");
+            if(playerCamera == null) Debug.LogError("Player camera not set");
             
                 
             //enable player controls
@@ -53,6 +55,9 @@ namespace GameProg.Player
             _playerControls.Player.Dash.performed += HandleOnDashPerformed;
             
             _isDashing = false;
+            
+            //switch to player camera
+            playerCamera.gameObject.SetActive(true);
         }
 
         private void Update()

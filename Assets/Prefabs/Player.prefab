@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 500
   m_Sprite: {fileID: 1640815844, guid: 19a98cbcbf5afd349bcdbe599e2921ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -253,12 +253,12 @@ GameObject:
   - component: {fileID: 2816199197607054025}
   - component: {fileID: 5393999500186439665}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: PlayerCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5380170585596960659
 Transform:
   m_ObjectHideFlags: 0
@@ -398,6 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b171fbb1aa776942880928d2ac4f8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCamera: {fileID: 2816199197607054025}
   moveSpeed: 7.5
   dashSpeed: 40.3
   dashLength: 0.212

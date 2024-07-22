@@ -19,10 +19,13 @@ namespace GameProg.General
         [SerializeField] private PlayableAudioClip[] playableAudioClips;
         
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             DontDestroyOnLoad(gameObject);
-            
+        }
+
+        private void Start()
+        {
             //start with "startAudioClip"
             PlayClip("menu");
         }
@@ -30,7 +33,12 @@ namespace GameProg.General
         public void PlayClip(string clipName)
         {
             PlayableAudioClip clip;
+            
+            //default values so Unity will shut up
+            clip = playableAudioClips[0];
             clip.audioClip = null;
+            clip.volume = 1f;
+            
             bool found = false;
             
             //find the clip with the name
@@ -56,12 +64,17 @@ namespace GameProg.General
             {
                 if (fadeOnStart)
                 {
-                    StartCoroutine(FadeIn(audioSourceA, clip.audioClip)); 
+                    audioSourceA.clip = clip.audioClip;
+                    audioSourceA.volume = 0;
+                    audioSourceA.clip.LoadAudioData();
+                    audioSourceA.Play();
+                    StartCoroutine(FadeIn(audioSourceA, clip)); 
                 }
                 else
                 {
                     audioSourceA.clip = clip.audioClip;
-                    audioSourceA.volume = 1;
+                    audioSourceA.volume = clip.volume;
+                    audioSourceA.clip.LoadAudioData();
                     audioSourceA.Play();
                 }
                 
@@ -70,14 +83,24 @@ namespace GameProg.General
             }
             else if(_currentAudioSource == audioSourceA)
             {
+                audioSourceB.clip = clip.audioClip;
+                audioSourceB.volume = 0;
+                audioSourceB.clip.LoadAudioData();
+                audioSourceB.Play();
+                
                 StartCoroutine(FadeOut(audioSourceA));
-                StartCoroutine(FadeIn(audioSourceB, clip.audioClip));
+                StartCoroutine(FadeIn(audioSourceB, clip));
                 
                 _currentAudioSource = audioSourceB;
             }else if(_currentAudioSource == audioSourceB)
             {
+                audioSourceA.clip = clip.audioClip;
+                audioSourceA.volume = 0;
+                audioSourceA.clip.LoadAudioData();
+                audioSourceA.Play();
+                
                 StartCoroutine(FadeOut(audioSourceB));
-                StartCoroutine(FadeIn(audioSourceA, clip.audioClip));
+                StartCoroutine(FadeIn(audioSourceA, clip));
                 
                 _currentAudioSource = audioSourceA;
             }
@@ -85,32 +108,38 @@ namespace GameProg.General
             
         }
         
-        private IEnumerator FadeIn(AudioSource audioSource, AudioClip audioClip)
+        private IEnumerator FadeIn(AudioSource audioSource, PlayableAudioClip audioClip)
         {
-            //set the clip
-            audioSource.clip = audioClip;
-            audioSource.Play();
             
-            //fade in
+            //fade in 
             float t = 0;
             while (t < fadeTime)
             {
                 t += Time.deltaTime;
-                audioSource.volume = t / fadeTime;
+                audioSource.volume = Mathf.Lerp(0, audioClip.volume, t / fadeTime);
+                
                 yield return null;
             }
+            
         }
         
         private IEnumerator FadeOut(AudioSource audioSource)
         {
             //fade out
-            float t = fadeTime;
-            while (t > 0)
+            float t = 0;
+            
+            //get current volume
+            float startVolume = audioSource.volume;
+            
+            //fade out
+            while (t < fadeTime)
             {
-                t -= Time.deltaTime;
-                audioSource.volume = t / fadeTime;
+                t += Time.deltaTime;
+                audioSource.volume = Mathf.Lerp(startVolume, 0, t / fadeTime);
+                
                 yield return null;
             }
+            
             
             //stop the audio
             audioSource.Stop();
@@ -123,5 +152,6 @@ namespace GameProg.General
     {
         public String name;
         public AudioClip audioClip;
+        [Range(0f, 1f)] public float volume;
     }
 }

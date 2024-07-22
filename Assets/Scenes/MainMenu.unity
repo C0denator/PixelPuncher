@@ -992,13 +992,16 @@ MonoBehaviour:
   startAudioClip:
     name: 
     audioClip: {fileID: 0}
+    volume: 0
   fadeTime: 3
   fadeOnStart: 1
   playableAudioClips:
   - name: menu
     audioClip: {fileID: 8300000, guid: 2ab05979328a6674e8287d96add0ff91, type: 3}
+    volume: 1
   - name: world1
-    audioClip: {fileID: 8300000, guid: 6efbb4664c85a714cbfbe62289d43289, type: 3}
+    audioClip: {fileID: 8300000, guid: eb57c79a71d3a4b4bb6cf0f6c231c375, type: 3}
+    volume: 0.502
 --- !u!4 &1605064127
 Transform:
   m_ObjectHideFlags: 0
@@ -1045,6 +1048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   music: {fileID: 1605064126}
+  currentWorld: {fileID: 0}
 --- !u!4 &1609093749
 Transform:
   m_ObjectHideFlags: 0

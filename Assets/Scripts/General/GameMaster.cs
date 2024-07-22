@@ -5,11 +5,18 @@ namespace GameProg.General
     public class GameMaster : MonoBehaviour
     {
         [SerializeField] private Music music;
+        [SerializeField] private World.World currentWorld;
         
         // Start is called before the first frame update
         void Start()
         {
             DontDestroyOnLoad(gameObject);
+            
+            //subscribe to the scene loaded event
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+            
+            //subscribe to the world generated event
+            World.World.OnWorldGenerated += OnWorldGenerated;
         }
         
         public void SwitchScene(string sceneName)
@@ -21,13 +28,37 @@ namespace GameProg.General
                 return;
             }
             
-            if (sceneName == "World1")
+            //switch scene
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        }
+        
+        private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+        {
+            //find world
+            currentWorld = FindObjectOfType<World.World>();
+            
+            //error handling
+            if (currentWorld == null)
+            {
+                Debug.LogError("World not found");
+                return;
+            }
+        }
+        
+        private void OnWorldGenerated()
+        {
+            //error handling
+            if (currentWorld == null)
+            {
+                Debug.LogError("World not found");
+                return;
+            }
+            
+            //if world1
+            if (currentWorld.name == "World1")
             {
                 music.PlayClip("world1");
             }
-            
-            //switch scene
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
         }
     }
 }
