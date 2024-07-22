@@ -2,15 +2,19 @@ using UnityEngine;
 
 namespace GameProg.Player
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public class WeaponMovement : MonoBehaviour
     {
         [SerializeField] private Transform rotationCenter; //the player, where the weapon rotates around
         [SerializeField] private float distance = 1f; //distance from the player
-        [SerializeField] private SpriteRenderer spriteRenderer;
+        private SpriteRenderer spriteRenderer;
         
         // Start is called before the first frame update
         void Start()
         {
+            //get the sprite renderer
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            
             //error handling
             if (rotationCenter == null)
             {
