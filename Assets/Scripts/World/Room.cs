@@ -11,7 +11,7 @@ namespace GameProg.World
         public TilemapRenderer wallsRenderer;
         public Tilemap Walls;
         [SerializeField] private CompositeCollider2D spaceCollider; //the inside of the room
-
+        
         public World World { get; private set; }
         public RoomType RoomType => roomType;
         public List<Door> Doors => doors;

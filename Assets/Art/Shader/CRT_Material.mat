@@ -77,7 +77,7 @@ Material:
     - _Parallax: 0.02
     - _ScanlineIntensity: 0.392
     - _ScanlineSpeed: 10
-    - _ScanlineTime: 6.7817745
+    - _ScanlineTime: 2.171331
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

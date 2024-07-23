@@ -9,6 +9,7 @@ namespace GameProg.World
     public class CombatController : MonoBehaviour
     {
         [SerializeField] private Transform spawnpointParent;
+        [SerializeField] private Transform enemyParent;
         [FormerlySerializedAs("waves")] [SerializeField] private int wavesForThisRoom = 1;
         [SerializeField] private Wave[] waves;
         private int _currentWave = 0;
@@ -106,6 +107,7 @@ namespace GameProg.World
             {
                 GameObject enemy = Instantiate(waves[_currentWave].spawnpoints[i].EnemyPrefab,
                     waves[_currentWave].spawnpoints[i].transform.position, Quaternion.identity);
+                enemy.transform.SetParent(enemyParent);
                 currentEnemies.Add(enemy);
             }
         }

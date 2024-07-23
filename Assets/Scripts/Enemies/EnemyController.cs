@@ -13,8 +13,6 @@ namespace GameProg.Enemies
         [SerializeField] private int maxHealth;
         [Header("References")]
         [SerializeField] private GameObject player;
-        [Header("Movement")]
-        [SerializeField] private float speed;
         [Header("Attack")]
         [SerializeField] private int damage;
         [SerializeField] [Range(0f,5f)] private float attackCooldown;
@@ -32,11 +30,18 @@ namespace GameProg.Enemies
         {
             //get references
             _rb = GetComponent<Rigidbody2D>();
-            _navMeshAgent = GetComponent<NavMeshAgent>();
             player = GameObject.FindWithTag("Player");
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+            
+            //set up agent for 2D
+            _navMeshAgent.updateRotation = false;
+            _navMeshAgent.updateUpAxis = false;
+            
+            //set health
+            currentHealth = maxHealth;
             
             //error handling
-            if (_rb == null) Debug.LogError("Rigidbody2D component not found");
+            //if (_rb == null) Debug.LogError("Rigidbody2D component not found");
             if (_navMeshAgent == null) Debug.LogError("NavMeshAgent component not found");
             if (player == null) Debug.LogError("Player not found");
         }
@@ -54,11 +59,26 @@ namespace GameProg.Enemies
                 //is cooldown over?
                 if (_cooldownTimer <= 0)
                 {
+                    Debug.Log("Starting attack");
+                    
+                    //reset target
+                    _navMeshAgent.ResetPath();
+                    
                     //start attack
                     return;
                 }
                 
+                Debug.Log("Moving towards player");
+                
                 //move towards player
+                _navMeshAgent.SetDestination(player.transform.position);
+            }
+            else
+            {
+                Debug.Log("Moving towards player");
+                
+                //move towards player
+                _navMeshAgent.SetDestination(player.transform.position);
             }
         }
 
