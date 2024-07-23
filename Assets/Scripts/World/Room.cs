@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace GameProg.World
@@ -37,6 +35,21 @@ namespace GameProg.World
                 if (door != null && !doors.Contains(door))
                 {
                     doors.Add(door);
+                }
+            }
+            
+            //check for a CombatController component and initialize it
+            if (roomType == RoomType.Combat)
+            {
+                CombatController combatController = GetComponent<CombatController>();
+                
+                if (combatController == null)
+                {
+                    Debug.LogError("Room "+name+" is of type Combat but has no CombatController component");
+                }
+                else
+                {
+                    combatController.Init();
                 }
             }
             

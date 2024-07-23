@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -143.41156, y: 40.21071}
+  m_AnchoredPosition: {x: -143.41156, y: 40.210693}
   m_SizeDelta: {x: 267.2112, y: 53.9314}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &292243678
@@ -307,9 +307,7 @@ MonoBehaviour:
   CurrentRoom: {fileID: 0}
   startRoom: {fileID: 1754421886716813612, guid: ca15ba8a26a32e544b47f7082ff9cb40, type: 3}
   roomPrefabs:
-  - {fileID: 1754421886716813612, guid: 05e33ac4385024440a559fda8c2deec9, type: 3}
   - {fileID: 1754421886716813612, guid: cd688802e9dee6342a94f82927961675, type: 3}
-  - {fileID: 1754421886716813612, guid: 5ad5f530e1bdcbf4eb40405ad85e2750, type: 3}
   numberOfRooms: 10
 --- !u!1 &1054228300
 GameObject:

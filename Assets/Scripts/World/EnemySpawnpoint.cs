@@ -1,0 +1,44 @@
+using UnityEditor;
+using UnityEngine;
+
+namespace GameProg.World
+{
+    public class EnemySpawnpoint : MonoBehaviour
+    {
+        [SerializeField] private GameObject enemyPrefab;
+        [SerializeField] [Range(0,2)] private int spawnAtWave = 0;
+        
+        //getter
+        public int SpawnAtWave => spawnAtWave;
+        public GameObject EnemyPrefab => enemyPrefab;
+        
+        private static bool _InfoShown = false;
+        
+        // Start is called before the first frame update
+        void Start()
+        {
+
+            if (!_InfoShown)
+            {
+                Debug.LogWarning("Uses Unity Editor - Delete Gizmos before build");
+                _InfoShown = true;
+            }
+            
+            if(enemyPrefab == null) Debug.LogError("Enemy prefab not set in spawnpoint "+name);
+        }
+
+        private void OnDrawGizmos()
+        {
+            //draw the name of the prefab over the spawnpoint
+            if (enemyPrefab != null)
+            {
+                //draw a red box at the spawnpoint
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(transform.position, Vector3.one);
+                
+                Handles.color = Color.red;
+                Handles.Label(transform.position - new Vector3(0.5f,0f,0f), enemyPrefab.name);
+            }
+        }
+    }
+}
