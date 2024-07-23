@@ -3,7 +3,8 @@ Shader "Custom/CRTShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Curvature ("Curvature", Range(0, 1)) = 0.5
+        _CurvatureCenter ("Curvature Center", Range(0, 1)) = 0.5
+        _CurvatureEdge ("Curvature Edge", Range(0, 1)) = 0.5
         _VignetteIntensity ("Vignette Intensity", Range(0, 1)) = 0.5
         _VignetteSmoothness ("Vignette Smoothness", Range(0, 1)) = 0.5
         _ScanlineIntensity ("Scanline Intensity", Range(0, 1)) = 0.5
@@ -37,6 +38,8 @@ Shader "Custom/CRTShader"
 
             sampler2D _MainTex;
             float4 _MainTex_TexelSize;
+            float _CurvatureCenter;
+            float _CurvatureEdge;
             float _Curvature;
             float _VignetteIntensity;
             float _VignetteSmoothness;
@@ -56,18 +59,30 @@ Shader "Custom/CRTShader"
             {
                 float2 uv = i.uv;
 
-                // Apply CRT curvature
-                uv = uv * 2.0 - 1.0;
-                uv.x *= 1.0 + _Curvature * (uv.y * uv.y);
-                uv.y *= 1.0 + _Curvature * (uv.x * uv.x);
-                uv = (uv + 1.0) * 0.5;
+                // Apply CRT curvature with separate parameters for center and edges
+                uv = uv * 2.0 - 1.0; // Transform UV coordinates from [0, 1] to [-1, 1]
+                float dist = length(uv);
+                float theta = atan2(uv.y, uv.x);
+                
+                // Mix between center curvature and edge curvature
+                float curvature = lerp(_CurvatureCenter, _CurvatureEdge, dist);
+                dist = pow(dist, 1.0 + curvature * 0.5); // Radial distortion
+                
+                uv = dist * float2(cos(theta), sin(theta));
+                uv = (uv + 1.0) * 0.5; // Transform UV coordinates back to [0, 1]
+
+                // Prevent sampling outside texture coordinates
+                if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0)
+                {
+                    return float4(0, 0, 0, 1);
+                }
 
                 float4 color = tex2D(_MainTex, uv);
 
                 // Apply vignette effect
                 float2 position = i.uv - 0.5;
-                float dist = length(position);
-                float vignette = smoothstep(0.5 - _VignetteSmoothness, 0.5 + _VignetteSmoothness, 1.0 - dist * _VignetteIntensity);
+                float vignetteDist = length(position);
+                float vignette = smoothstep(0.5 - _VignetteSmoothness, 0.5 + _VignetteSmoothness, 1.0 - vignetteDist * _VignetteIntensity);
                 color.rgb *= vignette;
 
                 // Apply scanline effect

@@ -1,3 +1,4 @@
+using GameProg.General;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +17,7 @@ namespace GameProg.Player
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
         private Rigidbody2D _rigidbody2D;
+        private GameMaster _gameMaster;
         
         private PlayerControls _playerControls;
         private Vector2 _movementInput;
@@ -35,11 +37,13 @@ namespace GameProg.Player
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
             _rigidbody2D = GetComponent<Rigidbody2D>();
+            _gameMaster = FindObjectOfType<GameMaster>();
             
             if(_spriteRenderer == null) Debug.LogError("SpriteRenderer component not found");
             if(_animator == null) Debug.LogError("Animator component not found");
             if(_rigidbody2D == null) Debug.LogError("Rigidbody2D component not found");
             if(playerCamera == null) Debug.LogError("Player camera not set");
+            if(_gameMaster == null) Debug.LogError("GameMaster not found");
             
                 
             //enable player controls
@@ -61,6 +65,7 @@ namespace GameProg.Player
             
             //switch to player camera
             playerCamera.gameObject.SetActive(true);
+            _gameMaster.CurrentCamera = playerCamera;
         }
 
         private void Update()

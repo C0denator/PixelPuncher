@@ -2,7 +2,8 @@
     "name": "Player.ass",
     "rootNamespace": "GameProg",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:d287bb11b48580f418b59ebcdbaa1678"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

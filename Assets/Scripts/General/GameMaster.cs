@@ -1,3 +1,5 @@
+using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace GameProg.General
@@ -6,6 +8,19 @@ namespace GameProg.General
     {
         [SerializeField] private Music music;
         [SerializeField] private World.World currentWorld;
+        [SerializeField] [CanBeNull] private Camera currentCamera;
+        
+        public Action<Camera> OnCameraChanged;
+        
+        public Camera CurrentCamera
+        {
+            get => currentCamera;
+            set
+            {
+                currentCamera = value;
+                OnCameraChanged?.Invoke(currentCamera);
+            }
+        }
         
         // Start is called before the first frame update
         void Start()
