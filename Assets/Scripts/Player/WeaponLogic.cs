@@ -1,7 +1,6 @@
 using System.Collections;
 using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace GameProg.Player
 {
@@ -9,6 +8,8 @@ namespace GameProg.Player
     {
         [Header("References")]
         [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private AudioClip shootSound;
+        [SerializeField] [Range(0f,1f)] private float shootVolume = 1f;
         [Header("Settings")]
         [SerializeField] private float bulletSpeed = 10f;
         [SerializeField] private float secondsBetweenShots = 0.5f;
@@ -18,6 +19,7 @@ namespace GameProg.Player
         [SerializeField] private int magazineAmount = 10;
         [SerializeField] private int currentMagazine;
         
+        private AudioSource _audioSource;
         private bool _isBulletInMagazine = true;
         private bool _cooldownActive = false;
         
@@ -33,10 +35,19 @@ namespace GameProg.Player
         // Start is called before the first frame update
         void Start()
         {
+            _audioSource = GetComponent<AudioSource>();
+            
+            if(shootSound == null)
+            {
+                Debug.LogWarning("Shoot sound not set");
+            }else if (_audioSource == null)
+            {
+                Debug.LogWarning("Audio source not found");
+            }
             
             if (bulletPrefab == null)
             {
-                Debug.LogWarning("Bullet prefab not set");
+                Debug.LogError("Bullet prefab not set");
                 return;
             }
             
@@ -50,6 +61,8 @@ namespace GameProg.Player
             if(!_isBulletInMagazine || _cooldownActive) return;
             
             Debug.Log("Shooting");
+            //play the shoot once
+            _audioSource.PlayOneShot(shootSound, shootVolume);
             
             //create a bullet
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
