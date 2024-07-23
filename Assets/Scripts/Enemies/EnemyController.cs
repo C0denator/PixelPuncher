@@ -5,7 +5,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 namespace GameProg.Enemies
-{
+{   
+    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Animator))]
     public class EnemyController : MonoBehaviour
     {
         [Header("Health")]
@@ -20,10 +23,12 @@ namespace GameProg.Enemies
         
         private Rigidbody2D _rb;
         private NavMeshAgent _navMeshAgent;
+        private SpriteRenderer _spriteRenderer;
+        private Animator _animator;
         
         [CanBeNull] private Coroutine _attackCoroutine;
         private bool _attackInProgress = false;
-        private float _cooldownTimer = 0;
+        private float _cooldownTimer;
         
         // Start is called before the first frame update
         void Start()
@@ -32,22 +37,37 @@ namespace GameProg.Enemies
             _rb = GetComponent<Rigidbody2D>();
             player = GameObject.FindWithTag("Player");
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _animator = GetComponent<Animator>();
             
             //set up agent for 2D
             _navMeshAgent.updateRotation = false;
             _navMeshAgent.updateUpAxis = false;
             
-            //set health
+            //set stuff
             currentHealth = maxHealth;
+            _cooldownTimer = attackCooldown;
             
             //error handling
             //if (_rb == null) Debug.LogError("Rigidbody2D component not found");
             if (_navMeshAgent == null) Debug.LogError("NavMeshAgent component not found");
             if (player == null) Debug.LogError("Player not found");
+            if (_spriteRenderer == null) Debug.LogError("SpriteRenderer component not found");
+            if (_animator == null) Debug.LogError("Animator component not found");
         }
 
         private void FixedUpdate()
         {
+            //flip sprite if player is on the left side
+            if (player.transform.position.x < transform.position.x)
+            {
+                _spriteRenderer.flipX = true;
+            }
+            else
+            {
+                _spriteRenderer.flipX = false;
+            }
+            
             if (_cooldownTimer > 0) _cooldownTimer -= Time.fixedDeltaTime;
             
             if (_attackInProgress) return;
@@ -65,17 +85,22 @@ namespace GameProg.Enemies
                     _navMeshAgent.ResetPath();
                     
                     //start attack
+                    _animator.SetTrigger("AttackStart");
+                    
+                    //set cooldown
+                    _cooldownTimer = attackCooldown;
+                    
+                    //start attack coroutine
+                    _attackCoroutine = StartCoroutine(AttackCoroutine());
+                    
                     return;
                 }
-                
-                Debug.Log("Moving towards player");
                 
                 //move towards player
                 _navMeshAgent.SetDestination(player.transform.position);
             }
             else
             {
-                Debug.Log("Moving towards player");
                 
                 //move towards player
                 _navMeshAgent.SetDestination(player.transform.position);
@@ -93,10 +118,12 @@ namespace GameProg.Enemies
         {
             _attackInProgress = true;
             
-            yield return new WaitForSeconds(attackCooldown);
+            yield return new WaitForSeconds(1f);
             Debug.Log("Attack performed!");
             
             _attackInProgress = false;
+            
+            _animator.SetTrigger("AttackEnd");
             
             _attackCoroutine = null;
         }
