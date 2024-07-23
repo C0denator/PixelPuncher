@@ -8,6 +8,7 @@ namespace GameProg.Player
     {
         [Header("References")]
         [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private Transform bulletSpawnPoint;
         [SerializeField] private AudioClip shootSound;
         [SerializeField] [Range(0f,1f)] private float shootVolume = 1f;
         [Header("Settings")]
@@ -45,6 +46,12 @@ namespace GameProg.Player
                 Debug.LogWarning("Audio source not found");
             }
             
+            if (bulletSpawnPoint == null)
+            {
+                Debug.LogError("Bullet spawn point not set");
+                return;
+            }
+            
             if (bulletPrefab == null)
             {
                 Debug.LogError("Bullet prefab not set");
@@ -65,7 +72,7 @@ namespace GameProg.Player
             _audioSource.PlayOneShot(shootSound, shootVolume);
             
             //create a bullet
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
             
             //set the rotation of the bullet to the rotation of the weapon
             bullet.transform.rotation = transform.rotation;
