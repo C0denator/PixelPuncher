@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using GameProg.Player;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,10 +17,12 @@ namespace GameProg.Enemies
         [SerializeField] private int maxHealth;
         [Header("References")]
         [SerializeField] private GameObject player;
+        [SerializeField] private GameObject bulletPrefab;
         [Header("Attack")]
         [SerializeField] private int damage;
         [SerializeField] [Range(0f,5f)] private float attackCooldown;
         [SerializeField] [Range(2f,8f)] private float attackRange;
+        [SerializeField] [Range(3f,10f)] private float bulletSpeed;
         
         private Rigidbody2D _rb;
         private NavMeshAgent _navMeshAgent;
@@ -54,6 +57,7 @@ namespace GameProg.Enemies
             if (player == null) Debug.LogError("Player not found");
             if (_spriteRenderer == null) Debug.LogError("SpriteRenderer component not found");
             if (_animator == null) Debug.LogError("Animator component not found");
+            if (bulletPrefab == null) Debug.LogError("Bullet prefab not set");
         }
 
         private void FixedUpdate()
@@ -118,14 +122,34 @@ namespace GameProg.Enemies
         {
             _attackInProgress = true;
             
-            yield return new WaitForSeconds(1f);
-            Debug.Log("Attack performed!");
+            yield return new WaitForSeconds(0.2f);
+            
+            SpawnBullet();
+            
+
+            yield return new WaitForSeconds(0.3f);
+            
+            //shoot another bullet
+            
+            SpawnBullet();
+            
+            
+            yield return new WaitForSeconds(0.3f);
             
             _attackInProgress = false;
             
             _animator.SetTrigger("AttackEnd");
             
             _attackCoroutine = null;
+        }
+        
+        private void SpawnBullet()
+        {
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            bullet.GetComponent<Bullet>().PlayerBullet = false;
+            Vector2 direction = (player.transform.position - transform.position).normalized;
+            bullet.transform.rotation = Quaternion.Euler(0,0,Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+            bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
         }
     }
 }

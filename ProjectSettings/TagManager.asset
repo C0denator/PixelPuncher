@@ -8,6 +8,8 @@ TagManager:
   - Weapon
   - World
   - Spawnpoint
+  - Enemy
+  - Wall
   layers:
   - Default
   - TransparentFX
