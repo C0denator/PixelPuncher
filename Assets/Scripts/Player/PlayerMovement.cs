@@ -14,6 +14,7 @@ namespace GameProg.Player
         [SerializeField] [Range(0.1f,0.5f)] private float dashDuration = 0.5f;
         [SerializeField] [Range(0f,3f)] private float dashCooldown = 1f;
         
+        private Health.Health _health;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
         private Rigidbody2D _rigidbody2D;
@@ -34,11 +35,14 @@ namespace GameProg.Player
         private void Start()
         {
             //get References
+            _health = GetComponent<Health.Health>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _gameMaster = FindObjectOfType<GameMaster>();
             
+            //error handling
+            if(_health == null) Debug.LogError("Health component not found");
             if(_spriteRenderer == null) Debug.LogError("SpriteRenderer component not found");
             if(_animator == null) Debug.LogError("Animator component not found");
             if(_rigidbody2D == null) Debug.LogError("Rigidbody2D component not found");
@@ -99,6 +103,9 @@ namespace GameProg.Player
                     _isDashing = false;
                     _animator.SetBool(IsDashing, false);
                     _elapsedDashTime = 0;
+                    
+                    //enable health component
+                    _health.enabled = true;
                 }
                 else //dash still active
                 {
@@ -148,6 +155,9 @@ namespace GameProg.Player
                 _elapsedDashTime = 0;
                 _elapsedDashCooldown = 0;
                 _animator.SetBool(IsDashing, true);
+                
+                //disable health component
+                _health.enabled = false;
                 
                 _dashDirection = _movementInput.normalized;
             }

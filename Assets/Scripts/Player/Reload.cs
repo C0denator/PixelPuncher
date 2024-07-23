@@ -38,8 +38,6 @@ namespace GameProg.Player
         
         public void StartReload(float time)
         {
-            Debug.Log("Reloading started");
-            
             //set the reload time
             reloadTime = time;
             animator.speed = 1f / reloadTime;
@@ -53,8 +51,6 @@ namespace GameProg.Player
         
         public void FinishReload()
         {
-            Debug.Log("Reloading finished");
-            
             //hide the reload bar
             reloadBar.enabled = false;
         }

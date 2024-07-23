@@ -502,12 +502,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 791116838313154642}
+  - component: {fileID: 3478218372503984274}
   - component: {fileID: 1899773772501373677}
   - component: {fileID: 4077290391495653953}
   - component: {fileID: 7047086141274275105}
   - component: {fileID: 6397255664661542125}
   - component: {fileID: 698696537923577284}
-  - component: {fileID: 6525020407694129226}
+  - component: {fileID: 442416457001517070}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -533,6 +534,20 @@ Transform:
   - {fileID: 5477632938543270518}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3478218372503984274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8370123616100767719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf2cef8bbb8b8504aac764bd248b32a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 3
 --- !u!114 &1899773772501373677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,8 +679,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &6525020407694129226
-CircleCollider2D:
+--- !u!70 &442416457001517070
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -696,6 +711,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.49
+  m_Offset: {x: 0, y: -0.02}
+  m_Size: {x: 0.65, y: 0.95}
+  m_Direction: 0

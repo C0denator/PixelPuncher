@@ -163,14 +163,14 @@ namespace GameProg.World
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("Door started colliding with: "+other.gameObject.name);
+            //Debug.Log("Door started colliding with: "+other.gameObject.name);
             //return if the door is marked for deletion
             if (_markedForDeletion) return;
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            Debug.Log("Door stopped colliding with: "+other.gameObject.name);
+            //Debug.Log("Door stopped colliding with: "+other.gameObject.name);
             //return if the door is marked for deletion
             if (_markedForDeletion) return;
             

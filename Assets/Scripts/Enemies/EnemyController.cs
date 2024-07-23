@@ -12,9 +12,6 @@ namespace GameProg.Enemies
     [RequireComponent(typeof(Animator))]
     public class EnemyController : MonoBehaviour
     {
-        [Header("Health")]
-        [SerializeField] private int currentHealth;
-        [SerializeField] private int maxHealth;
         [Header("References")]
         [SerializeField] private GameObject player;
         [SerializeField] private GameObject bulletPrefab;
@@ -48,7 +45,6 @@ namespace GameProg.Enemies
             _navMeshAgent.updateUpAxis = false;
             
             //set stuff
-            currentHealth = maxHealth;
             _cooldownTimer = attackCooldown;
             
             //error handling
@@ -146,7 +142,6 @@ namespace GameProg.Enemies
         private void SpawnBullet()
         {
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            bullet.GetComponent<Bullet>().PlayerBullet = false;
             Vector2 direction = (player.transform.position - transform.position).normalized;
             bullet.transform.rotation = Quaternion.Euler(0,0,Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;

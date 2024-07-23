@@ -1,11 +1,7 @@
 {
-    "name": "Player.ass",
+    "name": "Health.ass",
     "rootNamespace": "GameProg",
-    "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:d287bb11b48580f418b59ebcdbaa1678",
-        "GUID:d0a06b1b3c70f784e8c71b4e6b024e53"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

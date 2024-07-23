@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace GameProg.Player
+namespace GameProg.Enemies
 {
-    public class PlayerBullet : MonoBehaviour
+    public class EnemyBullet : MonoBehaviour
     {
         private void Start()
         {
@@ -20,10 +20,18 @@ namespace GameProg.Player
                 Destroy(gameObject);
             }
             
-            if (other.gameObject.CompareTag("Enemy"))
+            if (other.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Enemy hit");
-                Destroy(gameObject);
+                //look if the player has a health component
+                Health.Health playerHealth = other.gameObject.GetComponent<Health.Health>();
+                
+                //is the component enabled?
+                if (playerHealth.enabled)
+                {
+                    //do damage to the player
+                    Debug.Log("Player hit");
+                    Destroy(gameObject);
+                }
             }
             
         }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5004863194603156427}
-  - component: {fileID: 3165785215746240134}
+  - component: {fileID: -835657783171884475}
   - component: {fileID: 1220467628838674474}
   - component: {fileID: 5111641080167410940}
   - component: {fileID: 4425454308005389065}
@@ -36,7 +36,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3165785215746240134
+--- !u!114 &-835657783171884475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,10 +45,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5981027238127665226}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58df19377cd6d6541a7667cbe5c8fccc, type: 3}
+  m_Script: {fileID: 11500000, guid: 49464433a0f1f104ebf06f53918fcd7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBullet: 0
 --- !u!212 &1220467628838674474
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -126,7 +125,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &4425454308005389065
 BoxCollider2D:

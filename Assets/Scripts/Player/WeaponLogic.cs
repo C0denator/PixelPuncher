@@ -67,7 +67,6 @@ namespace GameProg.Player
         {
             if(!_isBulletInMagazine || _cooldownActive) return;
             
-            Debug.Log("Shooting");
             //play the shoot once
             _audioSource.PlayOneShot(shootSound, shootVolume);
             
