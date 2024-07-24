@@ -571,7 +571,7 @@ MonoBehaviour:
   moveSpeed: 7.5
   dashSpeed: 40
   dashDuration: 0.15
-  dashCooldown: 1
+  dashCooldown: 3
   dashSound:
     clip: {fileID: 8300000, guid: b537546d1b39a1b448111cef8099f323, type: 3}
     volume: 0.25

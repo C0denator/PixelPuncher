@@ -1,36 +1,30 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Sound;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
-namespace GameProg.Enemies
+namespace GameProg.Enemies.SpecificBehaviour
 {   
     [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Animator))]
-    public class EnemyController : MonoBehaviour
+    [RequireComponent(typeof(EnemyBaseClass))]
+    public class Fighter1Controller : MonoBehaviour
     {
         [Header("References")]
         [SerializeField] private GameObject player;
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private AudioClipWithVolume attackSound;
-        [SerializeField] private List<GameObject> debrisObjects;
         [Header("Attack")]
         [SerializeField] private int damage;
         [SerializeField] [Range(0f,5f)] private float attackCooldown;
         [SerializeField] [Range(2f,8f)] private float attackRange;
-        [SerializeField] [Range(3f,10f)] private float bulletSpeed;
+        [SerializeField] [Range(5f,20f)] private float bulletSpeed;
         
-        private Health.Health _health;
         private Rigidbody2D _rb;
         private NavMeshAgent _navMeshAgent;
-        private SpriteRenderer _spriteRenderer;
         private Animator _animator;
-        private Transform _debrisParent;
         private AudioSource _audioSource;
         
         
@@ -45,30 +39,15 @@ namespace GameProg.Enemies
             _rb = GetComponent<Rigidbody2D>();
             player = GameObject.FindWithTag("Player");
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
-            _health = GetComponent<Health.Health>();
             _audioSource = GlobalSound.globalAudioSource;
-            
-            //find debris parent: look at parent and search for a gameobject with the name "Debris"
-            foreach (Transform child in transform.parent.parent)
-            {
-                if (child.name == "Debris")
-                {
-                    _debrisParent = child;
-                    break;
-                }
-            }
             
             //error handling
             //if (_rb == null) Debug.LogError("Rigidbody2D component not found");
             if (_navMeshAgent == null) Debug.LogError("NavMeshAgent component not found");
             if (player == null) Debug.LogError("Player not found");
-            if (_spriteRenderer == null) Debug.LogError("SpriteRenderer component not found");
             if (_animator == null) Debug.LogError("Animator component not found");
             if (bulletPrefab == null) Debug.LogError("Bullet prefab not set");
-            if (_debrisParent == null) Debug.LogError("Debris parent not set");
-            if (_health == null) Debug.LogError("Health component not found");
             if (_audioSource == null) Debug.LogError("Audio source not found");
             
             //set up agent for 2D
@@ -77,23 +56,12 @@ namespace GameProg.Enemies
             
             //set stuff
             _cooldownTimer = attackCooldown;
-            
-            //subscribe to death event
-            _health.OnDeath += HandleOnDeath;
         }
         
 
         private void FixedUpdate()
         {
-            //flip sprite if player is on the left side
-            if (player.transform.position.x < transform.position.x)
-            {
-                _spriteRenderer.flipX = true;
-            }
-            else
-            {
-                _spriteRenderer.flipX = false;
-            }
+            
             
             if (_cooldownTimer > 0) _cooldownTimer -= Time.fixedDeltaTime;
             
@@ -178,45 +146,7 @@ namespace GameProg.Enemies
             
             bullet.GetComponent<EnemyBullet>().Damage = damage;
         }
-        
-        private void HandleOnDeath(GameObject obj)
-        {
-            //unsubscribe from death event
-            _health.OnDeath -= HandleOnDeath;
-            
-            //spawn debris
-            foreach (GameObject debrisObject in debrisObjects)
-            {
-                debrisObject.SetActive(true);
-                
-                //set parent
-                debrisObject.transform.SetParent(_debrisParent);
-                
-                //get rigidbody
-                Rigidbody2D debrisRb = debrisObject.GetComponent<Rigidbody2D>();
 
-                if (debrisRb == null)
-                {
-                    Debug.LogError("Rigidbody2D component not found on debris object");
-                }
-                else
-                {
-                    //apply slight random force
-                    debrisRb.AddForce(new Vector2(Random.Range(-2f,2f), Random.Range(-2f,2f)), ForceMode2D.Impulse);
-                }
-                
-                //get sprite renderer
-                SpriteRenderer debrisSpriteRenderer = debrisObject.GetComponent<SpriteRenderer>();
-                
-                debrisSpriteRenderer.flipX = _spriteRenderer.flipX;
-                
-                
-            }
-            
-            //destroy enemy
-            Destroy(gameObject);
-        }
-        
         [Serializable]
         private struct AudioClipWithVolume
         {

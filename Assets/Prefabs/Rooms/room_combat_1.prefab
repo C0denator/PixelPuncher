@@ -6169,7 +6169,7 @@ PrefabInstance:
     - target: {fileID: 7369789104794779728, guid: 30f00d5128d0abc4e962e26dace549d6, type: 3}
       propertyPath: enemyPrefab
       value: 
-      objectReference: {fileID: 3623134906648738520, guid: 68030e1de0329a24495ea0158b5e57bc, type: 3}
+      objectReference: {fileID: 6512602392665042123, guid: 1c7c7c9d4c3c8534bab08e8d47e6ce89, type: 3}
     - target: {fileID: 7369789104794779728, guid: 30f00d5128d0abc4e962e26dace549d6, type: 3}
       propertyPath: spawnAtWave
       value: 1
@@ -6320,7 +6320,7 @@ PrefabInstance:
     - target: {fileID: 7369789104794779728, guid: 30f00d5128d0abc4e962e26dace549d6, type: 3}
       propertyPath: enemyPrefab
       value: 
-      objectReference: {fileID: 3623134906648738520, guid: 68030e1de0329a24495ea0158b5e57bc, type: 3}
+      objectReference: {fileID: 6512602392665042123, guid: 1c7c7c9d4c3c8534bab08e8d47e6ce89, type: 3}
     - target: {fileID: 7369789104794779728, guid: 30f00d5128d0abc4e962e26dace549d6, type: 3}
       propertyPath: spawnAtWave
       value: 1
