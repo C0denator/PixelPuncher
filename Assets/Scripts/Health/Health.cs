@@ -1,4 +1,5 @@
 using System;
+using Sound;
 using UnityEngine;
 
 namespace GameProg.Health
@@ -7,6 +8,11 @@ namespace GameProg.Health
     {
         [SerializeField] private int currentHealth;
         [SerializeField] private int maxHealth;
+        [Header("HitSounds")] 
+        [SerializeField] private AudioClipWithVolume hitSound;
+        [SerializeField] private AudioClipWithVolume deathSound;
+
+        private AudioSource _audioSource;
         
         public event Action OnHealthChanged;
         public event Action OnDeath;
@@ -16,8 +22,18 @@ namespace GameProg.Health
             get => currentHealth;
             set
             {
+                int tmp = currentHealth;
                 currentHealth = value;
-                OnHealthChanged?.Invoke();
+                
+                if(tmp != currentHealth)
+                {
+                    OnHealthChanged?.Invoke();
+                    
+                    if(tmp > currentHealth)
+                    {
+                        _audioSource.PlayOneShot(hitSound.clip, hitSound.volume);
+                    }
+                }
             }
         }
         
@@ -25,6 +41,9 @@ namespace GameProg.Health
         void Start()
         {
             currentHealth = maxHealth;
+            
+            //get audio source
+            _audioSource = GlobalSound.globalAudioSource;
         }
         
         public void DoDamage(int damage)
@@ -35,8 +54,17 @@ namespace GameProg.Health
             {
                 CurrentHealth = 0;
                 
+                _audioSource.PlayOneShot(deathSound.clip, deathSound.volume);
+                
                 OnDeath?.Invoke();
             }
+        }
+
+        [Serializable]
+        private struct AudioClipWithVolume
+        {
+            public AudioClip clip;
+            [Range(0f, 1f)] public float volume;
         }
     }
 }

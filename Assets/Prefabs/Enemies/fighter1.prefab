@@ -51,6 +51,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 5
+  hitSound:
+    clip: {fileID: 8300000, guid: 52dfeceb86a06d544958602eb41252b7, type: 3}
+    volume: 1
+  deathSound:
+    clip: {fileID: 8300000, guid: 43582791a4ee89447b32b695cad59a51, type: 3}
+    volume: 1
 --- !u!114 &7241693294779322900
 MonoBehaviour:
   m_ObjectHideFlags: 0

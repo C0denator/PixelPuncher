@@ -145,6 +145,8 @@ namespace GameProg.Enemies
             Vector2 direction = (player.transform.position - transform.position).normalized;
             bullet.transform.rotation = Quaternion.Euler(0,0,Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+            
+            bullet.GetComponent<EnemyBullet>().Damage = damage;
         }
     }
 }

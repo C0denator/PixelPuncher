@@ -4,6 +4,9 @@ namespace GameProg.Enemies
 {
     public class EnemyBullet : MonoBehaviour
     {
+        
+        public int Damage = 1;
+        
         private void Start()
         {
             //destroy the bullet max 5 seconds after it was created
@@ -30,6 +33,9 @@ namespace GameProg.Enemies
                 {
                     //do damage to the player
                     Debug.Log("Player hit");
+                    
+                    playerHealth.DoDamage(Damage);
+                    
                     Destroy(gameObject);
                 }
             }

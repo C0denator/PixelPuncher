@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
-using Unity.Plastic.Newtonsoft.Json.Serialization;
+using Sound;
 using UnityEngine;
+using Action = Unity.Plastic.Newtonsoft.Json.Serialization.Action;
 
 namespace GameProg.Player
 {
@@ -9,20 +11,20 @@ namespace GameProg.Player
         [Header("References")]
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private Transform bulletSpawnPoint;
-        [SerializeField] private AudioClip shootSound;
-        [SerializeField] [Range(0f,1f)] private float shootVolume = 1f;
+        [SerializeField] private AudioClipWithVolume shootSound;
         [Header("Settings")]
         [SerializeField] private float bulletSpeed = 10f;
         [SerializeField] private float secondsBetweenShots = 0.5f;
-        [SerializeField] private float damage = 1f;
+        [SerializeField] private int damage = 1;
         [SerializeField] private bool hasMagazine = false;
         [SerializeField] private float reloadTime = 2f;
         [SerializeField] private int magazineAmount = 10;
         [SerializeField] private int currentMagazine;
         
-        private AudioSource _audioSource;
         private bool _isBulletInMagazine = true;
         private bool _cooldownActive = false;
+        
+        private AudioSource _audioSource;
         
         private Coroutine _reloadCoroutine;
         private Coroutine _cooldownCoroutine;
@@ -38,7 +40,7 @@ namespace GameProg.Player
         {
             _audioSource = GetComponent<AudioSource>();
             
-            if(shootSound == null)
+            if(shootSound.clip == null)
             {
                 Debug.LogWarning("Shoot sound not set");
             }else if (_audioSource == null)
@@ -61,6 +63,9 @@ namespace GameProg.Player
             //set the current maganize
             currentMagazine = magazineAmount;
             
+            //get the audio source
+            _audioSource = GlobalSound.globalAudioSource;
+
         }
         
         public void HandleShoot()
@@ -68,7 +73,7 @@ namespace GameProg.Player
             if(!_isBulletInMagazine || _cooldownActive) return;
             
             //play the shoot once
-            _audioSource.PlayOneShot(shootSound, shootVolume);
+            _audioSource.PlayOneShot(shootSound.clip, shootSound.volume);
             
             //create a bullet
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
@@ -78,6 +83,9 @@ namespace GameProg.Player
             
             //set the bullet speed
             bullet.GetComponent<Rigidbody2D>().velocity = transform.right * bulletSpeed;
+            
+            //set the damage
+            bullet.GetComponent<PlayerBullet>().Damage = damage;
 
             if (hasMagazine)
             {
@@ -133,6 +141,13 @@ namespace GameProg.Player
             _cooldownActive = false;
             
             _cooldownCoroutine = null;
+        }
+        
+        [Serializable]
+        private struct AudioClipWithVolume
+        {
+            public AudioClip clip;
+            [Range(0f, 1f)] public float volume;
         }
         
     }

@@ -1,4 +1,6 @@
+using System;
 using GameProg.General;
+using Sound;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,13 +15,14 @@ namespace GameProg.Player
         [SerializeField] [Range(20f,50f)] private float dashSpeed = 5f;
         [SerializeField] [Range(0.1f,0.5f)] private float dashDuration = 0.5f;
         [SerializeField] [Range(0f,3f)] private float dashCooldown = 1f;
+        [SerializeField] private AudioClipWithVolume dashSound;
         
         private Health.Health _health;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
         private Rigidbody2D _rigidbody2D;
         private GameMaster _gameMaster;
-        
+        private AudioSource _audioSource;
         private PlayerControls _playerControls;
         private Vector2 _movementInput;
         
@@ -40,6 +43,7 @@ namespace GameProg.Player
             _animator = GetComponent<Animator>();
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _gameMaster = FindObjectOfType<GameMaster>();
+            _audioSource = GlobalSound.globalAudioSource;
             
             //error handling
             if(_health == null) Debug.LogError("Health component not found");
@@ -159,8 +163,18 @@ namespace GameProg.Player
                 //disable health component
                 _health.enabled = false;
                 
+                //play dash sound
+                _audioSource.PlayOneShot(dashSound.clip, dashSound.volume);
+                
                 _dashDirection = _movementInput.normalized;
             }
+        }
+        
+        [Serializable]
+        private struct AudioClipWithVolume
+        {
+            public AudioClip clip;
+            [Range(0f, 1f)] public float volume;
         }
 
         private void OnCollisionEnter2D(Collision2D other)

@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
+using Sound;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace GameProg.World
@@ -13,6 +13,7 @@ namespace GameProg.World
         private Animator animator;
         private SpriteRenderer _spriteRenderer;
         [SerializeField] private BoxCollider2D _boxCollider2D;
+        [SerializeField] private AudioClipWithVolume deniedSound;
 
         private bool _markedForDeletion = false; //if true, the door will be deleted in the next frame
         //(fixed a bug where doors would still be used after being deleted)
@@ -20,6 +21,8 @@ namespace GameProg.World
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
         
         public bool WasUsedInGeneration;
+        
+        private AudioSource _audioSource;
         
 
         public void Initialize()
@@ -32,6 +35,7 @@ namespace GameProg.World
             _spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
             _boxCollider2D = GetComponent<BoxCollider2D>();
+            _audioSource = GlobalSound.globalAudioSource;
             
             //check if references are set
             if(roomA == null) Debug.LogError("Room component not found in parent");
@@ -166,6 +170,17 @@ namespace GameProg.World
             //Debug.Log("Door started colliding with: "+other.gameObject.name);
             //return if the door is marked for deletion
             if (_markedForDeletion) return;
+            
+            //has the other gameobject the tag "Player"?
+            if (other.gameObject.CompareTag("Player"))
+            {
+                //is the door currently locked?
+                if (!animator.GetBool(IsOpen))
+                {
+                    //play denied sound
+                    _audioSource.PlayOneShot(deniedSound.clip, deniedSound.volume);
+                }
+            }
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -211,6 +226,13 @@ namespace GameProg.World
                     newRoom.OnRoomEnter?.Invoke();
                 }
             }
+        }
+        
+        [Serializable]
+        private struct AudioClipWithVolume
+        {
+            public AudioClip clip;
+            [Range(0f, 1f)] public float volume;
         }
         
     }

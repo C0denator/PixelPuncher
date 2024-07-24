@@ -7,8 +7,9 @@ namespace GameProg.General
     public class GameMaster : MonoBehaviour
     {
         [SerializeField] private Music music;
-        [SerializeField] private World.World currentWorld;
+        [SerializeField] private GameProg.World.World currentWorld;
         [SerializeField] [CanBeNull] private Camera currentCamera;
+        public AudioSource globalAudioSource;
         
         public Action<Camera> OnCameraChanged;
         
@@ -31,7 +32,7 @@ namespace GameProg.General
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
             
             //subscribe to the world generated event
-            World.World.OnWorldGenerated += OnWorldGenerated;
+            GameProg.World.World.OnWorldGenerated += OnWorldGenerated;
         }
         
         public void SwitchScene(string sceneName)
@@ -50,7 +51,7 @@ namespace GameProg.General
         private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
         {
             //find world
-            currentWorld = FindObjectOfType<World.World>();
+            currentWorld = FindObjectOfType<GameProg.World.World>();
             
             //error handling
             if (currentWorld == null)

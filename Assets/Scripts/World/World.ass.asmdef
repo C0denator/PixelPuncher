@@ -1,7 +1,9 @@
 {
     "name": "World.ass",
     "rootNamespace": "GameProg",
-    "references": [],
+    "references": [
+        "GUID:8f3e15d4bdd2d2a4a890fadbe8d7543d"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
