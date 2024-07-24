@@ -1,7 +1,7 @@
 {
     "name": "Enemies.ass",
     "rootNamespace": "GameProg",
-    "references": ["GUID:8d5d968679d54ab40823bc21ee8b2b32","GUID:d0a06b1b3c70f784e8c71b4e6b024e53"],
+    "references": ["GUID:8d5d968679d54ab40823bc21ee8b2b32","GUID:d0a06b1b3c70f784e8c71b4e6b024e53","GUID:8f3e15d4bdd2d2a4a890fadbe8d7543d"],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

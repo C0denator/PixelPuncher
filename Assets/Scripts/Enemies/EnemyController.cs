@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Sound;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace GameProg.Enemies
 {   
@@ -14,6 +17,7 @@ namespace GameProg.Enemies
         [Header("References")]
         [SerializeField] private GameObject player;
         [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private AudioClipWithVolume attackSound;
         [SerializeField] private List<GameObject> debrisObjects;
         [Header("Attack")]
         [SerializeField] private int damage;
@@ -27,6 +31,7 @@ namespace GameProg.Enemies
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
         private Transform _debrisParent;
+        private AudioSource _audioSource;
         
         
         [CanBeNull] private Coroutine _attackCoroutine;
@@ -43,6 +48,7 @@ namespace GameProg.Enemies
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
             _health = GetComponent<Health.Health>();
+            _audioSource = GlobalSound.globalAudioSource;
             
             //find debris parent: look at parent and search for a gameobject with the name "Debris"
             foreach (Transform child in transform.parent)
@@ -63,6 +69,7 @@ namespace GameProg.Enemies
             if (bulletPrefab == null) Debug.LogError("Bullet prefab not set");
             if (_debrisParent == null) Debug.LogError("Debris parent not set");
             if (_health == null) Debug.LogError("Health component not found");
+            if (_audioSource == null) Debug.LogError("Audio source not found");
             
             //set up agent for 2D
             _navMeshAgent.updateRotation = false;
@@ -161,6 +168,9 @@ namespace GameProg.Enemies
         
         private void SpawnBullet()
         {
+            //play attack sound
+            _audioSource.PlayOneShot(attackSound.clip, attackSound.volume);
+            
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             Vector2 direction = (player.transform.position - transform.position).normalized;
             bullet.transform.rotation = Quaternion.Euler(0,0,Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
@@ -202,6 +212,13 @@ namespace GameProg.Enemies
             
             //destroy enemy
             Destroy(gameObject);
+        }
+        
+        [Serializable]
+        private struct AudioClipWithVolume
+        {
+            public AudioClip clip;
+            [Range(0f, 1f)] public float volume;
         }
     }
 }
