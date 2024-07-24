@@ -17,9 +17,9 @@ TagManager:
   - NavMesh
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - Wall
+  - Enemy
   - 
   - 
   - 

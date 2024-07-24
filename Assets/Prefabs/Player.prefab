@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8832164338254463890}
   - component: {fileID: 6079023485288377633}
   - component: {fileID: 3932257444009140572}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ReloadBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 2583055797977908485}
   - component: {fileID: 68240790014357368}
   - component: {fileID: 5515999539367768471}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Revolver
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 2816199197607054025}
   - component: {fileID: 5393999500186439665}
   - component: {fileID: 1925688651090670387}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4103390176658680527}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 6397255664661542125}
   - component: {fileID: 698696537923577284}
   - component: {fileID: 442416457001517070}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -629,7 +629,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1380819330, guid: aa7e78310f932ce43aa1649fcd9003ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
