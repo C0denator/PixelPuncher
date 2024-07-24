@@ -83,6 +83,12 @@ namespace GameProg.World
 
         private void CombatStart()
         {
+            //was teh room visited before?
+            if (_room.WasVisited)
+            {
+                return;
+            }
+            
             Debug.Log("Combat started");
             
             //close all doors
@@ -108,13 +114,26 @@ namespace GameProg.World
                 GameObject enemy = Instantiate(waves[_currentWave].spawnpoints[i].EnemyPrefab,
                     waves[_currentWave].spawnpoints[i].transform.position, Quaternion.identity);
                 enemy.transform.SetParent(enemyParent);
+                
+                //subscribe to enemy death event
+                enemy.GetComponent<Health.Health>().OnDeath += HandleOnEnemyDeath;
+                
                 currentEnemies.Add(enemy);
             }
+            
+            Debug.Log("Wave "+_currentWave+" spawned");
         }
         
         private void HandleOnEnemyDeath(GameObject deadEnemy)
         {
+            //unsubscribe from enemy death event
+            deadEnemy.GetComponent<Health.Health>().OnDeath -= HandleOnEnemyDeath;
+            
+            //remove enemy from list
             currentEnemies.Remove(deadEnemy);
+            
+            //destroy enemy
+            Destroy(deadEnemy);
             
             //check if all enemies are dead
             if (currentEnemies.Count == 0)

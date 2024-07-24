@@ -15,7 +15,7 @@ namespace GameProg.Health
         private AudioSource _audioSource;
         
         public event Action OnHealthChanged;
-        public event Action OnDeath;
+        public event Action<GameObject> OnDeath;
         
         public int CurrentHealth
         {
@@ -56,7 +56,7 @@ namespace GameProg.Health
                 
                 _audioSource.PlayOneShot(deathSound.clip, deathSound.volume);
                 
-                OnDeath?.Invoke();
+                OnDeath?.Invoke(gameObject);
             }
         }
 

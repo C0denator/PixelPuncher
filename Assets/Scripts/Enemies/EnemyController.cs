@@ -51,7 +51,7 @@ namespace GameProg.Enemies
             _audioSource = GlobalSound.globalAudioSource;
             
             //find debris parent: look at parent and search for a gameobject with the name "Debris"
-            foreach (Transform child in transform.parent)
+            foreach (Transform child in transform.parent.parent)
             {
                 if (child.name == "Debris")
                 {
@@ -179,8 +179,11 @@ namespace GameProg.Enemies
             bullet.GetComponent<EnemyBullet>().Damage = damage;
         }
         
-        private void HandleOnDeath()
+        private void HandleOnDeath(GameObject obj)
         {
+            //unsubscribe from death event
+            _health.OnDeath -= HandleOnDeath;
+            
             //spawn debris
             foreach (GameObject debrisObject in debrisObjects)
             {
