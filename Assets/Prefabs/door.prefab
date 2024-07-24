@@ -54,7 +54,7 @@ MonoBehaviour:
   _boxCollider2D: {fileID: 3364853111628791718}
   deniedSound:
     clip: {fileID: 8300000, guid: ce1c2b0c2c2ee0340ad60222515e76df, type: 3}
-    volume: 1
+    volume: 0.5
   WasUsedInGeneration: 0
 --- !u!212 &7295544910262094345
 SpriteRenderer:

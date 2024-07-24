@@ -238,7 +238,7 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 4103390176658680527}
   shootSound:
     clip: {fileID: 8300000, guid: f5d86e975f71a4341abfe56668d26425, type: 3}
-    volume: 1
+    volume: 0.25
   bulletSpeed: 20
   secondsBetweenShots: 0.15
   damage: 1
@@ -551,10 +551,10 @@ MonoBehaviour:
   maxHealth: 3
   hitSound:
     clip: {fileID: 8300000, guid: d55b8cfb39a222e4f929273b5230477b, type: 3}
-    volume: 1
+    volume: 0.25
   deathSound:
     clip: {fileID: 8300000, guid: fbfbc433be779ba469244debf7c6bc17, type: 3}
-    volume: 1
+    volume: 0.25
 --- !u!114 &1899773772501373677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,7 +574,7 @@ MonoBehaviour:
   dashCooldown: 1
   dashSound:
     clip: {fileID: 8300000, guid: b537546d1b39a1b448111cef8099f323, type: 3}
-    volume: 1
+    volume: 0.25
 --- !u!114 &4077290391495653953
 MonoBehaviour:
   m_ObjectHideFlags: 0

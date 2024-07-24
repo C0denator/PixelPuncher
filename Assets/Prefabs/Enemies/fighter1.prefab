@@ -370,10 +370,10 @@ MonoBehaviour:
   maxHealth: 5
   hitSound:
     clip: {fileID: 8300000, guid: 52dfeceb86a06d544958602eb41252b7, type: 3}
-    volume: 1
+    volume: 0.25
   deathSound:
     clip: {fileID: 8300000, guid: 43582791a4ee89447b32b695cad59a51, type: 3}
-    volume: 1
+    volume: 0.25
 --- !u!114 &7241693294779322900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +390,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5981027238127665226, guid: bd17be733a54354459803df378e823d4, type: 3}
   attackSound:
     clip: {fileID: 8300000, guid: 583991f572750564eb427d4e9318ebac, type: 3}
-    volume: 1
+    volume: 0.25
   debrisObjects:
   - {fileID: 2188345982771818112}
   - {fileID: 8399578430887659249}

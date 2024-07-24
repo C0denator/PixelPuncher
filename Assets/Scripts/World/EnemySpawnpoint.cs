@@ -37,7 +37,17 @@ namespace GameProg.World
                 Gizmos.DrawWireCube(transform.position, Vector3.one);
                 
                 Handles.color = Color.red;
-                Handles.Label(transform.position - new Vector3(0.5f,0f,0f), enemyPrefab.name);
+                Handles.Label(transform.position - new Vector3(0.5f,-0.25f,0f), enemyPrefab.name);
+                Handles.Label(transform.position - new Vector3(0.5f,+0.25f,0f), spawnAtWave.ToString());
+            }
+            else
+            {
+                //draw a pink box at the spawnpoint
+                Gizmos.color = Color.magenta;
+                Gizmos.DrawWireCube(transform.position, Vector3.one);
+                
+                Handles.color = Color.magenta;
+                Handles.Label(transform.position - new Vector3(0.5f,0f,0f), "Null");
             }
         }
     }

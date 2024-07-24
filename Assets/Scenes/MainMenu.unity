@@ -1153,10 +1153,10 @@ MonoBehaviour:
   playableAudioClips:
   - name: menu
     audioClip: {fileID: 8300000, guid: 2ab05979328a6674e8287d96add0ff91, type: 3}
-    volume: 1
+    volume: 0.4
   - name: world1
     audioClip: {fileID: 8300000, guid: eb57c79a71d3a4b4bb6cf0f6c231c375, type: 3}
-    volume: 0.502
+    volume: 0.2
 --- !u!4 &1605064127
 Transform:
   m_ObjectHideFlags: 0
