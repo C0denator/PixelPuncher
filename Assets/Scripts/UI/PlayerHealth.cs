@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameProg.General;
 using UnityEngine;
 
 namespace GameProg.UI
@@ -13,7 +14,7 @@ namespace GameProg.UI
         [SerializeField] private Health.Health _playerHealth;
         private List<GameObject> _hearts = new List<GameObject>();
         [SerializeField] private Canvas _canvas;
-        
+        private World.World _world;
         // Start is called before the first frame update
         void Start()
         {
@@ -24,59 +25,75 @@ namespace GameProg.UI
                 Debug.LogError("Player not found");
                 return;
             }
-            
+
             _playerHealth = player.GetComponent<Health.Health>();
             _canvas = GetComponent<Canvas>();
             _hearts = new List<GameObject>();
-                
+            _world = FindObjectOfType<World.World>();
+            
             //error handling
             if (_playerHealth == null) Debug.LogError("Health component not found on player");
             if (_canvas == null) Debug.LogError("Canvas not found");
-            
+            if (heartPrefab == null) Debug.LogError("Heart prefab not found");
+            if (_world == null) Debug.LogError("World not found");
+
             //subscribe to the health changed event
             _playerHealth.OnHealthChanged += HandleOnHealthChanged;
             
-            //create hearts
-            UpdateHearts(_playerHealth.CurrentHealth);
+            //subscribe to the world generated event
+            World.World.OnWorldGenerated += HandleOnWorldGenerated;
+
         }
-        
+
         private void HandleOnHealthChanged()
         {
             UpdateHearts(_playerHealth.CurrentHealth);
         }
 
-        private void UpdateHearts(int numberOfHearts)
+        private void UpdateHearts(int heartsNumber)
         {
-            //delete old hearts
-            if (_hearts.Count > 0)
+            
+            //disable hearts if they are not needed
+            for (int i = 0; i < _hearts.Count; i++)
             {
-                for(int i = 0; i < _hearts.Count; i++)
+                if (i <heartsNumber)
                 {
-                    Destroy(_hearts[i]);
+                    _hearts[i].SetActive(true);
+                }
+                else
+                {
+                    _hearts[i].SetActive(false);
                 }
             }
             
-            
-            //spawn hearts on the top left corner
-            for (int i = 0; i < numberOfHearts; i++)
+            //move hearts to the right position
+            for (int i = 0; i < heartsNumber; i++)
             {
-                //create heart
-                var heart = Instantiate(heartPrefab, _canvas.transform);
-                
-                //set position
-                var rectTransform = heart.GetComponent<RectTransform>();
-                rectTransform.anchoredPosition = new Vector2(startX + i * spacing, startY);
-                
-                //add to list
-                _hearts.Add(heart);
+                _hearts[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(startX + i * spacing, startY);
             }
         }
 
+        private void CreateHearts()
+        {
+            //create new hearts
+            for (int i = 0; i < _playerHealth.MaxHealth; i++)
+            {
+                var heart = Instantiate(heartPrefab, _canvas.transform);
+                _hearts.Add(heart);
+            }
+        }
+        
+        private void HandleOnWorldGenerated()
+        {
+            CreateHearts();
+            UpdateHearts(_playerHealth.MaxHealth);
+        }
+        
         private void OnValidate()
         {
             if (heartPrefab)
             {
-                UpdateHearts(_playerHealth.MaxHealth);
+                UpdateHearts(_playerHealth.CurrentHealth);
             }
             
         }

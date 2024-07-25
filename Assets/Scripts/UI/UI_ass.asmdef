@@ -1,7 +1,7 @@
 {
     "name": "Ui_ass",
     "rootNamespace": "GameProg",
-    "references": ["GUID:039847f077b64394b92015c3d04e562b","GUID:d0a06b1b3c70f784e8c71b4e6b024e53"],
+    "references": ["GUID:039847f077b64394b92015c3d04e562b","GUID:d0a06b1b3c70f784e8c71b4e6b024e53","GUID:d287bb11b48580f418b59ebcdbaa1678"],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
