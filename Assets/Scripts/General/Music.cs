@@ -146,6 +146,12 @@ namespace GameProg.General
             
             yield return null;
         }
+        
+        public void StopAll()
+        {
+            audioSourceA.Stop();
+            audioSourceB.Stop();
+        }
     }
 
     [Serializable] public struct PlayableAudioClip

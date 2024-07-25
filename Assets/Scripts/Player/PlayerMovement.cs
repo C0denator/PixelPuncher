@@ -78,6 +78,9 @@ namespace GameProg.Player
 
         private void Update()
         {
+            //return if player is dead
+            if (Time.timeScale == 0) return;
+            
             //get mouse position
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             

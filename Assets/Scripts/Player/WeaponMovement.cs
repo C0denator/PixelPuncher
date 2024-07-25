@@ -32,6 +32,9 @@ namespace GameProg.Player
         // Update is called once per frame
         void Update()
         {
+            //return if player is dead
+            if (Time.timeScale == 0) return;
+            
             //look at the mouse, while rotating around the player
             
             //get the mouse position

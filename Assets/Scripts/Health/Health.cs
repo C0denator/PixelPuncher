@@ -56,10 +56,10 @@ namespace GameProg.Health
         {
             CurrentHealth -= damage;
             
-            if (CurrentHealth < 0)
+            if (CurrentHealth < 0) CurrentHealth = 0;
+
+            if (CurrentHealth == 0)
             {
-                CurrentHealth = 0;
-                
                 _audioSource.PlayOneShot(deathSound.clip, deathSound.volume);
                 
                 OnDeath?.Invoke(gameObject);
