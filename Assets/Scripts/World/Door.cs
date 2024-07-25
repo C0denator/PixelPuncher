@@ -77,7 +77,9 @@ namespace GameProg.World
             {
                 if (collider.gameObject == gameObject) continue;
 
-                if (collider.CompareTag("Wall") && collider.gameObject.transform.parent.gameObject != roomA.gameObject)
+                /*if (collider.CompareTag("Wall") && 
+                    collider.gameObject.transform.parent.gameObject != roomA.gameObject &&
+                    collider.gameObject.transform.parent.GetComponent<Room>().RoomType != RoomType.Boss)
                 {
                     //get the room component
                     Room otherRoom = collider.GetComponentInParent<Room>();
@@ -89,12 +91,17 @@ namespace GameProg.World
                     else
                     {
                         //set roomB
-                        roomB = otherRoom;
                         found = true;
+                        roomB = otherRoom;
+                        
+                        //add itself to the list of the other room
+                        roomB.Doors.Add(this);
+                        
                         Debug.Log("Door "+gameObject.name+" found room "+roomB.name+" through wall "+collider.gameObject.name);
                         break;
                     }
-                }else if (collider.CompareTag("Door") && collider.gameObject != gameObject)
+                }else */
+                if (collider.CompareTag("Door") && collider.gameObject != gameObject)
                 {
                     //get the door component
                     Door otherDoor = collider.GetComponent<Door>();
@@ -111,17 +118,18 @@ namespace GameProg.World
                         {
                             roomB = otherDoor.roomA;
                             
+                            //add itself to the list of the other room
+                            roomB?.Doors.Add(this);
+                            
                             //mark other door for deletion
                             otherDoor.MarkedForDeletion = true;
                         }
                         else
                         {
                             Debug.Log("Sorting order of door "+gameObject.name+" is lower than "+otherDoor.name);
-                            otherDoor.roomB = roomA;
+                            break;
                             
                             
-                            //mark this door for deletion
-                            MarkedForDeletion = true;
                         }
                         
                         Debug.Log("Door "+gameObject.name+" found door "+otherDoor.name+" through door "+collider.gameObject.name);
