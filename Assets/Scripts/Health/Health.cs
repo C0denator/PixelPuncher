@@ -37,6 +37,12 @@ namespace GameProg.Health
             }
         }
         
+        public int MaxHealth
+        {
+            get => maxHealth;
+            set => maxHealth = value;
+        }
+        
         // Start is called before the first frame update
         void Start()
         {

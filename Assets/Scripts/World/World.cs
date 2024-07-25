@@ -333,8 +333,8 @@ namespace GameProg.World
                 }
             }
             
-            //spawn the player in the starting room
-            player = Instantiate(playerPrefab, startRoom.transform.position, Quaternion.identity);
+            /*//spawn the player in the starting room
+            player = Instantiate(playerPrefab, startRoom.transform.position, Quaternion.identity);*/
             
             //fire event
             OnWorldGenerated?.Invoke();
