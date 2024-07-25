@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -15,6 +16,7 @@ namespace GameProg.World
         public Room CurrentRoom;
         [Header("World Generation")]
         [SerializeField] private Room startRoom;
+        [SerializeField] private GameObject bossRoomPrefab;
         [SerializeField] private List<Room> roomPrefabs;
         [SerializeField] private int numberOfRooms = 10;
         
@@ -161,7 +163,85 @@ namespace GameProg.World
             }
             
             Debug.Log("Generated "+(generatedRooms.Count-1)+" rooms");
+            
+            //generate boss room
+            GameObject bossRoomGameObject = Instantiate(bossRoomPrefab, transform);
+            Room bossRoom = bossRoomGameObject.GetComponent<Room>();
+            
+            //set viable position for boss room
+            //get all available doors
+            List<Door> availableDoorsForBoss = new List<Door>();
+            foreach (var room in generatedRooms)
+            {
+                foreach (var door in room.Doors)
+                {
+                    if (!door.WasUsedInGeneration)
+                    {
+                        availableDoorsForBoss.Add(door); 
+                    }
+                }
+            }
+            
+            bool bossRoomGenerated = false;
 
+            while (availableDoorsForBoss.Count > 0)
+            {
+
+                //get a random door
+                Door randomDoorForBoss = availableDoorsForBoss[UnityEngine.Random.Range(0, availableDoorsForBoss.Count)];
+                
+                //try all doors in the boss room
+                for (int i = 0; i < bossRoom.Doors.Count(); i++)
+                {
+                    //move the boss room, so that the door is at the same position as the random door
+                    bossRoomGameObject.transform.position = Vector3.zero;
+                    
+                    Vector3 offset = randomDoorForBoss.transform.position - bossRoom.Doors[i].transform.position;
+                    
+                    bossRoomGameObject.transform.position += offset;
+                    
+                    //wait for the physics system to update
+                    yield return new WaitForFixedUpdate();
+                    
+                    //check if the boss room is colliding with any other room
+                    if (!IsRoomCollidingWithAnyRoom(bossRoom))
+                    {
+                        //found valid room
+                        bossRoomGenerated = true;
+                        
+                        randomDoorForBoss.WasUsedInGeneration = true;
+                        bossRoom.Doors[i].WasUsedInGeneration = true;
+                        
+                        //set sorting order
+                        bossRoom.wallsRenderer.sortingOrder = 100 - generatedRoomsCount;
+                        
+                        //add the boss room to the list of generated rooms
+                        generatedRooms.Add(bossRoom);
+                        
+                        Debug.Log("Boss room generated!");
+                        
+                        break;
+                    }
+                }
+                
+                //was a room generated?
+                if (bossRoomGenerated)
+                {
+                    break;
+                }
+                else
+                {
+                    //remove this door from available doors
+                    availableDoorsForBoss.Remove(randomDoorForBoss);
+                }
+            }
+            
+            //was a room generated?
+            if (!bossRoomGenerated)
+            {
+                Debug.LogError("No boss room generated: No available doors left");
+            }
+            
             //set the starting room as current room
             foreach (var room in generatedRooms)
             {

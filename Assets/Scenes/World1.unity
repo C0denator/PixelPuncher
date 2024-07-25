@@ -407,6 +407,7 @@ MonoBehaviour:
   generatedRooms: []
   CurrentRoom: {fileID: 0}
   startRoom: {fileID: 1754421886716813612, guid: ca15ba8a26a32e544b47f7082ff9cb40, type: 3}
+  bossRoomPrefab: {fileID: 4906896466256603529, guid: e84f767bcc70a804ab7bb3d958bca7d6, type: 3}
   roomPrefabs:
   - {fileID: 1754421886716813612, guid: cd688802e9dee6342a94f82927961675, type: 3}
   - {fileID: 8241666297283251434, guid: 203d4c7d41fa73043add630706920cbc, type: 3}

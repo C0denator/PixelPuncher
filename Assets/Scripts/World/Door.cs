@@ -73,12 +73,40 @@ namespace GameProg.World
                                 return;
                             }
                             
-                            //delete any tile touching the door
+                            //delete all tiles touching the collider of this door
                             Tilemap tilemapA = roomA.Walls;
-                            tilemapA.SetTile(tilemapA.WorldToCell(transform.position), null);
+                            Vector2 colliderSize = _boxCollider2D.size;
+                            Vector2 bottomLeft = (Vector2)transform.position - colliderSize/2;
+                            
+                            Debug.Log("Looking for tiles to delete on Room A...");
+                            
+                            for(int i=0; i<_boxCollider2D.size.y; i++)
+                            {
+                                for(int j=0; j<_boxCollider2D.size.x; j++)
+                                {
+                                    tilemapA.SetTile(tilemapA.WorldToCell(bottomLeft + new Vector2(j, i)), null);
+                                    
+                                    Debug.Log("Deleted tile at: "+(bottomLeft + new Vector2(j, i)));
+                                    Debug.Log("i: "+i+" j: "+j + " size: "+_boxCollider2D.size);
+                                }
+                            }
                             
                             Tilemap tilemapB = roomB.Walls;
-                            tilemapB.SetTile(tilemapB.WorldToCell(otherDoor.transform.position), null);
+                            colliderSize = otherDoor._boxCollider2D.size;
+                            bottomLeft = (Vector2)otherDoor.transform.position - colliderSize/2;
+                            
+                            Debug.Log("Looking for tiles to delete on Room B...");
+                            
+                            for(int i=0; i<otherDoor._boxCollider2D.size.y; i++)
+                            {
+                                for(int j=0; j<otherDoor._boxCollider2D.size.x; j++)
+                                {
+                                    tilemapB.SetTile(tilemapB.WorldToCell(bottomLeft + new Vector2(j, i)), null);
+                                    
+                                    Debug.Log("Deleted tile at: "+(bottomLeft + new Vector2(j, i)));
+                                    Debug.Log("i: "+i+" j: "+j + " size: "+otherDoor._boxCollider2D.size);
+                                }
+                            }
                             
                             //add this door to the list of other room
                             otherDoor.roomA.Doors.Add(this);
