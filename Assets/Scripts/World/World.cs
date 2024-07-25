@@ -19,6 +19,7 @@ namespace GameProg.World
         [SerializeField] private GameObject bossRoomPrefab;
         [SerializeField] private List<Room> roomPrefabs;
         [SerializeField] private int numberOfRooms = 10;
+        [SerializeField] private bool debugMode = false;
         
         //getters
         public GameObject Player => player;
@@ -166,6 +167,10 @@ namespace GameProg.World
             
             //generate boss room
             GameObject bossRoomGameObject = Instantiate(bossRoomPrefab, transform);
+            
+            //wait for the physics system to update
+            yield return new WaitForFixedUpdate();
+            
             Room bossRoom = bossRoomGameObject.GetComponent<Room>();
             
             //set viable position for boss room
@@ -264,7 +269,20 @@ namespace GameProg.World
                 room.InitializeDoors();
             }
             
-            //wait for Destroy() to finish
+            //destroy doors that are marked for deletion
+            foreach (var room in generatedRooms)
+            {
+                for (int i=0; i<room.Doors.Count; i++)
+                {
+                    if (room.Doors[i].MarkedForDeletion)
+                    {
+                        room.Doors[i].Delete();
+                        i--;
+                    }
+                }
+            }
+            
+            //wait for destroy() to finish
             yield return new WaitForEndOfFrame();
             
             //remove missing references in door lists
@@ -279,6 +297,21 @@ namespace GameProg.World
                     }
                 }
             }
+            
+            //destroy tiles that are colliding with doors
+            foreach (var room in generatedRooms)
+            {
+                Debug.Log("Checking room "+room.name+" for overlapping tiles");
+                foreach (var door in room.Doors)
+                {
+                    Debug.Log("Checking door "+door.name+" for overlapping tiles");
+                    door.DeleteOverlappingTiles();
+                    Debug.Log("Door "+door.name+" checked for overlapping tiles");
+                }
+            }
+            
+            //wait for destroy() to finish
+            yield return new WaitForEndOfFrame();
 
             //show all starting rooms, hide the rest
             foreach (var room in generatedRooms)
@@ -292,7 +325,11 @@ namespace GameProg.World
                 }
                 else
                 {
-                    room.Hide();
+                    if (!debugMode)
+                    {
+                        room.Hide();
+                    }
+                    
                 }
             }
             
@@ -301,6 +338,7 @@ namespace GameProg.World
             
             //fire event
             OnWorldGenerated?.Invoke();
+            Debug.Log("World generation finished");
             
             yield return null;
         }

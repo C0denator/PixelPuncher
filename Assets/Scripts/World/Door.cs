@@ -11,28 +11,45 @@ namespace GameProg.World
         public Room roomA; //the room this door belongs to
         [CanBeNull] public Room roomB; //the room this door leads to
         private Animator animator;
-        private SpriteRenderer _spriteRenderer;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private BoxCollider2D _boxCollider2D;
         [SerializeField] private AudioClipWithVolume deniedSound;
+        
+        public SpriteRenderer SpriteRenderer => _spriteRenderer;
 
-        private bool _markedForDeletion = false; //if true, the door will be deleted in the next frame
-        //(fixed a bug where doors would still be used after being deleted)
+        public bool MarkedForDeletion = false; 
         
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
+        
+        private static int roomCount = 0;
         
         public bool WasUsedInGeneration;
         
         private AudioSource _audioSource;
-        
+
+        private void Awake()
+        {
+            //error handling
+            if (_spriteRenderer == null) Debug.LogError("SpriteRenderer component not found");
+            if (_boxCollider2D == null) Debug.LogError("BoxCollider2D component not found");
+            if (deniedSound.clip == null) Debug.LogError("Denied sound not set");
+            if(roomA == null) Debug.LogError("Room A not set");
+            
+            //set name
+            gameObject.name = "Door " + roomCount;
+            roomCount++;
+        }
+
 
         public void Initialize()
         {
             //return if the door is marked for deletion
-            if (_markedForDeletion) return;
+            if (MarkedForDeletion) return;
+            
+            //return if roomB was already set
+            if (roomB) return;
             
             //get references
-            roomA = GetComponentInParent<Room>();
-            _spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
             _boxCollider2D = GetComponent<BoxCollider2D>();
             _audioSource = GlobalSound.globalAudioSource;
@@ -43,95 +60,87 @@ namespace GameProg.World
             if(animator == null) Debug.LogError("Animator component not found");
             if(_boxCollider2D == null) Debug.LogError("BoxCollider2D component not found");
             
-            //look, if another door touches this door
-            if (roomB == null)
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, _boxCollider2D.size, 0);
+            
+            String names = "";
+            foreach (Collider2D collider in colliders)
             {
-                Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, _boxCollider2D.size, 0);
-                bool found = false;
-                
-                //look if one gameobject has the tag "Door"
-                foreach (var collider in colliders)
+                names += collider.gameObject.name + ", ";
+            }
+            Debug.Log("Door "+gameObject.name+" found colliders: "+names);
+
+            bool found = false;
+            
+            //look for other wall
+            
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.gameObject == gameObject) continue;
+
+                if (collider.CompareTag("Wall") && collider.gameObject.transform.parent.gameObject != roomA.gameObject)
                 {
-                    if (collider.CompareTag("Door"))
+                    //get the room component
+                    Room otherRoom = collider.GetComponentInParent<Room>();
+
+                    if (!otherRoom)
                     {
-                        //is the gameobject not this gameobject?
-                        if (collider.gameObject != gameObject)
+                        Debug.LogError("Room component not found in parent");
+                    }
+                    else
+                    {
+                        //set roomB
+                        roomB = otherRoom;
+                        found = true;
+                        Debug.Log("Door "+gameObject.name+" found room "+roomB.name+" through wall "+collider.gameObject.name);
+                        break;
+                    }
+                }else if (collider.CompareTag("Door") && collider.gameObject != gameObject)
+                {
+                    //get the door component
+                    Door otherDoor = collider.GetComponent<Door>();
+                    
+                    if (!otherDoor)
+                    {
+                        Debug.LogError("Door component not found");
+                    }
+                    else
+                    {
+                        found = true;
+                        
+                        if (_spriteRenderer.sortingOrder >= otherDoor.SpriteRenderer.sortingOrder)
                         {
-                            found = true;
-                            
-                            //get the door component
-                            Door otherDoor = collider.GetComponent<Door>();
-                            
-                            //set the roomB of the other door to this roomB
                             roomB = otherDoor.roomA;
                             
-                            Debug.Log("Found overlapping door: "+collider.gameObject.name);
-
-                            if (roomB == null)
-                            {
-                                Debug.LogError("Other door has no room component");
-                                return;
-                            }
-                            
-                            //delete all tiles touching the collider of this door
-                            Tilemap tilemapA = roomA.Walls;
-                            Vector2 colliderSize = _boxCollider2D.size;
-                            Vector2 bottomLeft = (Vector2)transform.position - colliderSize/2;
-                            
-                            Debug.Log("Looking for tiles to delete on Room A...");
-                            
-                            for(int i=0; i<_boxCollider2D.size.y; i++)
-                            {
-                                for(int j=0; j<_boxCollider2D.size.x; j++)
-                                {
-                                    tilemapA.SetTile(tilemapA.WorldToCell(bottomLeft + new Vector2(j, i)), null);
-                                    
-                                    Debug.Log("Deleted tile at: "+(bottomLeft + new Vector2(j, i)));
-                                    Debug.Log("i: "+i+" j: "+j + " size: "+_boxCollider2D.size);
-                                }
-                            }
-                            
-                            Tilemap tilemapB = roomB.Walls;
-                            colliderSize = otherDoor._boxCollider2D.size;
-                            bottomLeft = (Vector2)otherDoor.transform.position - colliderSize/2;
-                            
-                            Debug.Log("Looking for tiles to delete on Room B...");
-                            
-                            for(int i=0; i<otherDoor._boxCollider2D.size.y; i++)
-                            {
-                                for(int j=0; j<otherDoor._boxCollider2D.size.x; j++)
-                                {
-                                    tilemapB.SetTile(tilemapB.WorldToCell(bottomLeft + new Vector2(j, i)), null);
-                                    
-                                    Debug.Log("Deleted tile at: "+(bottomLeft + new Vector2(j, i)));
-                                    Debug.Log("i: "+i+" j: "+j + " size: "+otherDoor._boxCollider2D.size);
-                                }
-                            }
-                            
-                            //add this door to the list of other room
-                            otherDoor.roomA.Doors.Add(this);
-                            
-                            //remove the other door from the list of the other room
-                            otherDoor.roomA.Doors.Remove(otherDoor);
-                            
-                            //delete the other door
-                            otherDoor._markedForDeletion = true;
-                            Destroy(collider.gameObject);
-                            
-                            //break the loop
-                            break;
+                            //mark other door for deletion
+                            otherDoor.MarkedForDeletion = true;
                         }
+                        else
+                        {
+                            Debug.Log("Sorting order of door "+gameObject.name+" is lower than "+otherDoor.name);
+                            otherDoor.roomB = roomA;
+                            
+                            
+                            //mark this door for deletion
+                            MarkedForDeletion = true;
+                        }
+                        
+                        Debug.Log("Door "+gameObject.name+" found door "+otherDoor.name+" through door "+collider.gameObject.name);
+
+                        break;
                     }
                 }
-                
-                //if no other door was found, destroy this door
-                if (!found)
+            }
+
+            if (!found)
+            {
+
+                if (WasUsedInGeneration)
                 {
-                    Debug.Log("No overlapping door found, destroying this door");
-                    //roomA.Doors.Remove(this);
-                    _markedForDeletion = true;
-                    Destroy(gameObject);
+                    Debug.LogError("Door "+gameObject.name+" was used in generation but no other door was found");
                 }
+                
+                MarkedForDeletion = true;
+                Debug.LogWarning("Door "+gameObject.name+" was marked for deletion because no other door was found");
             }
             
             
@@ -146,10 +155,27 @@ namespace GameProg.World
             }
         }
 
+        public void DeleteOverlappingTiles()
+        {
+            if(MarkedForDeletion) return;
+            
+            //delete all tiles touching the collider of this door
+            Tilemap tilemapA = roomA.Walls;
+            Tilemap tilemapB = roomB?.Walls;
+            
+            Debug.Log("Looking for tiles to delete on position "+transform.position);
+                            
+            tilemapA.RefreshAllTiles();
+            tilemapB?.RefreshAllTiles();
+            
+            tilemapA.SetTile(tilemapA.WorldToCell(transform.position), null);
+            tilemapB?.SetTile(tilemapB.WorldToCell(transform.position), null);
+        }
+
         public void Open()
         {
             //return if the door is marked for deletion
-            if (_markedForDeletion) return;
+            if (MarkedForDeletion) return;
             
             //disable collider
             _boxCollider2D.enabled = false;
@@ -161,7 +187,7 @@ namespace GameProg.World
         public void Close()
         {
             //return if the door is marked for deletion
-            if (_markedForDeletion) return;
+            if (MarkedForDeletion) return;
             
             //enable collider
             _boxCollider2D.enabled = true;
@@ -173,7 +199,7 @@ namespace GameProg.World
         public void CheckVisibility()
         {
             //return if the door is marked for deletion
-            if (_markedForDeletion) return;
+            if (MarkedForDeletion) return;
             
             //check for null
             if (roomA == null || roomB == null)
@@ -197,7 +223,7 @@ namespace GameProg.World
         {
             //Debug.Log("Door started colliding with: "+other.gameObject.name);
             //return if the door is marked for deletion
-            if (_markedForDeletion) return;
+            if (MarkedForDeletion) return;
             
             //has the other gameobject the tag "Player"?
             if (other.gameObject.CompareTag("Player"))
@@ -215,7 +241,7 @@ namespace GameProg.World
         {
             //Debug.Log("Door stopped colliding with: "+other.gameObject.name);
             //return if the door is marked for deletion
-            if (_markedForDeletion) return;
+            if (MarkedForDeletion) return;
             
             //has the other gameobject the tag "Player"?
             if (other.gameObject.CompareTag("Player"))
@@ -254,6 +280,24 @@ namespace GameProg.World
                     newRoom.OnRoomEnter?.Invoke();
                 }
             }
+        }
+
+        public void Delete()
+        {
+            if (!MarkedForDeletion)
+            {
+                Debug.LogError("Door "+gameObject.name+" was not marked for deletion");
+            }else 
+            {
+                Debug.Log("Deleting door "+gameObject.name);
+            }
+            
+            //remove from lists
+            roomA.Doors.Remove(this);
+            roomB?.Doors.Remove(this);
+            
+            //delete the door
+            Destroy(gameObject);
         }
         
         [Serializable]

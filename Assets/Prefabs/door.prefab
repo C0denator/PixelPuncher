@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomA: {fileID: 0}
   roomB: {fileID: 0}
+  _spriteRenderer: {fileID: 7295544910262094345}
   _boxCollider2D: {fileID: 3364853111628791718}
   deniedSound:
     clip: {fileID: 8300000, guid: ce1c2b0c2c2ee0340ad60222515e76df, type: 3}

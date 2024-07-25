@@ -27,17 +27,6 @@ namespace GameProg.World
             //get references
             World = GetComponentInParent<World>();
             
-            //find doors in children
-            doors = new List<Door>();
-            foreach (Transform child in transform)
-            {
-                Door door = child.GetComponent<Door>();
-                if (door != null && !doors.Contains(door))
-                {
-                    doors.Add(door);
-                }
-            }
-            
             //check for a CombatController component and initialize it
             if (roomType == RoomType.Combat)
             {
@@ -56,16 +45,26 @@ namespace GameProg.World
             if(World == null) Debug.LogError("World component not found in parent");
             if(wallsRenderer == null) Debug.LogError("TilemapRenderer component not found");
             if(spaceCollider == null) Debug.LogError("SpaceCollider component not found");
-            if(doors.Count == 0) Debug.LogWarning("No doors found in room "+name);
+            if(doors.Count == 0) Debug.LogWarning("No doors set in room "+name);
             
         }
         
         public void InitializeDoors()
         {
+            Debug.Log("Initializing doors for room "+name);
+            
+            if (doors.Count == 0)
+            {
+                Debug.LogWarning("No doors set in room "+name);
+                return;
+            }
+            
             //initialize doors
             for(int i = 0; i < doors.Count; i++)
             {
+                Debug.Log("Initializing door "+doors[i].name);
                 doors[i].Initialize();
+                Debug.Log("Door "+doors[i].name+" initialized");
             }
         }
 

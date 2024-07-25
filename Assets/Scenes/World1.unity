@@ -269,6 +269,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Border
       objectReference: {fileID: 0}
+    - target: {fileID: 1489648163479879543, guid: 8be076f7abbea384bba47cd6c718e700, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1575048522117195785, guid: 8be076f7abbea384bba47cd6c718e700, type: 3}
       propertyPath: m_Camera
       value: 
@@ -413,6 +417,7 @@ MonoBehaviour:
   - {fileID: 8241666297283251434, guid: 203d4c7d41fa73043add630706920cbc, type: 3}
   - {fileID: 2451253443366623538, guid: 1f720ff0ec8316d47959e45949eaa596, type: 3}
   numberOfRooms: 10
+  debugMode: 1
 --- !u!1 &1054228300
 GameObject:
   m_ObjectHideFlags: 0
