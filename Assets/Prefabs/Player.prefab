@@ -361,7 +361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5380170585596960659
 Transform:
   m_ObjectHideFlags: 0
@@ -604,8 +604,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _deathCamera: {fileID: 2816199197607054025}
   _deathSound:
-    clip: {fileID: 0}
-    volume: 0
+    clip: {fileID: 8300000, guid: dc2ae2d63aa4407439ec378116be397d, type: 3}
+    volume: 1
 --- !u!212 &7047086141274275105
 SpriteRenderer:
   m_ObjectHideFlags: 0

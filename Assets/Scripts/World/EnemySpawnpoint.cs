@@ -24,7 +24,7 @@ namespace GameProg.World
                 _InfoShown = true;
             }
             
-            if(enemyPrefab == null) Debug.LogError("Enemy prefab not set in spawnpoint "+name);
+            if(enemyPrefab == null) Debug.LogWarning("Enemy prefab not set in spawnpoint "+name);
         }
 
         private void OnDrawGizmos()

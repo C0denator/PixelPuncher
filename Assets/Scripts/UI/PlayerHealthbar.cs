@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using GameProg.General;
 using UnityEngine;
 
 namespace GameProg.UI
 {
-    public class PlayerHealth : MonoBehaviour
+    public class PlayerHealthbar : MonoBehaviour
     {
         [SerializeField] private GameObject heartPrefab;
         [SerializeField] private float startX = 0;
@@ -96,6 +95,15 @@ namespace GameProg.UI
                 UpdateHearts(_playerHealth.CurrentHealth);
             }
             
+        }
+
+        private void OnDisable()
+        {
+            //unsubscribe from the health changed event
+            _playerHealth.OnHealthChanged -= HandleOnHealthChanged;
+            
+            //unsubscribe from the world generated event
+            World.World.OnWorldGenerated -= HandleOnWorldGenerated;
         }
     }
 }

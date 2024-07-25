@@ -18,6 +18,7 @@ namespace GameProg.Player
         // Start is called before the first frame update
         void Start()
         {
+            
             //get references
             var player = GameObject.FindWithTag("Player");
             if (player == null)
@@ -51,14 +52,45 @@ namespace GameProg.Player
             
             //stop time
             Time.timeScale = 0;
+            
+            yield return new WaitForSecondsRealtime(1f);
 
-            yield return new WaitForSecondsRealtime(2f);
+            while (_deathCamera.orthographicSize > 5)
+            {
+                _deathCamera.orthographicSize -= 10 * Time.unscaledDeltaTime;
+                yield return null;
+            }
+            _deathCamera.orthographicSize = 5;
+
+            yield return new WaitForSecondsRealtime(1f);
+            
+            //play death sound
+            _playerHealth.AudioSource.PlayOneShot(_deathSound.clip, _deathSound.volume);
+
+            while (transform.localScale.y > 0)
+            {
+                transform.localScale -= new Vector3(0, 1, 0) * Time.unscaledDeltaTime;
+                yield return null;
+            }
+            transform.localScale = new Vector3(1, 0, 1);
             
             Debug.Log("Death sequence finished");
+            
+            //change to main menu
+            FindObjectOfType<GameMaster>().SwitchScene("MainMenu");
+            
+            //reset time
+            Time.timeScale = 1;
 
             yield return null;
         }
-        
+
+        private void OnDisable()
+        {
+            //unsubscribe from the death event
+            _playerHealth.OnDeath -= HandleOnDeath;
+        }
+
         [Serializable]
         private struct AudioClipWithVolume
         {

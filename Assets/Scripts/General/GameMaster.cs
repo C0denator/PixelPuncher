@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GameProg.General
 {
@@ -9,9 +10,10 @@ namespace GameProg.General
         [SerializeField] private Music music;
         [SerializeField] private GameProg.World.World currentWorld;
         [SerializeField] [CanBeNull] private Camera currentCamera;
-        public AudioSource globalAudioSource;
         
         public Action<Camera> OnCameraChanged;
+        
+        private static GameMaster _instance;
         
         public Camera CurrentCamera
         {
@@ -22,7 +24,20 @@ namespace GameProg.General
                 OnCameraChanged?.Invoke(currentCamera);
             }
         }
-        
+
+        private void Awake()
+        {
+            //singleton pattern
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -33,6 +48,11 @@ namespace GameProg.General
             
             //subscribe to the world generated event
             GameProg.World.World.OnWorldGenerated += OnWorldGenerated;
+            
+            if (SceneManager.GetActiveScene().name=="MainMenu")
+            {
+                music.PlayClip("menu");
+            }
         }
         
         public void SwitchScene(string sceneName)
@@ -52,12 +72,10 @@ namespace GameProg.General
         {
             //find world
             currentWorld = FindObjectOfType<GameProg.World.World>();
-            
-            //error handling
-            if (currentWorld == null)
+
+            if (SceneManager.GetActiveScene().name=="MainMenu")
             {
-                Debug.LogError("World not found");
-                return;
+                music.PlayClip("menu");
             }
         }
         

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GameProg.Enemies
 {
@@ -91,6 +93,12 @@ namespace GameProg.Enemies
             
             //destroy enemy
             Destroy(gameObject);
+        }
+
+        private void OnDisable()
+        {
+            //unsubscribe from death event
+            _health.OnDeath -= HandleOnDeath;
         }
     }
 }

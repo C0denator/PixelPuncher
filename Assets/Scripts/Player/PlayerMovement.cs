@@ -35,6 +35,11 @@ namespace GameProg.Player
         private static readonly int Velocity = Animator.StringToHash("Velocity");
         private static readonly int IsDashing = Animator.StringToHash("isDashing");
 
+        private void Awake()
+        {
+            //_playerControls = new PlayerControls();
+        }
+
         private void Start()
         {
             //get References
@@ -43,7 +48,6 @@ namespace GameProg.Player
             _animator = GetComponent<Animator>();
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _gameMaster = FindObjectOfType<GameMaster>();
-            _audioSource = GlobalSound.globalAudioSource;
             
             //error handling
             if(_health == null) Debug.LogError("Health component not found");
@@ -52,20 +56,6 @@ namespace GameProg.Player
             if(_rigidbody2D == null) Debug.LogError("Rigidbody2D component not found");
             if(playerCamera == null) Debug.LogError("Player camera not set");
             if(_gameMaster == null) Debug.LogError("GameMaster not found");
-            
-                
-            //enable player controls
-            _playerControls = new PlayerControls();
-            _playerControls.Player.Movement.Enable();
-            _playerControls.Player.Shoot.Enable();
-            _playerControls.Player.Dash.Enable();
-            
-            //subscribe to movement input
-            _playerControls.Player.Movement.performed += HandleOnMovementPerformed;
-            _playerControls.Player.Movement.canceled += HandleOnMovementCanceled;
-            
-            //subscribe to dash input
-            _playerControls.Player.Dash.performed += HandleOnDashPerformed;
             
             _isDashing = false;
             _elapsedDashTime = 0;
@@ -180,24 +170,37 @@ namespace GameProg.Player
             [Range(0f, 1f)] public float volume;
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnEnable()
         {
-            //Debug.Log("Player started colliding with: "+other.gameObject.name);
+            _playerControls = new PlayerControls();
+            _audioSource = FindObjectOfType<GlobalSound>().globalAudioSource;
+            
+            if(_audioSource == null) Debug.LogError("Global audio source not found");
+            
+            //enable player controls
+            _playerControls.Player.Movement.Enable();
+            _playerControls.Player.Dash.Enable();
+            
+            //subscribe to movement input
+            _playerControls.Player.Movement.performed += HandleOnMovementPerformed;
+            _playerControls.Player.Movement.canceled += HandleOnMovementCanceled;
+            
+            //subscribe to dash input
+            _playerControls.Player.Dash.performed += HandleOnDashPerformed;
         }
 
-        private void OnCollisionExit2D(Collision2D other)
+        private void OnDisable()
         {
-            //Debug.Log("Player stopped colliding with: "+other.gameObject.name);
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            //Debug.Log("Player started trigger with: "+other.gameObject.name);
-        }
-        
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            //Debug.Log("Player stopped trigger with: "+other.gameObject.name);
+            //disable player controls
+            _playerControls.Player.Movement.Disable();
+            _playerControls.Player.Dash.Disable();
+            
+            //unsubscribe from movement input
+            _playerControls.Player.Movement.performed -= HandleOnMovementPerformed;
+            _playerControls.Player.Movement.canceled -= HandleOnMovementCanceled;
+            
+            //unsubscribe from dash input
+            _playerControls.Player.Dash.performed -= HandleOnDashPerformed;
         }
     }
 }

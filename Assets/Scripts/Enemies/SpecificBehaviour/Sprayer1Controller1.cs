@@ -42,7 +42,7 @@ namespace GameProg.Enemies.SpecificBehaviour
             player = GameObject.FindWithTag("Player");
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
-            _audioSource = GlobalSound.globalAudioSource;
+            _audioSource = FindObjectOfType<GlobalSound>().globalAudioSource;
             
             //error handling
             //if (_rb == null) Debug.LogError("Rigidbody2D component not found");

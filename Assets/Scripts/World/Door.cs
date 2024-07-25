@@ -52,7 +52,7 @@ namespace GameProg.World
             //get references
             animator = GetComponent<Animator>();
             _boxCollider2D = GetComponent<BoxCollider2D>();
-            _audioSource = GlobalSound.globalAudioSource;
+            _audioSource = FindObjectOfType<GlobalSound>().globalAudioSource;
             
             //check if references are set
             if(roomA == null) Debug.LogError("Room component not found in parent");

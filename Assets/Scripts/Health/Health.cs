@@ -14,6 +14,8 @@ namespace GameProg.Health
 
         private AudioSource _audioSource;
         
+        public AudioSource AudioSource => _audioSource;
+        
         public event Action OnHealthChanged;
         public event Action<GameObject> OnDeath;
         
@@ -49,7 +51,7 @@ namespace GameProg.Health
             currentHealth = maxHealth;
             
             //get audio source
-            _audioSource = GlobalSound.globalAudioSource;
+            _audioSource = FindObjectOfType<GlobalSound>().globalAudioSource;
         }
         
         public void DoDamage(int damage)

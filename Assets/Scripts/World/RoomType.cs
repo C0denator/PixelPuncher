@@ -5,7 +5,5 @@ namespace GameProg.World
         Start,
         Combat,
         Boss,
-        Treasure,
-        Empty
     }
 }

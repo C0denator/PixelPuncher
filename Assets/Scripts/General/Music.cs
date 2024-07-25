@@ -18,16 +18,21 @@ namespace GameProg.General
         
         [SerializeField] private PlayableAudioClip[] playableAudioClips;
         
+        private static Music _instance;
+        
         // Start is called before the first frame update
         void Awake()
         {
+            if(_instance == null)
+            {
+                _instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            
             DontDestroyOnLoad(gameObject);
-        }
-
-        private void Start()
-        {
-            //start with "startAudioClip"
-            PlayClip("menu");
         }
 
         public void PlayClip(string clipName)

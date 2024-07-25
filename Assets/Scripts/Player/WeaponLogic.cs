@@ -64,7 +64,7 @@ namespace GameProg.Player
             currentMagazine = magazineAmount;
             
             //get the audio source
-            _audioSource = GlobalSound.globalAudioSource;
+            _audioSource = FindObjectOfType<GlobalSound>().globalAudioSource;
 
         }
         

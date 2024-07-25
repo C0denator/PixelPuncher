@@ -10,6 +10,12 @@ namespace GameProg.Player
         private IWeapon _currentWeaponScript;
         private PlayerControls _playerControls;
         
+        private void Awake()
+        {
+            _playerControls = new PlayerControls();
+            _currentWeaponScript = _currentWeapon.GetComponent<IWeapon>();
+        }
+        
         // Start is called before the first frame update
         void Start()
         {
@@ -55,18 +61,6 @@ namespace GameProg.Player
                     Debug.LogError("Weapon script not found on Weapon");
                 }
             }
-            
-            //subscribe to the shoot event
-            _playerControls = new PlayerControls();
-            _playerControls.Player.Shoot.performed += HandleShoot;
-            _playerControls.Player.Shoot.Enable();
-            
-            //subscribe to the reload event
-            if (_currentWeaponScript != null)
-            {
-                _currentWeaponScript.OnReloadStart += HandleOnReloadStart;
-                _currentWeaponScript.OnReloadFinished += HandleOnReloadFinished;
-            }
         }
         
         private void HandleShoot(InputAction.CallbackContext context)
@@ -82,6 +76,32 @@ namespace GameProg.Player
         private void HandleOnReloadFinished()
         {
             _reloadBar.FinishReload();
+        }
+
+        private void OnEnable()
+        {
+            //subscribe to the shoot event
+            _playerControls.Player.Shoot.performed += HandleShoot;
+            _playerControls.Player.Shoot.Enable();
+            
+            //subscribe to the reload event
+            if (_currentWeaponScript != null)
+            {
+                _currentWeaponScript.OnReloadStart += HandleOnReloadStart;
+                _currentWeaponScript.OnReloadFinished += HandleOnReloadFinished;
+            }
+        }
+
+        private void OnDisable()
+        {
+            Debug.Log("Scene unloaded");
+            
+            //unsubscribe from the shoot event
+            _playerControls.Player.Shoot.performed -= HandleShoot;
+            _playerControls.Player.Shoot.Disable();
+            
+            _currentWeaponScript.OnReloadStart -= HandleOnReloadStart;
+            _currentWeaponScript.OnReloadFinished -= HandleOnReloadFinished;
         }
     }
 }

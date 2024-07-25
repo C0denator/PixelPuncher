@@ -35,7 +35,7 @@ namespace GameProg.UI
                 yield return null;
             }
             
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         
     }

@@ -7,7 +7,7 @@ namespace Sound
     
         private static GlobalSound instance;
     
-        public static AudioSource globalAudioSource;
+        public AudioSource globalAudioSource;
 
         private void Start()
         {
@@ -18,7 +18,6 @@ namespace Sound
             }
             else
             {
-                Debug.LogWarning("GlobalSound already exists. Destroying new instance.");
                 Destroy(gameObject);
             }
         
