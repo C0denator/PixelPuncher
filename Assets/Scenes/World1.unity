@@ -239,8 +239,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Generating World...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cb6f15744edba654c950927706e66928, type: 2}
-  m_sharedMaterial: {fileID: -7330815951572548373, guid: cb6f15744edba654c950927706e66928, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 658875a4ae6b6ba4f9b318506698bce2, type: 2}
+  m_sharedMaterial: {fileID: -5488086727037942947, guid: 658875a4ae6b6ba4f9b318506698bce2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -264,8 +264,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.92
-  m_fontSizeBase: 14.92
+  m_fontSize: 24.4
+  m_fontSizeBase: 24.4
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

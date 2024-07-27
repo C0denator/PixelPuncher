@@ -665,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fedf517ff7ec2e245a1ce38c3a1ad13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  globalAudioSource: {fileID: 0}
 --- !u!4 &776699085
 Transform:
   m_ObjectHideFlags: 0
@@ -712,10 +713,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1640078736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0.7239628}
+  m_SizeDelta: {x: 180, y: 46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &882642191
 MonoBehaviour:
@@ -739,8 +740,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Start
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cb6f15744edba654c950927706e66928, type: 2}
-  m_sharedMaterial: {fileID: -7330815951572548373, guid: cb6f15744edba654c950927706e66928, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 658875a4ae6b6ba4f9b318506698bce2, type: 2}
+  m_sharedMaterial: {fileID: -5488086727037942947, guid: 658875a4ae6b6ba4f9b318506698bce2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -764,8 +765,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.17
-  m_fontSizeBase: 17.17
+  m_fontSize: 25.13
+  m_fontSizeBase: 25.13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
