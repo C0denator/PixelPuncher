@@ -7,6 +7,18 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
     {
         public Action OnAttackFinished;
         
-        public void StartAttack(BossController ctx){}
+        protected Coroutine _attackCoroutine;
+        
+        public virtual void StartAttack(BossController ctx){
+            throw new NotImplementedException();
+        }
+
+        protected void OnDisable()
+        {
+            if (_attackCoroutine != null)
+            {
+                StopCoroutine(_attackCoroutine);
+            }
+        }
     }
 }
