@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using GameProg.World;
 using Sound;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace GameProg.Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private Camera playerCamera;
+        [SerializeField] [Range(0f,2f)] private float invincibleTimeAfterHit = 0.5f;
         [SerializeField] [Range(0.1f,10f)] private float moveSpeed = 5f;
         [SerializeField] [Range(20f,50f)] private float dashSpeed = 5f;
         [SerializeField] [Range(0.1f,0.5f)] private float dashDuration = 0.5f;
@@ -30,17 +32,13 @@ namespace GameProg.Player
         private float _elapsedDashTime;
         private float _elapsedDashCooldown;
         private Vector2 _dashDirection;
+        private Coroutine _invincibleCoroutine;
         
         private float _velocity;
         private static readonly int Velocity = Animator.StringToHash("Velocity");
         private static readonly int IsDashing = Animator.StringToHash("isDashing");
 
         private void Awake()
-        {
-            //_playerControls = new PlayerControls();
-        }
-
-        private void Start()
         {
             //get References
             _health = GetComponent<Health.Health>();
@@ -57,6 +55,10 @@ namespace GameProg.Player
             if(playerCamera == null) Debug.LogError("Player camera not set");
             if(_gameMaster == null) Debug.LogError("GameMaster not found");
             
+        }
+
+        private void Start()
+        {
             _isDashing = false;
             _elapsedDashTime = 0;
             _elapsedDashCooldown = 0;
@@ -163,6 +165,53 @@ namespace GameProg.Player
             }
         }
         
+        private void HandleOnHealthChanged()
+        {
+            if (_health.CurrentHealth > 0)
+            {
+                if(_invincibleCoroutine == null)
+                {
+                    _invincibleCoroutine = StartCoroutine(InvincibleCoroutine());
+                }
+                else
+                {
+                    Debug.LogWarning("Invincible coroutine already running");
+                }
+            }
+        }
+        
+        private IEnumerator InvincibleCoroutine()
+        {
+            Debug.Log("Player is invincible");
+            
+            _health.invincible = true;
+            
+            float elapsed = 0;
+            
+            float blinkTime = 0.1f;
+            float blinkElapsed = 0;
+            
+            while (elapsed < invincibleTimeAfterHit)
+            {
+                elapsed += Time.deltaTime;
+                blinkElapsed += Time.deltaTime;
+                
+                if (blinkElapsed >= blinkTime)
+                {
+                    _spriteRenderer.enabled = !_spriteRenderer.enabled;
+                    blinkElapsed = 0;
+                }
+                
+                yield return null;
+            }
+            
+            _spriteRenderer.enabled = true;
+            _health.invincible = false;
+            
+            _invincibleCoroutine = null;
+            
+        }
+        
         [Serializable]
         private struct AudioClipWithVolume
         {
@@ -187,6 +236,9 @@ namespace GameProg.Player
             
             //subscribe to dash input
             _playerControls.Player.Dash.performed += HandleOnDashPerformed;
+            
+            //subscribe to health changed event
+            _health.OnHealthChanged += HandleOnHealthChanged;
         }
 
         private void OnDisable()
@@ -201,6 +253,12 @@ namespace GameProg.Player
             
             //unsubscribe from dash input
             _playerControls.Player.Dash.performed -= HandleOnDashPerformed;
+            
+            //unsubscribe from health changed event
+            _health.OnHealthChanged -= HandleOnHealthChanged;
+            
+            //stop the invincible coroutine
+            if(_invincibleCoroutine != null) StopCoroutine(_invincibleCoroutine);
         }
     }
 }

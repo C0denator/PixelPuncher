@@ -113,6 +113,9 @@ namespace GameProg.World
             timeToMove = 1f;
             elapsedTime = 0f;
             
+            //play boss music
+            _music.PlayClip("Boss");
+            
             while (elapsedTime < timeToMove)
             {
                 _camera.transform.position = Vector3.Lerp(newPos, oldPos, elapsedTime / timeToMove);
@@ -121,9 +124,6 @@ namespace GameProg.World
             }
             
             yield return new WaitForSecondsRealtime(1f);
-            
-            //play boss music
-            _music.PlayClip("Boss");
             
             //set time scale to 1
             Time.timeScale = 1f;

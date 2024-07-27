@@ -550,6 +550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 3
+  invincible: 0
   hitSound:
     clip: {fileID: 8300000, guid: d55b8cfb39a222e4f929273b5230477b, type: 3}
     volume: 0.25
@@ -569,6 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 2816199197607054025}
+  invincibleTimeAfterHit: 1
   moveSpeed: 7.5
   dashSpeed: 40
   dashDuration: 0.15

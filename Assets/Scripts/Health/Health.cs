@@ -8,6 +8,7 @@ namespace GameProg.Health
     {
         [SerializeField] private int currentHealth;
         [SerializeField] private int maxHealth;
+        public bool invincible;
         [Header("HitSounds")] 
         [SerializeField] private AudioClipWithVolume hitSound;
         [SerializeField] private AudioClipWithVolume deathSound;
@@ -24,6 +25,8 @@ namespace GameProg.Health
             get => currentHealth;
             set
             {
+                if(invincible) return;
+                
                 int tmp = currentHealth;
                 currentHealth = value;
                 
