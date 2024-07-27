@@ -1234,7 +1234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef46c47130bcb44b805cd32f345353c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetFrameRate: 30
+  targetFrameRate: 60
   DeltaTime: 0
 --- !u!1 &1640078735
 GameObject:
