@@ -21,7 +21,8 @@ namespace NavMeshPlus.Extensions
                 return m_navMeshOwner;
             }
         }
-        NavMeshSurface m_navMeshOwner;
+
+        private NavMeshSurface m_navMeshOwner;
 
         protected virtual void Awake()
         {
@@ -29,7 +30,7 @@ namespace NavMeshPlus.Extensions
         }
 #if UNITY_EDITOR
         [UnityEditor.Callbacks.DidReloadScripts]
-        static void OnScriptReload()
+        private static void OnScriptReload()
         {
             var extensions = Resources.FindObjectsOfTypeAll(
                 typeof(NavMeshExtension)) as NavMeshExtension[];

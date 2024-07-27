@@ -28,8 +28,8 @@ namespace NavMeshPlus.Extensions
     }
     internal class NavMeshExtensionsProvider : INavMeshExtensionsProvider
     {
-        List<NavMeshExtensionMeta> _extensions = new List<NavMeshExtensionMeta>();
-        static Comparer<NavMeshExtensionMeta> Comparer = Comparer<NavMeshExtensionMeta>.Create((x, y) => x.order > y.order ? 1 : x.order < y.order ? -1 : 0);
+        private List<NavMeshExtensionMeta> _extensions = new List<NavMeshExtensionMeta>();
+        private static Comparer<NavMeshExtensionMeta> Comparer = Comparer<NavMeshExtensionMeta>.Create((x, y) => x.order > y.order ? 1 : x.order < y.order ? -1 : 0);
         public NavMeshExtension this[int index] => _extensions[index].extension;
 
         public int Count => _extensions.Count;

@@ -10,7 +10,7 @@ namespace NavMeshPlus.Extensions.Editors
         //SerializedProperty m_UseMeshPrefab;
         //SerializedProperty m_CompressBounds;
         //SerializedProperty m_OverrideVector;
-        void OnEnable()
+        private void OnEnable()
         {
             //m_OverrideByGrid = serializedObject.FindProperty("m_OverrideByGrid");
             //m_UseMeshPrefab = serializedObject.FindProperty("m_UseMeshPrefab");

@@ -7,8 +7,9 @@ namespace NavMeshPlus.Extensions.Editors
     [CustomEditor(typeof(RootSources2d))]
     internal class RootSources2dEditor: Editor
     {
-        SerializedProperty _rootSources;
-        void OnEnable()
+        private SerializedProperty _rootSources;
+
+        private void OnEnable()
         {
             _rootSources = serializedObject.FindProperty("_rootSources");
         }

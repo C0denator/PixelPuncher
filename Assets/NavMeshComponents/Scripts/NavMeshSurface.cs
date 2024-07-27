@@ -22,78 +22,63 @@ namespace NavMeshPlus.Components
     [HelpURL("https://github.com/Unity-Technologies/NavMeshComponents#documentation-draft")]
     public class NavMeshSurface : MonoBehaviour
     {
-        [SerializeField, NavMeshAgent]
-        int m_AgentTypeID;
+        [SerializeField, NavMeshAgent] private int m_AgentTypeID;
         public int agentTypeID { get { return m_AgentTypeID; } set { m_AgentTypeID = value; } }
 
-        [SerializeField]
-        CollectObjects m_CollectObjects = CollectObjects.All;
+        [SerializeField] private CollectObjects m_CollectObjects = CollectObjects.All;
         public CollectObjects collectObjects { get { return m_CollectObjects; } set { m_CollectObjects = value; } }
 
-        [SerializeField]
-        Vector3 m_Size = new Vector3(10.0f, 10.0f, 10.0f);
+        [SerializeField] private Vector3 m_Size = new Vector3(10.0f, 10.0f, 10.0f);
         public Vector3 size { get { return m_Size; } set { m_Size = value; } }
 
-        [SerializeField]
-        Vector3 m_Center = new Vector3(0, 2.0f, 0);
+        [SerializeField] private Vector3 m_Center = new Vector3(0, 2.0f, 0);
         public Vector3 center { get { return m_Center; } set { m_Center = value; } }
 
-        [SerializeField]
-        LayerMask m_LayerMask = ~0;
+        [SerializeField] private LayerMask m_LayerMask = ~0;
         public LayerMask layerMask { get { return m_LayerMask; } set { m_LayerMask = value; } }
 
-        [SerializeField]
-        NavMeshCollectGeometry m_UseGeometry = NavMeshCollectGeometry.RenderMeshes;
+        [SerializeField] private NavMeshCollectGeometry m_UseGeometry = NavMeshCollectGeometry.RenderMeshes;
         public NavMeshCollectGeometry useGeometry { get { return m_UseGeometry; } set { m_UseGeometry = value; } }
 
-        [SerializeField, NavMeshArea]
-        int m_DefaultArea;
+        [SerializeField, NavMeshArea] private int m_DefaultArea;
         public int defaultArea { get { return m_DefaultArea; } set { m_DefaultArea = value; } }
 
-        [SerializeField]
-        bool m_IgnoreNavMeshAgent = true;
+        [SerializeField] private bool m_IgnoreNavMeshAgent = true;
         public bool ignoreNavMeshAgent { get { return m_IgnoreNavMeshAgent; } set { m_IgnoreNavMeshAgent = value; } }
 
-        [SerializeField]
-        bool m_IgnoreNavMeshObstacle = true;
+        [SerializeField] private bool m_IgnoreNavMeshObstacle = true;
         public bool ignoreNavMeshObstacle { get { return m_IgnoreNavMeshObstacle; } set { m_IgnoreNavMeshObstacle = value; } }
 
-        [SerializeField]
-        bool m_OverrideTileSize;
+        [SerializeField] private bool m_OverrideTileSize;
         public bool overrideTileSize { get { return m_OverrideTileSize; } set { m_OverrideTileSize = value; } }
-        [SerializeField]
-        int m_TileSize = 256;
+        [SerializeField] private int m_TileSize = 256;
         public int tileSize { get { return m_TileSize; } set { m_TileSize = value; } }
-        [SerializeField]
-        bool m_OverrideVoxelSize;
+        [SerializeField] private bool m_OverrideVoxelSize;
         public bool overrideVoxelSize { get { return m_OverrideVoxelSize; } set { m_OverrideVoxelSize = value; } }
-        [SerializeField]
-        float m_VoxelSize;
+        [SerializeField] private float m_VoxelSize;
         public float voxelSize { get { return m_VoxelSize; } set { m_VoxelSize = value; } }
 
         // Currently not supported advanced options
-        [SerializeField]
-        bool m_BuildHeightMesh;
+        [SerializeField] private bool m_BuildHeightMesh;
         public bool buildHeightMesh { get { return m_BuildHeightMesh; } set { m_BuildHeightMesh = value; } }
 
-        [SerializeField]
-        bool m_HideEditorLogs;
+        [SerializeField] private bool m_HideEditorLogs;
         public bool hideEditorLogs { get { return m_HideEditorLogs; } set { m_HideEditorLogs = value; } }
 
         // Reference to whole scene navmesh data asset.
         [UnityEngine.Serialization.FormerlySerializedAs("m_BakedNavMeshData")]
         [SerializeField]
-        NavMeshData m_NavMeshData;
+        private NavMeshData m_NavMeshData;
         public NavMeshData navMeshData { get { return m_NavMeshData; } set { m_NavMeshData = value; } }
 
         // Do not serialize - runtime only state.
-        NavMeshDataInstance m_NavMeshDataInstance;
-        Vector3 m_LastPosition = Vector3.zero;
-        Quaternion m_LastRotation = Quaternion.identity;
+        private NavMeshDataInstance m_NavMeshDataInstance;
+        private Vector3 m_LastPosition = Vector3.zero;
+        private Quaternion m_LastRotation = Quaternion.identity;
 
         public NavMeshDataInstance navMeshDataInstance => m_NavMeshDataInstance;
 
-        static readonly List<NavMeshSurface> s_NavMeshSurfaces = new List<NavMeshSurface>();
+        private static readonly List<NavMeshSurface> s_NavMeshSurfaces = new List<NavMeshSurface>();
         public INavMeshExtensionsProvider NevMeshExtensions { get; set; } = new NavMeshExtensionsProvider();
 
         public static List<NavMeshSurface> activeSurfaces
@@ -101,13 +86,13 @@ namespace NavMeshPlus.Components
             get { return s_NavMeshSurfaces; }
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             Register(this);
             AddData();
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             RemoveData();
             Unregister(this);
@@ -237,7 +222,7 @@ namespace NavMeshPlus.Components
             return NavMeshBuilder.UpdateNavMeshDataAsync(data, GetBuildSettings(), sources, sourcesBounds);
         }
 
-        static void Register(NavMeshSurface surface)
+        private static void Register(NavMeshSurface surface)
         {
 #if UNITY_EDITOR
             var isInPreviewScene = EditorSceneManager.IsPreviewSceneObject(surface);
@@ -256,7 +241,7 @@ namespace NavMeshPlus.Components
                 s_NavMeshSurfaces.Add(surface);
         }
 
-        static void Unregister(NavMeshSurface surface)
+        private static void Unregister(NavMeshSurface surface)
         {
             s_NavMeshSurfaces.Remove(surface);
 
@@ -264,13 +249,13 @@ namespace NavMeshPlus.Components
                 NavMesh.onPreUpdate -= UpdateActive;
         }
 
-        static void UpdateActive()
+        private static void UpdateActive()
         {
             for (var i = 0; i < s_NavMeshSurfaces.Count; ++i)
                 s_NavMeshSurfaces[i].UpdateDataIfTransformChanged();
         }
 
-        void AppendModifierVolumes(ref List<NavMeshBuildSource> sources)
+        private void AppendModifierVolumes(ref List<NavMeshBuildSource> sources)
         {
 #if UNITY_EDITOR
             var myStage = StageUtility.GetStageHandle(gameObject);
@@ -312,7 +297,7 @@ namespace NavMeshPlus.Components
             }
         }
 
-        List<NavMeshBuildSource> CollectSources(NavMeshBuilderState builderState)
+        private List<NavMeshBuildSource> CollectSources(NavMeshBuilderState builderState)
         {
             var sources = new List<NavMeshBuildSource>();
             var markups = new List<NavMeshBuildMarkup>();
@@ -402,7 +387,7 @@ namespace NavMeshPlus.Components
             return sources;
         }
 
-        static Vector3 Abs(Vector3 v)
+        private static Vector3 Abs(Vector3 v)
         {
             return new Vector3(Mathf.Abs(v.x), Mathf.Abs(v.y), Mathf.Abs(v.z));
         }
@@ -462,14 +447,14 @@ namespace NavMeshPlus.Components
             return result;
         }
 
-        bool HasTransformChanged()
+        private bool HasTransformChanged()
         {
             if (m_LastPosition != transform.position) return true;
             if (m_LastRotation != transform.rotation) return true;
             return false;
         }
 
-        void UpdateDataIfTransformChanged()
+        private void UpdateDataIfTransformChanged()
         {
             if (HasTransformChanged())
             {
@@ -479,7 +464,7 @@ namespace NavMeshPlus.Components
         }
 
 #if UNITY_EDITOR
-        bool UnshareNavMeshAsset()
+        private bool UnshareNavMeshAsset()
         {
             // Nothing to unshare
             if (m_NavMeshData == null)
@@ -508,7 +493,7 @@ namespace NavMeshPlus.Components
             return false;
         }
 
-        void OnValidate()
+        private void OnValidate()
         {
             if (UnshareNavMeshAsset())
             {

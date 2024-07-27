@@ -9,7 +9,7 @@ namespace GameProg.General
         [SerializeField] private Tilemap tilemap;
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if(tilemap != null)
             {

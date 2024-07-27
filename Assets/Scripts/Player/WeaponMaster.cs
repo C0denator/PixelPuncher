@@ -17,7 +17,7 @@ namespace GameProg.Player
         }
         
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             //try to get missing references
             if (_reloadBar == null)

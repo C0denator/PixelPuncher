@@ -9,8 +9,8 @@ namespace NavMeshPlus.Extensions
     [AddComponentMenu("Navigation/Navigation CacheSources2d", 30)]
     public class CollectSourcesCache2d : NavMeshExtension
     {
-        List<NavMeshBuildSource> _sources;
-        Dictionary<UnityEngine.Object, NavMeshBuildSource> _lookup;
+        private List<NavMeshBuildSource> _sources;
+        private Dictionary<UnityEngine.Object, NavMeshBuildSource> _lookup;
         private Bounds _sourcesBounds;
         public bool IsDirty { get; protected set; }
 

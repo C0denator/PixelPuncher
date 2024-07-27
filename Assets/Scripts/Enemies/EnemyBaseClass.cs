@@ -17,7 +17,7 @@ namespace GameProg.Enemies
         private Transform _player;
         
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             //get references
             _health = GetComponent<Health.Health>();
@@ -44,7 +44,8 @@ namespace GameProg.Enemies
             _health.OnDeath += HandleOnDeath;
             
         }
-        void FixedUpdate()
+
+        private void FixedUpdate()
         {
             //flip sprite if player is on the left side
             if (_player.transform.position.x < transform.position.x)

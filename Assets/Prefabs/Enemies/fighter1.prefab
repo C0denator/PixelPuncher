@@ -332,7 +332,6 @@ GameObject:
   - component: {fileID: 8025783535373378516}
   - component: {fileID: 3094650260660735439}
   - component: {fileID: 244369346244614489}
-  - component: {fileID: 5395954209934435431}
   m_Layer: 8
   m_Name: fighter1
   m_TagString: Enemy
@@ -370,6 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 5
+  invincible: 0
   hitSound:
     clip: {fileID: 8300000, guid: 52dfeceb86a06d544958602eb41252b7, type: 3}
     volume: 0.25
@@ -554,19 +554,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.83, y: 0.84}
   m_EdgeRadius: 0
---- !u!114 &5395954209934435431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3623134906648738520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85b6e135b253f4646b1c2baff548b9d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debrisObjects: []
 --- !u!1 &7506364552632838665
 GameObject:
   m_ObjectHideFlags: 0

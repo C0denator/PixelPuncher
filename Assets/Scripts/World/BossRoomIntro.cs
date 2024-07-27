@@ -19,7 +19,7 @@ namespace GameProg.World
         [SerializeField] private AudioClipWithVolume clickSound;
         
         // Start is called before the first frame update
-        void Awake()
+        private void Awake()
         {
             Debug.Log("Boss spawned");  
             
@@ -38,7 +38,7 @@ namespace GameProg.World
             
         }
 
-        void Start()
+        private void Start()
         {
             foreach (var introObject in introObjects)
             {

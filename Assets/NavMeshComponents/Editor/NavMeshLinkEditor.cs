@@ -5,24 +5,24 @@ namespace NavMeshPlus.Components.Editors
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NavMeshLink))]
-    class NavMeshLinkEditor : Editor
+    internal class NavMeshLinkEditor : Editor
     {
-        SerializedProperty m_AgentTypeID;
-        SerializedProperty m_Area;
-        SerializedProperty m_CostModifier;
-        SerializedProperty m_AutoUpdatePosition;
-        SerializedProperty m_Bidirectional;
-        SerializedProperty m_EndPoint;
-        SerializedProperty m_StartPoint;
-        SerializedProperty m_Width;
+        private SerializedProperty m_AgentTypeID;
+        private SerializedProperty m_Area;
+        private SerializedProperty m_CostModifier;
+        private SerializedProperty m_AutoUpdatePosition;
+        private SerializedProperty m_Bidirectional;
+        private SerializedProperty m_EndPoint;
+        private SerializedProperty m_StartPoint;
+        private SerializedProperty m_Width;
 
-        static int s_SelectedID;
-        static int s_SelectedPoint = -1;
+        private static int s_SelectedID;
+        private static int s_SelectedPoint = -1;
 
-        static Color s_HandleColor = new Color(255f, 167f, 39f, 210f) / 255;
-        static Color s_HandleColorDisabled = new Color(255f * 0.75f, 167f * 0.75f, 39f * 0.75f, 100f) / 255;
+        private static Color s_HandleColor = new Color(255f, 167f, 39f, 210f) / 255;
+        private static Color s_HandleColorDisabled = new Color(255f * 0.75f, 167f * 0.75f, 39f * 0.75f, 100f) / 255;
 
-        void OnEnable()
+        private void OnEnable()
         {
             m_AgentTypeID = serializedObject.FindProperty("m_AgentTypeID");
             m_Area = serializedObject.FindProperty("m_Area");
@@ -40,13 +40,12 @@ namespace NavMeshPlus.Components.Editors
         }
 
 
-
-        static Matrix4x4 UnscaledLocalToWorldMatrix(Transform t)
+        private static Matrix4x4 UnscaledLocalToWorldMatrix(Transform t)
         {
             return Matrix4x4.TRS(t.position, t.rotation, Vector3.one);
         }
 
-        void AlignTransformToEndPoints(NavMeshLink navLink)
+        private void AlignTransformToEndPoints(NavMeshLink navLink)
         {
             var mat = UnscaledLocalToWorldMatrix(navLink.transform);
 
@@ -114,13 +113,13 @@ namespace NavMeshPlus.Components.Editors
             EditorGUILayout.Space();
         }
 
-        static Vector3 CalcLinkRight(NavMeshLink navLink)
+        private static Vector3 CalcLinkRight(NavMeshLink navLink)
         {
             var dir = navLink.endPoint - navLink.startPoint;
             return (new Vector3(-dir.z, 0.0f, dir.x)).normalized;
         }
 
-        static void DrawLink(NavMeshLink navLink)
+        private static void DrawLink(NavMeshLink navLink)
         {
             var right = CalcLinkRight(navLink);
             var rad = navLink.width * 0.5f;
@@ -133,8 +132,7 @@ namespace NavMeshPlus.Components.Editors
 
 
         [DrawGizmo(GizmoType.InSelectionHierarchy | GizmoType.Active | GizmoType.Pickable)]
-
-        static void RenderBoxGizmo(NavMeshLink navLink, GizmoType gizmoType)
+        private static void RenderBoxGizmo(NavMeshLink navLink, GizmoType gizmoType)
         {
             if (!EditorApplication.isPlaying && navLink.isActiveAndEnabled)
                 navLink.UpdateLink();
@@ -158,7 +156,7 @@ namespace NavMeshPlus.Components.Editors
         }
 
         [DrawGizmo(GizmoType.NotInSelectionHierarchy | GizmoType.Pickable)]
-        static void RenderBoxGizmoNotSelected(NavMeshLink navLink, GizmoType gizmoType)
+        private static void RenderBoxGizmoNotSelected(NavMeshLink navLink, GizmoType gizmoType)
         {
             if (!EditorApplication.isPlaying && navLink.isActiveAndEnabled)
                 navLink.UpdateLink();

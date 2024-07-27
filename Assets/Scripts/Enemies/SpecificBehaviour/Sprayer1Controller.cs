@@ -35,7 +35,7 @@ namespace GameProg.Enemies.SpecificBehaviour
         private float _cooldownTimer;
         
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             //get references
             _rb = GetComponent<Rigidbody2D>();

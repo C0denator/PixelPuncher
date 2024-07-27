@@ -11,7 +11,7 @@ namespace GameProg.UI
         private GameMaster _gameMaster;
         
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             _gameMaster = FindObjectOfType<GameMaster>();
             if (_gameMaster == null) Debug.LogError("GameMaster not found");

@@ -17,7 +17,7 @@ namespace GameProg.World
         private Coroutine _openCoroutine;
         
         // Start is called before the first frame update
-        void Awake()
+        private void Awake()
         {
             _gameMaster = FindObjectOfType<GameMaster>();
             player = GameObject.FindWithTag("Player").transform;
@@ -63,12 +63,12 @@ namespace GameProg.World
             animator.SetBool(IsOpen, true);
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             _gameMaster.OnAllRoomsCleared += HandleOnAllRoomsCleared;
         }
-        
-        void OnDisable()
+
+        private void OnDisable()
         {
             _gameMaster.OnAllRoomsCleared -= HandleOnAllRoomsCleared;
             

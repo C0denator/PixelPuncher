@@ -34,17 +34,15 @@ namespace NavMeshPlus.Components
 
         // List of agent types the modifier is applied for.
         // Special values: empty == None, m_AffectedAgents[0] =-1 == All.
-        [SerializeField]
-        List<int> m_AffectedAgents = new List<int>(new int[] { -1 });    // Default value is All
+        [SerializeField] private List<int> m_AffectedAgents = new List<int>(new int[] { -1 });    // Default value is All
 
-        [SerializeField]
-        List<TileModifier> m_TileModifiers = new List<TileModifier>();
+        [SerializeField] private List<TileModifier> m_TileModifiers = new List<TileModifier>();
 
         private Dictionary<TileBase, TileModifier> m_ModifierMap;
 
         public Dictionary<TileBase, TileModifier> GetModifierMap() => m_TileModifiers.Where(mod => mod.tile != null).Distinct(MatchingTileComparator.Instance).ToDictionary(mod => mod.tile);
 
-        void OnEnable()
+        private void OnEnable()
         {
             CacheModifiers();
         }

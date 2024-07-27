@@ -10,7 +10,7 @@ namespace GameProg.Player
         private SpriteRenderer spriteRenderer;
         
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             //get the sprite renderer
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -30,7 +30,7 @@ namespace GameProg.Player
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             //return if player is dead
             if (Time.timeScale == 0) return;

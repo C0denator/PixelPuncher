@@ -525,7 +525,6 @@ GameObject:
   - component: {fileID: 7302425052963555843}
   - component: {fileID: 1016290177227088085}
   - component: {fileID: 4915845287538611176}
-  - component: {fileID: 3403831687397522587}
   m_Layer: 8
   m_Name: sprayer1
   m_TagString: Enemy
@@ -563,6 +562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 6
+  invincible: 0
   hitSound:
     clip: {fileID: 8300000, guid: 52dfeceb86a06d544958602eb41252b7, type: 3}
     volume: 0.25
@@ -749,19 +749,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.83, y: 0.84}
   m_EdgeRadius: 0
---- !u!114 &3403831687397522587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6512602392665042123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85b6e135b253f4646b1c2baff548b9d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debrisObjects: []
 --- !u!1 &7540450865972462445
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ namespace GameProg.UI
         [SerializeField] private Canvas _canvas;
         private World.World _world;
         // Start is called before the first frame update
-        void Awake()
+        private void Awake()
         {
             //get references
             var player = GameObject.FindWithTag("Player");

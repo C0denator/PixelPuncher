@@ -7,31 +7,31 @@ namespace NavMeshPlus.Components.Editors
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NavMeshModifierVolume))]
-    class NavMeshModifierVolumeEditor : Editor
+    internal class NavMeshModifierVolumeEditor : Editor
     {
-        SerializedProperty m_AffectedAgents;
-        SerializedProperty m_Area;
-        SerializedProperty m_Center;
-        SerializedProperty m_Size;
+        private SerializedProperty m_AffectedAgents;
+        private SerializedProperty m_Area;
+        private SerializedProperty m_Center;
+        private SerializedProperty m_Size;
 
-        static Color s_HandleColor = new Color(187f, 138f, 240f, 210f) / 255;
-        static Color s_HandleColorDisabled = new Color(187f * 0.75f, 138f * 0.75f, 240f * 0.75f, 100f) / 255;
+        private static Color s_HandleColor = new Color(187f, 138f, 240f, 210f) / 255;
+        private static Color s_HandleColorDisabled = new Color(187f * 0.75f, 138f * 0.75f, 240f * 0.75f, 100f) / 255;
 
-        BoxBoundsHandle m_BoundsHandle = new BoxBoundsHandle();
+        private BoxBoundsHandle m_BoundsHandle = new BoxBoundsHandle();
 
-        bool editingCollider
+        private bool editingCollider
         {
             get { return EditMode.editMode == EditMode.SceneViewEditMode.Collider && EditMode.IsOwner(this); }
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             m_AffectedAgents = serializedObject.FindProperty("m_AffectedAgents");
             m_Area = serializedObject.FindProperty("m_Area");
             m_Center = serializedObject.FindProperty("m_Center");
             m_Size = serializedObject.FindProperty("m_Size");        }
 
-        Bounds GetBounds()
+        private Bounds GetBounds()
         {
             var navModifier = (NavMeshModifierVolume)target;
             return new Bounds(navModifier.transform.position, navModifier.size);
@@ -55,7 +55,7 @@ namespace NavMeshPlus.Components.Editors
 
 
         [DrawGizmo(GizmoType.InSelectionHierarchy | GizmoType.Active)]
-        static void RenderBoxGizmo(NavMeshModifierVolume navModifier, GizmoType gizmoType)
+        private static void RenderBoxGizmo(NavMeshModifierVolume navModifier, GizmoType gizmoType)
         {
             var color = navModifier.enabled ? s_HandleColor : s_HandleColorDisabled;
             var colorTrans = new Color(color.r * 0.75f, color.g * 0.75f, color.b * 0.75f, color.a * 0.15f);
@@ -78,7 +78,7 @@ namespace NavMeshPlus.Components.Editors
         }
 
         [DrawGizmo(GizmoType.NotInSelectionHierarchy | GizmoType.Pickable)]
-        static void RenderBoxGizmoNotSelected(NavMeshModifierVolume navModifier, GizmoType gizmoType)
+        private static void RenderBoxGizmoNotSelected(NavMeshModifierVolume navModifier, GizmoType gizmoType)
         {
             {
                 var color = navModifier.enabled ? s_HandleColor : s_HandleColorDisabled;
@@ -97,7 +97,7 @@ namespace NavMeshPlus.Components.Editors
             Gizmos.DrawIcon(navModifier.transform.position, "NavMeshModifierVolume Icon", true);
         }
 
-        void OnSceneGUI()
+        private void OnSceneGUI()
         {
             if (!editingCollider)
                 return;

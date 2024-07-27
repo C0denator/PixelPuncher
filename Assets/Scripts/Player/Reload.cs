@@ -11,7 +11,7 @@ namespace GameProg.Player
         private static readonly int ReloadStart = Animator.StringToHash("Reload");
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             //get references
             reloadBar = GetComponent<SpriteRenderer>();

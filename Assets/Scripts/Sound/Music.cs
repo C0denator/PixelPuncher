@@ -20,7 +20,7 @@ namespace Sound
         private static Music _instance;
         
         // Start is called before the first frame update
-        void Awake()
+        private void Awake()
         {
             if(_instance == null)
             {

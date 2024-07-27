@@ -7,11 +7,12 @@ namespace NavMeshPlus.Extensions.Editors
     [CustomEditor(typeof(CollectSources2d))]
     internal class CollectSources2dEditor: Editor
     {
-        SerializedProperty m_OverrideByGrid;
-        SerializedProperty m_UseMeshPrefab;
-        SerializedProperty m_CompressBounds;
-        SerializedProperty m_OverrideVector;
-        void OnEnable()
+        private SerializedProperty m_OverrideByGrid;
+        private SerializedProperty m_UseMeshPrefab;
+        private SerializedProperty m_CompressBounds;
+        private SerializedProperty m_OverrideVector;
+
+        private void OnEnable()
         {
             m_OverrideByGrid = serializedObject.FindProperty("m_OverrideByGrid");
             m_UseMeshPrefab = serializedObject.FindProperty("m_UseMeshPrefab");

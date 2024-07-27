@@ -15,7 +15,7 @@ namespace GameProg.World
         private static bool _InfoShown = false;
         
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
 
             if (!_InfoShown)

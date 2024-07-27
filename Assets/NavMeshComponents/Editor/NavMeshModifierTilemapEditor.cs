@@ -10,12 +10,12 @@ namespace NavMeshPlus.Components.Editors
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NavMeshModifierTilemap))]
-    class NavMeshModifierTilemapEditor : Editor
+    internal class NavMeshModifierTilemapEditor : Editor
     {
-        SerializedProperty m_AffectedAgents;
-        SerializedProperty m_TileModifiers;
+        private SerializedProperty m_AffectedAgents;
+        private SerializedProperty m_TileModifiers;
 
-        void OnEnable()
+        private void OnEnable()
         {
             m_AffectedAgents = serializedObject.FindProperty("m_AffectedAgents");
             m_TileModifiers = serializedObject.FindProperty("m_TileModifiers");
@@ -87,7 +87,7 @@ namespace NavMeshPlus.Components.Editors
         }
 
         [CustomPropertyDrawer(typeof(NavMeshModifierTilemap.TileModifier))]
-        class TileModifierPropertyDrawer : PropertyDrawer
+        private class TileModifierPropertyDrawer : PropertyDrawer
         {
             
             private static Dictionary<Object, Texture2D> Previews;
@@ -159,7 +159,7 @@ namespace NavMeshPlus.Components.Editors
                 }
             }
 
-            static Texture2D GetPreview(Object objectToPreview)
+            private static Texture2D GetPreview(Object objectToPreview)
             {
                 int maxResolution = 128;
                 Previews ??= new Dictionary<Object, Texture2D>();

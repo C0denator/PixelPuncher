@@ -9,8 +9,8 @@ namespace GameProg.UI
         private World.World _world;
         
         private int _clearedRooms = 0;
-        
-        void Awake()
+
+        private void Awake()
         {
             _world = FindObjectOfType<World.World>();
             
