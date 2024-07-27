@@ -732,10 +732,10 @@ MonoBehaviour:
   maxHealth: 40
   hitSound:
     clip: {fileID: 8300000, guid: 8a34aba343ad1c9408ad7f9b5f0889e8, type: 3}
-    volume: 0
+    volume: 0.5
   deathSound:
     clip: {fileID: 8300000, guid: 43582791a4ee89447b32b695cad59a51, type: 3}
-    volume: 0
+    volume: 0.5
 --- !u!114 &1098518664931263962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,3 +748,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1ef24032c83024c81129a1f84d9613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  introObjects:
+  - {fileID: 7171077947371602712}
+  - {fileID: 8471814948705618468}
+  clickSound:
+    clip: {fileID: 8300000, guid: 52dfeceb86a06d544958602eb41252b7, type: 3}
+    volume: 0.4

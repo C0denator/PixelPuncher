@@ -602,7 +602,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5981027238127665226, guid: bd17be733a54354459803df378e823d4, type: 3}
   attackSound:
     clip: {fileID: 8300000, guid: 21b8b5c6c680217468b51a406855900b, type: 3}
-    volume: 0.125
+    volume: 0.075
   damage: 1
   attackCooldown: 2.5
   attackRange: 8
