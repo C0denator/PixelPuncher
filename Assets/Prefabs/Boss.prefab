@@ -666,6 +666,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7654612525080625664}
+  - component: {fileID: -5464667283721843651}
+  - component: {fileID: 1098518664931263962}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -692,3 +694,35 @@ Transform:
   - {fileID: 6992623923143700880}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5464667283721843651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8854570724913615862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf2cef8bbb8b8504aac764bd248b32a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 40
+  hitSound:
+    clip: {fileID: 8300000, guid: 8a34aba343ad1c9408ad7f9b5f0889e8, type: 3}
+    volume: 0
+  deathSound:
+    clip: {fileID: 8300000, guid: 43582791a4ee89447b32b695cad59a51, type: 3}
+    volume: 0
+--- !u!114 &1098518664931263962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8854570724913615862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1ef24032c83024c81129a1f84d9613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

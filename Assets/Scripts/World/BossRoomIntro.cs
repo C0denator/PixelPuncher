@@ -1,21 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-namespace GameProg
+namespace GameProg.World
 {
     public class BossRoomIntro : MonoBehaviour
     {
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-        
+            Debug.Log("Boss spawned");  
         }
 
-        // Update is called once per frame
-        void Update()
+        private void OnEnable()
         {
+        }
         
+        private void OnDisable()
+        {
         }
     }
 }

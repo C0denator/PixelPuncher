@@ -1503,6 +1503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 132887902153881292}
   - component: {fileID: 5236606356796851521}
+  - component: {fileID: 2657536335637770342}
   - component: {fileID: 6112962068880625818}
   m_Layer: 0
   m_Name: room_boss
@@ -1554,6 +1555,22 @@ MonoBehaviour:
   Walls: {fileID: 1205118688563049075}
   spaceCollider: {fileID: 1424113199206023177}
   WasVisited: 0
+--- !u!114 &2657536335637770342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4906896466256603529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 845fca4650b8ed44a92eb54d3a0234f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnpointParent: {fileID: 911884361293427693}
+  enemyParent: {fileID: 5894925558761152858}
+  wavesForThisRoom: 1
+  waves: []
 --- !u!114 &6112962068880625818
 MonoBehaviour:
   m_ObjectHideFlags: 0

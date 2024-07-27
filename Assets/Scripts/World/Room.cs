@@ -30,7 +30,7 @@ namespace GameProg.World
             World = GetComponentInParent<World>();
             
             //check for a CombatController component and initialize it
-            if (roomType == RoomType.Combat)
+            if (roomType == RoomType.Combat || roomType == RoomType.Boss)
             {
                 CombatController combatController = GetComponent<CombatController>();
                 
