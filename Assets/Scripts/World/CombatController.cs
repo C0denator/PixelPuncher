@@ -83,7 +83,7 @@ namespace GameProg.World
 
         private void CombatStart()
         {
-            //was teh room visited before?
+            //was the room visited before?
             if (_room.WasVisited)
             {
                 return;
@@ -104,6 +104,12 @@ namespace GameProg.World
             
             //open all doors
             _room.OpenDoors();
+            
+            //invoke room cleared event
+            _room.OnRoomCleared?.Invoke();
+            
+            //unsubscribe from room events
+            _room.OnRoomEnter -= CombatStart;
         }
         
         private void SpawnWave()
@@ -148,6 +154,15 @@ namespace GameProg.World
                 {
                     CombatFinish();
                 }
+            }
+        }
+
+        private void OnDisable()
+        {
+            //unsubscribe from room events
+            if (_room != null)
+            {
+                _room.OnRoomEnter -= CombatStart;
             }
         }
     }

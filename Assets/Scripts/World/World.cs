@@ -23,8 +23,9 @@ namespace GameProg.World
         
         //getters
         public GameObject Player => player;
+        public List<Room> GeneratedRooms => generatedRooms;
         
-        public static event Action OnWorldGenerated;
+        public event Action OnWorldGenerated;
 
         private void Start()
         {

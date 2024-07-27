@@ -21,6 +21,8 @@ namespace GameProg.World
         
         public System.Action OnRoomEnter;
         public System.Action OnRoomExit;
+
+        public System.Action OnRoomCleared; 
     
         public void InitializeRoom()
         {

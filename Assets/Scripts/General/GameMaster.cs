@@ -11,9 +11,12 @@ namespace GameProg.General
         [SerializeField] private GameProg.World.World currentWorld;
         [SerializeField] [CanBeNull] private Camera currentCamera;
         
-        public Action<Camera> OnCameraChanged;
-        
         private static GameMaster _instance;
+        
+        public Action<Camera> OnCameraChanged;
+        public Action OnAllRoomsCleared;
+        
+        private int _clearedRooms;
         
         public Camera CurrentCamera
         {
@@ -36,46 +39,63 @@ namespace GameProg.General
             {
                 Destroy(gameObject);
             }
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
+            
             DontDestroyOnLoad(gameObject);
             
-            //subscribe to the scene loaded event
-            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-            
-            //subscribe to the world generated event
-            GameProg.World.World.OnWorldGenerated += OnWorldGenerated;
-            
-            if (SceneManager.GetActiveScene().name=="MainMenu")
-            {
-                music.PlayClip("menu");
-            }
+            //subscribe to the scene events
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
         
         public void SwitchScene(string sceneName)
         {
             //does the scene exist?
-            if (string.IsNullOrEmpty(sceneName))
+            /*if (SceneManager.GetSceneByName(sceneName).buildIndex == -1)
             {
-                Debug.LogError("Scene name is empty");
+                Debug.LogError("Scene "+sceneName+" not found");
                 return;
-            }
+            }*/
             
             //switch scene
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(sceneName);
         }
         
-        private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            Debug.Log("Scene loaded: "+scene.name);
+            
             //find world
             currentWorld = FindObjectOfType<GameProg.World.World>();
+            
+            if(currentWorld != null)
+            {
+                //subscribe to the world generated event
+                currentWorld.OnWorldGenerated += OnWorldGenerated;
+            }
 
             if (SceneManager.GetActiveScene().name=="MainMenu")
             {
                 music.PlayClip("menu");
+            }
+        }
+        
+        private void OnSceneUnloaded(Scene scene)
+        {
+            Debug.Log("Scene unloaded: "+scene.name);
+            
+            //unsubscribe from the world generated event
+            if (currentWorld != null)
+            {
+                currentWorld.OnWorldGenerated -= OnWorldGenerated;
+            }
+            
+            //unsubscribe from the room cleared event
+            if (currentWorld != null)
+            {
+                for(int i=0; i<currentWorld.GeneratedRooms.Count; i++)
+                {
+                    currentWorld.GeneratedRooms[i].OnRoomCleared -= HandleOnRoomCleared;
+                }
             }
         }
         
@@ -92,6 +112,27 @@ namespace GameProg.General
             if (currentWorld.name == "World1")
             {
                 music.PlayClip("world1");
+            }
+            
+            //subscribe to the room cleared event
+            for(int i=0; i<currentWorld.GeneratedRooms.Count; i++)
+            {
+                currentWorld.GeneratedRooms[i].OnRoomCleared += HandleOnRoomCleared;
+            }
+            
+            //unsub from the world generated event
+            currentWorld.OnWorldGenerated -= OnWorldGenerated;
+        }
+        
+        private void HandleOnRoomCleared()
+        {
+            Debug.Log("Room cleared");
+            
+            _clearedRooms++;
+            
+            if (_clearedRooms == currentWorld.GeneratedRooms.Count - 2)
+            {
+                OnAllRoomsCleared?.Invoke();
             }
         }
     }

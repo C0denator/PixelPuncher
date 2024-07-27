@@ -144,11 +144,11 @@ namespace GameProg.World
 
                 if (WasUsedInGeneration)
                 {
-                    Debug.LogError("Door "+gameObject.name+" was used in generation but no other door was found");
+                    Debug.Log("Door "+gameObject.name+" was used in generation but no other door was found");
                 }
                 
                 MarkedForDeletion = true;
-                Debug.LogWarning("Door "+gameObject.name+" was marked for deletion because no other door was found");
+                Debug.Log("Door "+gameObject.name+" was marked for deletion because no other door was found");
             }
             
             

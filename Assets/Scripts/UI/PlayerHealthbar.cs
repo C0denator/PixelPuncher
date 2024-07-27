@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace GameProg.UI
         [SerializeField] private Canvas _canvas;
         private World.World _world;
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             //get references
             var player = GameObject.FindWithTag("Player");
@@ -35,12 +36,6 @@ namespace GameProg.UI
             if (_canvas == null) Debug.LogError("Canvas not found");
             if (heartPrefab == null) Debug.LogError("Heart prefab not found");
             if (_world == null) Debug.LogError("World not found");
-
-            //subscribe to the health changed event
-            _playerHealth.OnHealthChanged += HandleOnHealthChanged;
-            
-            //subscribe to the world generated event
-            World.World.OnWorldGenerated += HandleOnWorldGenerated;
 
         }
 
@@ -97,13 +92,22 @@ namespace GameProg.UI
             
         }
 
+        private void OnEnable()
+        {
+            //subscribe to the health changed event
+            _playerHealth.OnHealthChanged += HandleOnHealthChanged;
+            
+            //subscribe to the world generated event
+            _world.OnWorldGenerated += HandleOnWorldGenerated;
+        }
+
         private void OnDisable()
         {
             //unsubscribe from the health changed event
             _playerHealth.OnHealthChanged -= HandleOnHealthChanged;
             
             //unsubscribe from the world generated event
-            World.World.OnWorldGenerated -= HandleOnWorldGenerated;
+            _world.OnWorldGenerated -= HandleOnWorldGenerated;
         }
     }
 }
