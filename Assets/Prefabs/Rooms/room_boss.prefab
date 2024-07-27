@@ -1503,6 +1503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 132887902153881292}
   - component: {fileID: 5236606356796851521}
+  - component: {fileID: 6112962068880625818}
   m_Layer: 0
   m_Name: room_boss
   m_TagString: Untagged
@@ -1553,6 +1554,18 @@ MonoBehaviour:
   Walls: {fileID: 1205118688563049075}
   spaceCollider: {fileID: 1424113199206023177}
   WasVisited: 0
+--- !u!114 &6112962068880625818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4906896466256603529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1ef24032c83024c81129a1f84d9613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5037634625115186210
 GameObject:
   m_ObjectHideFlags: 0
@@ -7156,7 +7169,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5959457484948462837, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
-      insertIndex: -1
+      insertIndex: 2
       addedObject: {fileID: 8112093421496051999}
   m_SourcePrefab: {fileID: 100100000, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
 --- !u!114 &107393854941660104 stripped
@@ -7192,9 +7205,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c492a38ac373fb4990aec588471038d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   animator: {fileID: 3589707217814277839}
   _spriteRenderer: {fileID: 4138717515491296069}
   _boxCollider2D: {fileID: 1865384854749735597}
+  _openDistance: 5
 --- !u!95 &3589707217814277839 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5996762855940183785, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
@@ -7275,7 +7290,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5959457484948462837, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
-      insertIndex: -1
+      insertIndex: 2
       addedObject: {fileID: 8108665418241001223}
   m_SourcePrefab: {fileID: 100100000, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
 --- !u!61 &975744636053333392 stripped
@@ -7311,9 +7326,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c492a38ac373fb4990aec588471038d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   animator: {fileID: 2718085677539000818}
   _spriteRenderer: {fileID: 3244292198568037496}
   _boxCollider2D: {fileID: 975744636053333392}
+  _openDistance: 5
 --- !u!95 &2718085677539000818 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5996762855940183785, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
