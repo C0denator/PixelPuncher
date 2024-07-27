@@ -1,14 +1,15 @@
 using System;
 using JetBrains.Annotations;
+using Sound;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace GameProg.General
+namespace GameProg.World
 {
     public class GameMaster : MonoBehaviour
     {
         [SerializeField] private Music music;
-        [SerializeField] private GameProg.World.World currentWorld;
+        [SerializeField] private World currentWorld;
         [SerializeField] [CanBeNull] private Camera currentCamera;
         
         private static GameMaster _instance;
@@ -66,7 +67,7 @@ namespace GameProg.General
             Debug.Log("Scene loaded: "+scene.name);
             
             //find world
-            currentWorld = FindObjectOfType<GameProg.World.World>();
+            currentWorld = FindObjectOfType<World>();
             
             if(currentWorld != null)
             {
@@ -76,7 +77,7 @@ namespace GameProg.General
 
             if (SceneManager.GetActiveScene().name=="MainMenu")
             {
-                music.PlayClip("menu");
+                music.PlayClip("MainMenu");
             }
         }
         
@@ -112,7 +113,7 @@ namespace GameProg.General
             //if world1
             if (currentWorld.name == "World1")
             {
-                music.PlayClip("world1");
+                music.PlayClip("World1");
             }
             
             //subscribe to the room cleared event
@@ -127,8 +128,6 @@ namespace GameProg.General
         
         private void HandleOnRoomCleared()
         {
-            Debug.Log("Room cleared");
-            
             _clearedRooms++;
             
             if (_clearedRooms == currentWorld.GeneratedRooms.Count - 2)

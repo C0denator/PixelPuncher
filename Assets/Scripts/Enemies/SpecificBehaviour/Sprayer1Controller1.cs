@@ -76,8 +76,6 @@ namespace GameProg.Enemies.SpecificBehaviour
                 //is cooldown over?
                 if (_cooldownTimer <= 0)
                 {
-                    Debug.Log("Starting attack");
-                    
                     //reset target
                     _navMeshAgent.ResetPath();
                     

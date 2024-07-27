@@ -7089,7 +7089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7a1f0b9c5e43242be86e30b88a2f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 8854570724913615862, guid: 6d109fee1225c8a4dbd52d025057b442, type: 3}
   spawnAtWave: 0
 --- !u!1001 &7127504659893950502
 PrefabInstance:
@@ -7147,22 +7147,64 @@ PrefabInstance:
       propertyPath: roomA
       value: 
       objectReference: {fileID: 5236606356796851521}
+    - target: {fileID: 7175485028740111342, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+      propertyPath: isBossDoor
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5959457484948462837, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8112093421496051999}
   m_SourcePrefab: {fileID: 100100000, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
 --- !u!114 &107393854941660104 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7175485028740111342, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
   m_PrefabInstance: {fileID: 7127504659893950502}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3485157996635276499}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10f97bdf1b41d7147a210803f8c82646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &1865384854749735597 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 8866134240755708555, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+  m_PrefabInstance: {fileID: 7127504659893950502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3485157996635276499 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5959457484948462837, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+  m_PrefabInstance: {fileID: 7127504659893950502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8112093421496051999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3485157996635276499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c492a38ac373fb4990aec588471038d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3589707217814277839}
+  _spriteRenderer: {fileID: 4138717515491296069}
+  _boxCollider2D: {fileID: 1865384854749735597}
+--- !u!95 &3589707217814277839 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5996762855940183785, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+  m_PrefabInstance: {fileID: 7127504659893950502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &4138717515491296069 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6595053393652243299, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+  m_PrefabInstance: {fileID: 7127504659893950502}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5867167848303986835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3712555621966090421, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
@@ -7224,22 +7266,64 @@ PrefabInstance:
       propertyPath: roomA
       value: 
       objectReference: {fileID: 5236606356796851521}
+    - target: {fileID: 7175485028740111342, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+      propertyPath: isBossDoor
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5959457484948462837, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8108665418241001223}
   m_SourcePrefab: {fileID: 100100000, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+--- !u!61 &975744636053333392 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 8866134240755708555, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+  m_PrefabInstance: {fileID: 8538926659931756315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1518888536599186677 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7175485028740111342, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
   m_PrefabInstance: {fileID: 8538926659931756315}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2608819538514217966}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10f97bdf1b41d7147a210803f8c82646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2608819538514217966 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5959457484948462837, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+  m_PrefabInstance: {fileID: 8538926659931756315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8108665418241001223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2608819538514217966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c492a38ac373fb4990aec588471038d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2718085677539000818}
+  _spriteRenderer: {fileID: 3244292198568037496}
+  _boxCollider2D: {fileID: 975744636053333392}
+--- !u!95 &2718085677539000818 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5996762855940183785, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+  m_PrefabInstance: {fileID: 8538926659931756315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &3244292198568037496 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6595053393652243299, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}
+  m_PrefabInstance: {fileID: 8538926659931756315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4973655302025201582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3712555621966090421, guid: 427e5144858db594091a8b50ae7b4f6b, type: 3}

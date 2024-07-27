@@ -930,7 +930,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1605064127}
-  - component: {fileID: 1605064126}
+  - component: {fileID: 1605064128}
   - component: {fileID: 1605064125}
   - component: {fileID: 1605064124}
   m_Layer: 0
@@ -1132,33 +1132,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1605064126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605064123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2874b5b526eae55439ae8dd3313f50c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSourceA: {fileID: 1605064125}
-  audioSourceB: {fileID: 1605064124}
-  startAudioClip:
-    name: 
-    audioClip: {fileID: 0}
-    volume: 0
-  fadeTime: 3
-  fadeOnStart: 1
-  playableAudioClips:
-  - name: menu
-    audioClip: {fileID: 8300000, guid: 2ab05979328a6674e8287d96add0ff91, type: 3}
-    volume: 0.4
-  - name: world1
-    audioClip: {fileID: 8300000, guid: eb57c79a71d3a4b4bb6cf0f6c231c375, type: 3}
-    volume: 0.2
 --- !u!4 &1605064127
 Transform:
   m_ObjectHideFlags: 0
@@ -1174,6 +1147,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1605064128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605064123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf4036b3654a1b4cb942abd32ce9a66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSourceA: {fileID: 1605064125}
+  audioSourceB: {fileID: 1605064124}
+  startAudioClip:
+    name: 
+    audioClip: {fileID: 0}
+    volume: 0
+  fadeTime: 3
+  fadeOnStart: 1
+  playableAudioClips:
+  - name: MainMenu
+    audioClip: {fileID: 8300000, guid: 2ab05979328a6674e8287d96add0ff91, type: 3}
+    volume: 0.256
+  - name: World1
+    audioClip: {fileID: 8300000, guid: eb57c79a71d3a4b4bb6cf0f6c231c375, type: 3}
+    volume: 0.167
 --- !u!1 &1609093747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,7 +1204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42dcf8874c0f5d4890aea41e81f9bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: {fileID: 1605064126}
+  music: {fileID: 1605064128}
   currentWorld: {fileID: 0}
   currentCamera: {fileID: 0}
 --- !u!4 &1609093749

@@ -14,6 +14,7 @@ namespace GameProg.World
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private BoxCollider2D _boxCollider2D;
         [SerializeField] private AudioClipWithVolume deniedSound;
+        [SerializeField] private bool isBossDoor;
         
         public SpriteRenderer SpriteRenderer => _spriteRenderer;
 
@@ -182,6 +183,8 @@ namespace GameProg.World
 
         public void Open()
         {
+            if (isBossDoor) return;
+            
             //return if the door is marked for deletion
             if (MarkedForDeletion) return;
             

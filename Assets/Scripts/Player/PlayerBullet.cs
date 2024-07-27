@@ -25,8 +25,6 @@ namespace GameProg.Player
             
             if (other.gameObject.CompareTag("Enemy"))
             {
-                Debug.Log("Enemy hit");
-                
                 //look if the enemy has a health component
                 Health.Health enemyHealth = other.gameObject.GetComponent<Health.Health>();
                 

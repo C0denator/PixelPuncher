@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using GameProg.General;
+using GameProg.World;
+using Sound;
 using UnityEngine;
 
 namespace GameProg.Player

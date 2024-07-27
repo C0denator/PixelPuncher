@@ -34,8 +34,6 @@ namespace GameProg.UI
         
         private void HandleOnRoomCleared()
         {
-            Debug.Log("Room cleared");
-            
             _clearedRooms++;
             _counterText.text = _clearedRooms + "/" + (_world.GeneratedRooms.Count - 2);
             ;

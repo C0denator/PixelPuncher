@@ -1,10 +1,9 @@
-
 using System;
 using System.Collections;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace GameProg.General
+namespace Sound
 {
     public class Music : MonoBehaviour
     {

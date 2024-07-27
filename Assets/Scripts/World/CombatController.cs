@@ -44,10 +44,6 @@ namespace GameProg.World
                 Debug.LogWarning("No spawnpoints found in room "+_room.name);
                 return;
             }
-            else
-            {
-                Debug.Log("Found "+spawnpointList.Count+" spawnpoints in room "+_room.name);
-            }
             
             //initialize waves
             waves = new Wave[wavesForThisRoom+1];
@@ -89,8 +85,6 @@ namespace GameProg.World
                 return;
             }
             
-            Debug.Log("Combat started");
-            
             //close all doors
             _room.LockDoors();
             
@@ -100,8 +94,6 @@ namespace GameProg.World
         
         private void CombatFinish()
         {
-            Debug.Log("Combat finished");
-            
             //open all doors
             _room.OpenDoors();
             
@@ -126,8 +118,6 @@ namespace GameProg.World
                 
                 currentEnemies.Add(enemy);
             }
-            
-            Debug.Log("Wave "+_currentWave+" spawned");
         }
         
         private void HandleOnEnemyDeath(GameObject deadEnemy)
