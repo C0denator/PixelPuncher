@@ -19,6 +19,7 @@ namespace Sound
             else
             {
                 Destroy(gameObject);
+                return;
             }
         
             globalAudioSource = GetComponent<AudioSource>();

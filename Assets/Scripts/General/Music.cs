@@ -30,6 +30,7 @@ namespace GameProg.General
             else
             {
                 Destroy(gameObject);
+                return;
             }
             
             DontDestroyOnLoad(gameObject);
