@@ -36,6 +36,12 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
 
         public override void StartAttack(BossController ctx)
         {
+            if (ctx.GameMaster.GigachadMode)
+            {
+                secondsBetweenShots *= 0.75f;
+                secondsBetweenRockets *= 0.75f;
+            }
+            
             if(_attackCoroutine == null)
             {
                 _elapsedTime = 0;
@@ -136,8 +142,18 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                         //rotate downwards
                         bullet.transform.rotation = Quaternion.Euler(0, 0, -90);
                         
-                        //set velocity
-                        bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(ySin*10f, -1f) * bulletSpeed;
+                        
+
+                        if (ctx.GameMaster.GigachadMode)
+                        {
+                            //set velocity
+                            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(ySin*100f, -2f) * bulletSpeed;
+                        }
+                        else
+                        {
+                            //set velocity
+                            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(ySin*10f, -1f) * bulletSpeed;
+                        }
                         
                         //play sound
                         _audioSource.PlayOneShot(_attackSound.clip, _attackSound.volume);

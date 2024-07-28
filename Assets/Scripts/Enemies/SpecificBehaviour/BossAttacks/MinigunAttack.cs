@@ -32,6 +32,11 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
 
         public override void StartAttack(BossController ctx)
         {
+            if (ctx.GameMaster.GigachadMode)
+            {
+                secondsBetweenShots *= 0.75f;
+            }
+            
             if(_attackCoroutine == null)
             {
                 _elapsedTime = 0;
@@ -81,13 +86,23 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                         lookDir = ctx.Player.position - minigun.transform.position;
                         angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
                         bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+                        if (ctx.GameMaster.GigachadMode)
+                        {
+                            //rotate randomly
+                            bullet.transform.Rotate(Vector3.forward, Random.Range(-maxAngleDeviation*2, maxAngleDeviation*2));
+                            
+                            //set velocity
+                            bullet.GetComponent<Rigidbody2D>().velocity = bullet.transform.right * _bulletSpeed;
+                        }
+                        else
+                        {
+                            //rotate randomly
+                            bullet.transform.Rotate(Vector3.forward, Random.Range(-maxAngleDeviation, maxAngleDeviation));
                         
-                        //rotate randomly
-                        bullet.transform.Rotate(Vector3.forward, Random.Range(-maxAngleDeviation, maxAngleDeviation));
-                        
-                        //set velocity
-                        bullet.GetComponent<Rigidbody2D>().velocity = bullet.transform.right * _bulletSpeed;
-                        
+                            //set velocity
+                            bullet.GetComponent<Rigidbody2D>().velocity = bullet.transform.right * _bulletSpeed;
+                        }
                         
                         //play sound
                         _audioSource.PlayOneShot(_attackSound.clip, _attackSound.volume);

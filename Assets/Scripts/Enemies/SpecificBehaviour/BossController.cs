@@ -28,6 +28,7 @@ namespace GameProg.Enemies.SpecificBehaviour
         private Coroutine _waitCoroutine;
         private AudioSource _audioSource;
         private CircleCollider2D _collider;
+        private GameMaster _gameMaster;
         
         private float elapsedTimeBetweenAttacks;
         private bool _secondPhase;
@@ -40,6 +41,7 @@ namespace GameProg.Enemies.SpecificBehaviour
         public CircleCollider2D Collider => _collider;
         public Animator MiniGunAnimator => miniGunAnimator;
         public Animator MortarAnimator => mortarAnimator;
+        public GameMaster GameMaster => _gameMaster;
 
         private void Awake()
         {
@@ -48,6 +50,7 @@ namespace GameProg.Enemies.SpecificBehaviour
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _audioSource = FindObjectOfType<Sound.GlobalSound>().globalAudioSource;
             _collider = GetComponent<CircleCollider2D>();
+            _gameMaster = FindObjectOfType<GameMaster>();
             
             //error handling
             if (_player == null) Debug.LogError("Player not found in BossController");
@@ -59,6 +62,7 @@ namespace GameProg.Enemies.SpecificBehaviour
             if (_collider == null) Debug.LogError("Collider not found in BossController");
             if (miniGunAnimator == null) Debug.LogError("MiniGun animator not set in BossController");
             if (mortarAnimator == null) Debug.LogError("Mortar animator not set in BossController");
+            if (_gameMaster == null) Debug.LogError("GameMaster not found in BossController");
             
             //set up agent for 2D
             _navMeshAgent.updateRotation = false;

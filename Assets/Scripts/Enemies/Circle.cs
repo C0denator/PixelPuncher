@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using GameProg.Health;
 using UnityEngine;
@@ -11,10 +12,24 @@ namespace Enemies
     
         private float _timeLeft = 0f;
         public int _damage = 1;
-        
+        private GameMaster _gameMaster;
+
+        private void Awake()
+        {
+            _gameMaster = FindObjectOfType<GameMaster>();
+            
+            if (_gameMaster == null) Debug.LogError("GameMaster not found");
+        }
+
         // Start is called before the first frame update
         void Start()
         {
+            if (_gameMaster.GigachadMode)
+            {
+                _lifeTime *= 3;
+                _expandSpeed *= 3;
+            }
+            
             StartCoroutine(Explode());
         }
     

@@ -69,7 +69,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                     _audioSource.PlayOneShot(_attackSound.clip, _attackSound.volume);
                     
                     //spawn bullet ring
-                    SpawnBulletRing();
+                    SpawnBulletRing(ctx);
                 }
                 
                 //rotate the core depending on the velocity
@@ -87,9 +87,20 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
             yield return null;
         }
 
-        private void SpawnBulletRing()
+        private void SpawnBulletRing(BossController ctx)
         {
-            int BulletAmount = 36;
+            int BulletAmount;
+            
+            if (ctx.GameMaster.GigachadMode)
+            {
+                BulletAmount = 54;
+            }
+            else
+            {
+                BulletAmount = 36;
+            }
+            
+            
             
             //spawn a ring around the boss  
             for (int i = 0; i < BulletAmount; i++)

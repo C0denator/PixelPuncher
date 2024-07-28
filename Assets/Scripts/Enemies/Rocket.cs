@@ -113,9 +113,19 @@ namespace Enemies
             //delete line
             _lineRenderer.SetPosition(0, Vector3.zero);
             _lineRenderer.SetPosition(1, Vector3.zero);
+
+            if (_gameMaster.GigachadMode)
+            {
+                //shoot rocket
+                _rb.velocity = transform.right * speed * 3;
+            }
+            else
+            {
+                //shoot rocket
+                _rb.velocity = transform.right * speed;
+            }
             
-            //shoot rocket
-            _rb.velocity = transform.right * speed;
+            
             
             yield return null;
             
