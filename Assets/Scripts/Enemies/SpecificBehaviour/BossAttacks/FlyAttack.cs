@@ -36,9 +36,11 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
             
             //TODO: Implement attack
             
-            yield return null;
+            OnAttackFinished?.Invoke();
             
             _attackCoroutine = null;
+            
+            yield return null;
         }
         
         private new void OnDisable()

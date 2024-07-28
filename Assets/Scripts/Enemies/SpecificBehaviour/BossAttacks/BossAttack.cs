@@ -12,6 +12,12 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
         public virtual void StartAttack(BossController ctx){
             throw new NotImplementedException();
         }
+        
+        public virtual void StopAttack(){
+            if(_attackCoroutine != null){
+                StopCoroutine(_attackCoroutine);
+            }
+        }
 
         protected void OnDisable()
         {

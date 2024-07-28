@@ -10,32 +10,44 @@ namespace GameProg.Enemies.SpecificBehaviour
 {
     public class BossController : MonoBehaviour
     {
+        [SerializeField] private GameObject eye;
+        [SerializeField] private GameObject core;
         [SerializeField] [Range(0f,3f)] private float _secondsBetweenAttacks;
         [SerializeField] private List<BossAttackListItem> _attacks;
+        [SerializeField] private AudioClipWithVolume _destroySound;
         
         private Transform _player;
         private Health.Health _health;
         private int _lastAttackIndex;
+        [SerializeField] private BossAttack _currentAttack;
         private NavMeshAgent _navMeshAgent;
         private Coroutine _waitCoroutine;
+        private AudioSource _audioSource;
+        private CircleCollider2D _collider;
         
         private float elapsedTimeBetweenAttacks;
+        private bool _secondPhase;
         
         public Transform Player => _player;
         public Health.Health Health => _health;
         public NavMeshAgent NavMeshAgent => _navMeshAgent;
+        public CircleCollider2D Collider => _collider;
 
         private void Awake()
         {
             _player = GameObject.FindWithTag("Player").transform;
             _health = _player.GetComponent<Health.Health>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _audioSource = FindObjectOfType<Sound.GlobalSound>().globalAudioSource;
+            _collider = GetComponent<CircleCollider2D>();
             
             //error handling
             if (_player == null) Debug.LogError("Player not found in BossController");
             if (_health == null) Debug.LogError("Player health not found in BossController");
             if(_attacks.Count == 0) Debug.LogError("No attacks set in BossController");
             if (_navMeshAgent == null) Debug.LogError("NavMeshAgent not found in BossController");
+            if (_audioSource == null) Debug.LogError("Global audio source not found in BossController");
+            if (_collider == null) Debug.LogError("Collider not found in BossController");
             
             //set up agent for 2D
             _navMeshAgent.updateRotation = false;
@@ -44,11 +56,37 @@ namespace GameProg.Enemies.SpecificBehaviour
 
         private void Start()
         {
+            _secondPhase = false;
+            
             //start waiting coroutine
             _waitCoroutine = StartCoroutine(WaitCoroutine());
             
             //set last attack index to -1
             _lastAttackIndex = -1;
+        }
+
+        private void FixedUpdate()
+        {
+            //look at player
+            Vector2 lookDir = _player.position - eye.transform.position;
+            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+            eye.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+            if (_secondPhase)
+            {
+                //set rotation speed depending on agent velocity
+                float rotationSpeed = _navMeshAgent.velocity.magnitude * 10;
+                
+                //moving left or right
+                if (_navMeshAgent.velocity.x > 0.1f)
+                {
+                    core.transform.Rotate(Vector3.forward, rotationSpeed);
+                }
+                else if (_navMeshAgent.velocity.x < -0.1f)
+                {
+                    core.transform.Rotate(Vector3.forward, -rotationSpeed);
+                }
+            }
         }
 
         private IEnumerator WaitCoroutine()
@@ -63,9 +101,9 @@ namespace GameProg.Enemies.SpecificBehaviour
             
             yield return new WaitForSeconds(_secondsBetweenAttacks);
             
-            StartRandomAttack();
-            
             _waitCoroutine = null;
+            
+            StartRandomAttack();
         }
 
         private void StartRandomAttack()
@@ -77,6 +115,12 @@ namespace GameProg.Enemies.SpecificBehaviour
             {
                 //get list of available attacks
                 List<BossAttackListItem> availableAttacks = new List<BossAttackListItem>();
+                
+                if(availableAttacks.Count == 0)
+                {
+                    Debug.LogWarning("No attacks available");
+                    return;
+                }
 
                 foreach (var attack in _attacks)
                 {
@@ -129,8 +173,11 @@ namespace GameProg.Enemies.SpecificBehaviour
             //set new attack as last attack
             _lastAttackIndex = randomIndex;
             
+            //set current attack
+            _currentAttack = randomAttack;
+            
             //start attack
-            randomAttack.StartAttack(this);
+            _currentAttack.StartAttack(this);
         }
         
         private void HandleOnAttackFinished()
@@ -151,6 +198,38 @@ namespace GameProg.Enemies.SpecificBehaviour
         private void HandleOnHealthChanged()
         {
             Debug.Log("Boss health changed");
+            
+            if(_health.CurrentHealth <= _health.MaxHealth / 2 && !_secondPhase)
+            {
+                _secondPhase = true;
+                
+                //disable flying attack
+                for(int i = 0; i < _attacks.Count; i++)
+                {
+                    if (_attacks[i].Attack is FlyAttack)
+                    {
+                        var attack = _attacks[i];
+                        attack.IsAvailable = false;
+                        _attacks[i] = attack;
+                        
+                        break;
+                    }
+                }
+                
+                //enable roll attack
+                for(int i = 0; i < _attacks.Count; i++)
+                {
+                    if (_attacks[i].Attack is RollAttack)
+                    {
+                        var attack = _attacks[i];
+                        attack.IsAvailable = true;
+                        _attacks[i] = attack;
+                        
+                        break;
+                    }
+                }
+
+            }
         }
         
         private void HandleOnDeath(GameObject obj)
@@ -189,10 +268,17 @@ namespace GameProg.Enemies.SpecificBehaviour
         }
         
         [Serializable]
-        public struct BossAttackListItem
+        private struct BossAttackListItem
         {
             public BossAttack Attack;
             public bool IsAvailable;
+        }
+        
+        [Serializable]
+        private struct AudioClipWithVolume
+        {
+            public AudioClip clip;
+            [Range(0f, 1f)] public float volume;
         }
     }
 }
