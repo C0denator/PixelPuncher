@@ -9,7 +9,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
         [SerializeField] [Range(0.01f,1f)] private float amplitude;
         [SerializeField] [Range(0.1f,15f)] private float frequency;
         [SerializeField] [Range(0.1f,15f)] private float horizontalSpeed;
-        [SerializeField] [Range(3f,10f)] private float attackDuration;
+        [SerializeField] [Range(3f,20f)] private float attackDuration;
         [SerializeField] [Range(0.1f, 1f)] private float secondsBetweenShots;
         [SerializeField] [Range(1f, 10f)] private float bulletSpeed;
         [SerializeField] private Transform _bulletSpawnPoint;
@@ -69,7 +69,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                 }
                 
                 target += Vector3.up;
-                hit = Physics2D.Raycast(target, Vector3.up, 5f, LayerMask.GetMask("Wall"));
+                hit = Physics2D.Raycast(target, Vector3.up, 2f, LayerMask.GetMask("Wall"));
             } while (hit.collider == null);
             
             Debug.Log("Target found with " + i + " iterations");
@@ -113,6 +113,9 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
             while (_elapsedTime < attackDuration)
             {
                 _elapsedTime += Time.deltaTime;
+                
+                float ySin = Mathf.Sin(Time.time * frequency) * amplitude;
+                sinVector = new Vector3(0, ySin, 0);
 
                 if (_elapsedTime > 1f)
                 {
@@ -126,7 +129,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                         bullet.transform.rotation = Quaternion.Euler(0, 0, -90);
                         
                         //set velocity
-                        bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1) * bulletSpeed;
+                        bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(ySin*10f, -1f) * bulletSpeed;
                         
                         //play sound
                         _audioSource.PlayOneShot(_attackSound.clip, _attackSound.volume);
@@ -139,9 +142,6 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                     
                     }
                 }
-                
-                float ySin = Mathf.Sin(Time.time * frequency) * amplitude;
-                sinVector = new Vector3(0, ySin, 0);
 
                 Debug.Log("Sin vector: " + sinVector * Time.deltaTime);
                     

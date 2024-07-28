@@ -791,15 +791,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 0.05
   frequency: 2
-  horizontalSpeed: 5
-  attackDuration: 10
-  secondsBetweenShots: 0.3
-  bulletSpeed: 8
+  horizontalSpeed: 15
+  attackDuration: 15
+  secondsBetweenShots: 0.2
+  bulletSpeed: 1.25
   _bulletSpawnPoint: {fileID: 6992623923143700880}
-  bulletPrefab: {fileID: 5981027238127665226, guid: bd17be733a54354459803df378e823d4, type: 3}
+  bulletPrefab: {fileID: 2015684106694484879, guid: a6b39aad2ed51a84094f5a1ab79d131d, type: 3}
   _attackSound:
-    clip: {fileID: 8300000, guid: 391b8aa543186c44baef41f0006c1713, type: 3}
-    volume: 0.5
+    clip: {fileID: 8300000, guid: defe893ad499b534eb89e2859843fb6f, type: 3}
+    volume: 0.744
   _debugSphere: {fileID: 2823575052722226980, guid: c972b24c27389534ba377326fa90580d, type: 3}
 --- !u!114 &-7262659044578049045
 MonoBehaviour:

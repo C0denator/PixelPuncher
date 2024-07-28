@@ -10,7 +10,7 @@ namespace GameProg.Enemies
         private void Start()
         {
             //destroy the bullet max 5 seconds after it was created
-            Destroy(gameObject, 5f);
+            Destroy(gameObject, 20f);
             
             //set z position to 0
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
