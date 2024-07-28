@@ -17,6 +17,8 @@ namespace GameProg.Enemies.SpecificBehaviour
         [SerializeField] private List<BossAttack> _secondPhaseAttacks;
         [SerializeField] private AudioClipWithVolume _destroySound;
         [SerializeField] private List<GameObject> _destroyObjects; //objects to destroy on second phase
+        [SerializeField] private Animator miniGunAnimator;
+        [SerializeField] private Animator mortarAnimator;
         
         private Transform _player;
         private Health.Health _health;
@@ -36,6 +38,8 @@ namespace GameProg.Enemies.SpecificBehaviour
         public Health.Health Health => _health;
         public NavMeshAgent NavMeshAgent => _navMeshAgent;
         public CircleCollider2D Collider => _collider;
+        public Animator MiniGunAnimator => miniGunAnimator;
+        public Animator MortarAnimator => mortarAnimator;
 
         private void Awake()
         {
@@ -53,6 +57,8 @@ namespace GameProg.Enemies.SpecificBehaviour
             if (_navMeshAgent == null) Debug.LogError("NavMeshAgent not found in BossController");
             if (_audioSource == null) Debug.LogError("Global audio source not found in BossController");
             if (_collider == null) Debug.LogError("Collider not found in BossController");
+            if (miniGunAnimator == null) Debug.LogError("MiniGun animator not set in BossController");
+            if (mortarAnimator == null) Debug.LogError("Mortar animator not set in BossController");
             
             //set up agent for 2D
             _navMeshAgent.updateRotation = false;

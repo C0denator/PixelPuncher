@@ -11,13 +11,14 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
         
         private void Awake()
         {
-            _elapsedTime = 0;
+            
         }
 
         public override void StartAttack(BossController ctx)
         {
             if(_attackCoroutine == null)
             {
+                _elapsedTime = 0;
                 _attackCoroutine = StartCoroutine(LaserAttackCoroutine());
             }
             else

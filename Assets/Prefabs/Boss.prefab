@@ -773,6 +773,8 @@ MonoBehaviour:
   - {fileID: 6995501843691390756}
   - {fileID: 8471814948705618468}
   - {fileID: 8216482102769897971}
+  miniGunAnimator: {fileID: 420338536337782471}
+  mortarAnimator: {fileID: 6957811543642385888}
   _currentAttack: {fileID: 0}
   _lastAttack: {fileID: 0}
 --- !u!114 &-865285591626872570
@@ -787,10 +789,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a63eb7c7f79274b932216c913d41ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 1
-  frequency: 1
-  horizontalSpeed: 1
-  attackDuration: 5
+  amplitude: 0.1
+  frequency: 2
+  horizontalSpeed: 5
+  attackDuration: 10
+  _debugSphere: {fileID: 2823575052722226980, guid: c972b24c27389534ba377326fa90580d, type: 3}
 --- !u!114 &-7262659044578049045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -823,7 +826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41536582e5ba6af47bedff156e201617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDuration: 5.76
+  attackDuration: 6
 --- !u!114 &-6984643285377032830
 MonoBehaviour:
   m_ObjectHideFlags: 0

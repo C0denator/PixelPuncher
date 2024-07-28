@@ -66,6 +66,8 @@ namespace GameProg.World
         {
             Debug.Log("Scene loaded: "+scene.name);
             
+            _clearedRooms = 0;
+            
             //find world
             currentWorld = FindObjectOfType<World>();
             
@@ -73,6 +75,10 @@ namespace GameProg.World
             {
                 //subscribe to the world generated event
                 currentWorld.OnWorldGenerated += OnWorldGenerated;
+            }
+            else
+            {
+                Debug.Log("World not found");
             }
 
             if (SceneManager.GetActiveScene().name=="MainMenu")
@@ -130,7 +136,7 @@ namespace GameProg.World
         {
             _clearedRooms++;
             
-            if (_clearedRooms == currentWorld.GeneratedRooms.Count - 2)
+            if (_clearedRooms >= currentWorld.GeneratedRooms.Count - 2)
             {
                 OnAllRoomsCleared?.Invoke();
             }

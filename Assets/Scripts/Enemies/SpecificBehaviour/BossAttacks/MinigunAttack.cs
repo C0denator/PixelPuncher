@@ -11,14 +11,15 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
         
         private void Awake()
         {
-            _elapsedTime = 0;
+            
         }
 
         public override void StartAttack(BossController ctx)
         {
             if(_attackCoroutine == null)
             {
-                _attackCoroutine = StartCoroutine(MinigunAttackCoroutine());
+                _elapsedTime = 0;
+                _attackCoroutine = StartCoroutine(MinigunAttackCoroutine(ctx));
             }
             else
             {
@@ -26,12 +27,28 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
             }
         }
         
-        private IEnumerator MinigunAttackCoroutine()
+        private IEnumerator MinigunAttackCoroutine(BossController ctx)
         {
             Debug.Log("Minigun attack started");
             
-            //TODO: Implement attack
-            yield return new WaitForSeconds(attackDuration);
+            //start minigun animation
+            ctx.MiniGunAnimator.SetTrigger("Fire");
+
+            while (_elapsedTime < attackDuration)
+            {
+                _elapsedTime += Time.deltaTime;
+
+                //move towards player
+                ctx.NavMeshAgent.SetDestination(ctx.Player.position);
+
+                yield return null;
+            }
+
+            //stop minigun animation
+            ctx.MiniGunAnimator.SetTrigger("Stop");
+            
+            //reset path
+            ctx.NavMeshAgent.ResetPath();
             
             OnAttackFinished?.Invoke();
             
