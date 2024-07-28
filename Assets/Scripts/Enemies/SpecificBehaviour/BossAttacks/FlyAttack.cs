@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
 {
@@ -12,9 +13,12 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
         [SerializeField] [Range(0.1f,15f)] private float horizontalSpeed;
         [SerializeField] [Range(3f,20f)] private float attackDuration;
         [SerializeField] [Range(0.1f, 1f)] private float secondsBetweenShots;
-        [SerializeField] [Range(1f, 10f)] private float bulletSpeed;
+        [SerializeField] [Range(0.1f, 5f)] private float secondsBetweenRockets;
+        [SerializeField] [Range(1f, 3f)] private float bulletSpeed;
         [FormerlySerializedAs("_bulletSpawnPoint")] [SerializeField] private GameObject minigun;
+        [SerializeField] private GameObject mortar;
         [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private GameObject rocketPrefab;
         [SerializeField] private AudioClipWithVolume _attackSound;
         [SerializeField] private GameObject _debugSphere;
         
@@ -73,7 +77,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                 }
                 
                 target += Vector3.up;
-                hit = Physics2D.Raycast(target, Vector3.up, 1f, LayerMask.GetMask("Wall"));
+                hit = Physics2D.Raycast(target, Vector3.up, 1.5f, LayerMask.GetMask("Wall"));
             } while (hit.collider == null);
             
             Debug.Log("Target found with " + i + " iterations");
@@ -112,8 +116,8 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
             ctx.MiniGunAnimator.SetTrigger("Fire");
 
             float secondsTillLastShot = secondsBetweenShots;
+            float secondsTillLastRocket = secondsBetweenRockets;
             
-            //TODO: Implement attack
             while (_elapsedTime < attackDuration)
             {
                 _elapsedTime += Time.deltaTime;
@@ -144,6 +148,31 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                     {
                         secondsTillLastShot += Time.deltaTime;
                     
+                    }
+                    
+                    //shoot rocket
+                    if (secondsTillLastRocket >= secondsBetweenRockets)
+                    {
+                        GameObject rocket = Instantiate(rocketPrefab, mortar.transform.position, Quaternion.identity);
+
+                        //rotate downwards
+                        rocket.transform.rotation = Quaternion.Euler(0, 0, -90);
+                        
+                        //set velocity
+                        rocket.GetComponent<Rigidbody2D>().velocity = new Vector2(ySin*10f, -2f);
+                        rocket.GetComponent<Rigidbody2D>().angularVelocity = Random.Range(-90f, 90f);
+                        
+                        //play sound
+                        _audioSource.PlayOneShot(_attackSound.clip, _attackSound.volume);
+                        
+                        //play mortar animation
+                        ctx.MortarAnimator.SetTrigger("Fire");
+                        
+                        secondsTillLastRocket = 0;
+                    }
+                    else
+                    {
+                        secondsTillLastRocket += Time.deltaTime;
                     }
                 }
 
