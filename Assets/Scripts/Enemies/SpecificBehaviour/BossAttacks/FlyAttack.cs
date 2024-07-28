@@ -6,16 +6,27 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
 {
     public class FlyAttack : BossAttack
     {
-        [SerializeField] [Range(0.1f,40f)] private float amplitude;
+        [SerializeField] [Range(0.01f,1f)] private float amplitude;
         [SerializeField] [Range(0.1f,15f)] private float frequency;
         [SerializeField] [Range(0.1f,15f)] private float horizontalSpeed;
         [SerializeField] [Range(3f,10f)] private float attackDuration;
+        [SerializeField] [Range(0.1f, 1f)] private float secondsBetweenShots;
+        [SerializeField] [Range(1f, 10f)] private float bulletSpeed;
+        [SerializeField] private Transform _bulletSpawnPoint;
+        [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private AudioClipWithVolume _attackSound;
         [SerializeField] private GameObject _debugSphere;
         
         private float _elapsedTime;
+        private AudioSource _audioSource;
         
         private void Awake()
         {
+            _audioSource = FindObjectOfType<Sound.GlobalSound>().globalAudioSource;
+            
+            if (_audioSource == null) Debug.LogError("Global audio source not found in FlyAttack");
+            if (bulletPrefab == null) Debug.LogError("Bullet prefab not found in FlyAttack");
+            if (_bulletSpawnPoint == null) Debug.LogError("Bullet spawn point not found in FlyAttack");
         }
 
         public override void StartAttack(BossController ctx)
@@ -82,49 +93,74 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
             
             Vector3 vel = Vector3.zero;
             Vector3 sinVector = Vector3.zero;
+
+            while (ctx.NavMeshAgent.remainingDistance > 0.5f)
+            {
+                Debug.Log("Remaining distance: " + ctx.NavMeshAgent.remainingDistance);
+                yield return null;
+            }
+            
+            Debug.Log("Reached destination");
+            ctx.NavMeshAgent.ResetPath();
+            vel = new Vector3(horizontalSpeed, 0, 0);
+            
+            //start mini gun animation
+            ctx.MiniGunAnimator.SetTrigger("Fire");
+
+            float secondsTillLastShot = secondsBetweenShots;
             
             //TODO: Implement attack
             while (_elapsedTime < attackDuration)
             {
+                _elapsedTime += Time.deltaTime;
+
+                if (_elapsedTime > 1f)
+                {
+                    //shoot bullet
+
+                    if (secondsTillLastShot >= secondsBetweenShots)
+                    {
+                        GameObject bullet = Instantiate(bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
+
+                        //rotate downwards
+                        bullet.transform.rotation = Quaternion.Euler(0, 0, -90);
+                        
+                        //set velocity
+                        bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1) * bulletSpeed;
+                        
+                        //play sound
+                        _audioSource.PlayOneShot(_attackSound.clip, _attackSound.volume);
+                        
+                        secondsTillLastShot = 0;
+                    }
+                    else
+                    {
+                        secondsTillLastShot += Time.deltaTime;
+                    
+                    }
+                }
+                
                 float ySin = Mathf.Sin(Time.time * frequency) * amplitude;
                 sinVector = new Vector3(0, ySin, 0);
-                
-                //has the agent reached its destination?
-                if (!reachedTop && ctx.NavMeshAgent.remainingDistance < 0.5f)
-                {
-                    Debug.Log("Reached destination");
-                    reachedTop = true;
-                    ctx.NavMeshAgent.ResetPath();
-                    vel = new Vector3(horizontalSpeed, 0, 0);
-                }
 
-                if (!reachedTop)
-                {
-                    yield return null;
-                }
-                else
-                {
-                    _elapsedTime += Time.deltaTime;
-
-                    Debug.Log("Sin vector: " + sinVector * Time.deltaTime);
+                Debug.Log("Sin vector: " + sinVector * Time.deltaTime);
                     
-                    ctx.NavMeshAgent.Move((vel * Time.deltaTime)+sinVector);
+                ctx.NavMeshAgent.Move((vel * Time.deltaTime)+sinVector);
         
-                    // Check for collisions with the walls using RaycastHit2D
-                    Vector3 origin = new Vector3(ctx.transform.position.x, ctx.transform.position.y, 0);
-                    hit = Physics2D.Raycast(origin, vel, 20, LayerMask.GetMask("Wall"));
-                    if (hit.collider != null)
-                    {
-                        // Reflect velocity 
-                        //vel *= -1;
-                    }
-
-                    yield return null;
-
+                // Check for collisions with the walls using RaycastHit2D
+                Vector3 origin = new Vector3(ctx.transform.position.x, ctx.transform.position.y, 0);
+                hit = Physics2D.Raycast(origin, vel, 2, LayerMask.GetMask("Wall"));
+                if (hit.collider != null)
+                {
+                    // Reflect velocity 
+                    vel = new Vector3(-vel.x, vel.y, 0);
                 }
-                
+
                 yield return null;
             }
+            
+            //stop minigun animation
+            ctx.MiniGunAnimator.SetTrigger("Stop");
             
             OnAttackFinished?.Invoke();
             
@@ -136,6 +172,13 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
         private new void OnDisable()
         {
             base.OnDisable();
+        }
+        
+        [Serializable]
+        private struct AudioClipWithVolume
+        {
+            public AudioClip clip;
+            [Range(0f, 1f)] public float volume;
         }
     }
 }

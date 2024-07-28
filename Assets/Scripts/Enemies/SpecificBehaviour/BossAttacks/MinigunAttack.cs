@@ -6,6 +6,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
     public class MinigunAttack : BossAttack
     {
         [SerializeField] [Range(3f,10f)] private float attackDuration;
+        [SerializeField] [Range(2f,10f)] private float moveSpeed;
         
         private float _elapsedTime;
         
@@ -30,6 +31,9 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
         private IEnumerator MinigunAttackCoroutine(BossController ctx)
         {
             Debug.Log("Minigun attack started");
+            
+            ctx.NavMeshAgent.stoppingDistance = 2;
+            ctx.NavMeshAgent.speed = moveSpeed;
             
             //start minigun animation
             ctx.MiniGunAnimator.SetTrigger("Fire");

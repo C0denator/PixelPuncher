@@ -789,10 +789,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a63eb7c7f79274b932216c913d41ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 0.1
+  amplitude: 0.05
   frequency: 2
   horizontalSpeed: 5
   attackDuration: 10
+  secondsBetweenShots: 0.3
+  bulletSpeed: 8
+  _bulletSpawnPoint: {fileID: 6992623923143700880}
+  bulletPrefab: {fileID: 5981027238127665226, guid: bd17be733a54354459803df378e823d4, type: 3}
+  _attackSound:
+    clip: {fileID: 8300000, guid: 391b8aa543186c44baef41f0006c1713, type: 3}
+    volume: 0.5
   _debugSphere: {fileID: 2823575052722226980, guid: c972b24c27389534ba377326fa90580d, type: 3}
 --- !u!114 &-7262659044578049045
 MonoBehaviour:
@@ -827,6 +834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDuration: 6
+  moveSpeed: 5
 --- !u!114 &-6984643285377032830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,7 +858,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 0.89
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
