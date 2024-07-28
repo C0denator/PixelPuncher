@@ -25,6 +25,7 @@ namespace GameProg.Health
             get => currentHealth;
             set
             {
+                
                 if(invincible) return;
                 
                 int tmp = currentHealth;
@@ -32,6 +33,8 @@ namespace GameProg.Health
                 
                 if(tmp != currentHealth)
                 {
+                    Debug.Log("Health changed to " + currentHealth);
+                    
                     OnHealthChanged?.Invoke();
                     
                     if(tmp > currentHealth)

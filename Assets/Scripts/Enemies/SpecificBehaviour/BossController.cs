@@ -40,7 +40,7 @@ namespace GameProg.Enemies.SpecificBehaviour
         private void Awake()
         {
             _player = GameObject.FindWithTag("Player").transform;
-            _health = _player.GetComponent<Health.Health>();
+            _health = GetComponent<Health.Health>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _audioSource = FindObjectOfType<Sound.GlobalSound>().globalAudioSource;
             _collider = GetComponent<CircleCollider2D>();
@@ -77,7 +77,7 @@ namespace GameProg.Enemies.SpecificBehaviour
             if (_secondPhase)
             {
                 //set rotation speed depending on agent velocity
-                float rotationSpeed = _navMeshAgent.velocity.magnitude * 10;
+                float rotationSpeed = _navMeshAgent.velocity.magnitude * 2;
                 
                 //moving left or right
                 if (_navMeshAgent.velocity.x > 0.1f)
@@ -112,6 +112,8 @@ namespace GameProg.Enemies.SpecificBehaviour
         
         private IEnumerator SecondPhaseCoroutine()
         {
+            Debug.Log("Second phase started");
+            
             //make invulnerable
             _health.invincible = true;
             

@@ -88,7 +88,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                 }
                 
                 //rotate the core depending on the velocity
-                float rotationSpeed = vel.magnitude * 5;
+                float rotationSpeed = vel.magnitude * 2;
                 ctx.Core.transform.Rotate(Vector3.forward, rotationSpeed);
         
                 yield return null;
