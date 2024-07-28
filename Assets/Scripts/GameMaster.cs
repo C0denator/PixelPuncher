@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using GameProg.World;
 using JetBrains.Annotations;
 using Sound;
@@ -90,6 +91,9 @@ public class GameMaster : MonoBehaviour
         if (SceneManager.GetActiveScene().name=="MainMenu")
         {
             music.PlayClip("MainMenu");
+        }else if(SceneManager.GetActiveScene().name=="VictoryScreen")
+        {
+            music.PlayClip("Victory");
         }
     }
         
@@ -146,5 +150,41 @@ public class GameMaster : MonoBehaviour
         {
             OnAllRoomsCleared?.Invoke();
         }
+    }
+    
+    public void OnVictory()
+    {
+        StartCoroutine(VictorySequence());
+    }
+    
+    private IEnumerator VictorySequence()
+    {
+        //stop all music
+        music.StopAll();
+        
+        //set timescale to 0
+        Time.timeScale = 0;
+
+        yield return new WaitForSecondsRealtime(2f);
+        
+        //get current camera
+        currentCamera = Camera.main;
+        
+        float sizeChange = 0.1f;
+
+        while (currentCamera.orthographicSize < 100000)
+        {
+            currentCamera.orthographicSize += sizeChange;
+
+            sizeChange *= 1.1f;
+            
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+        
+        //set timescale back to 1
+        Time.timeScale = 1;
+        
+        //change scene to victory screen
+        SwitchScene("VictoryScreen");
     }
 }

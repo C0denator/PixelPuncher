@@ -241,6 +241,9 @@ namespace GameProg.Enemies.SpecificBehaviour
             
             //stop all coroutines
             if (_waitCoroutine != null) StopCoroutine(_waitCoroutine);
+            
+            //game won
+            _gameMaster.OnVictory();
         }
 
         private void OnEnable()
