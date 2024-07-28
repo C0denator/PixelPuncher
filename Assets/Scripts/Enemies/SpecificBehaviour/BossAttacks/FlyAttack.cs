@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
 {
@@ -12,7 +13,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
         [SerializeField] [Range(3f,20f)] private float attackDuration;
         [SerializeField] [Range(0.1f, 1f)] private float secondsBetweenShots;
         [SerializeField] [Range(1f, 10f)] private float bulletSpeed;
-        [SerializeField] private Transform _bulletSpawnPoint;
+        [FormerlySerializedAs("_bulletSpawnPoint")] [SerializeField] private GameObject minigun;
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private AudioClipWithVolume _attackSound;
         [SerializeField] private GameObject _debugSphere;
@@ -26,7 +27,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
             
             if (_audioSource == null) Debug.LogError("Global audio source not found in FlyAttack");
             if (bulletPrefab == null) Debug.LogError("Bullet prefab not found in FlyAttack");
-            if (_bulletSpawnPoint == null) Debug.LogError("Bullet spawn point not found in FlyAttack");
+            if (minigun == null) Debug.LogError("Bullet spawn point not found in FlyAttack");
         }
 
         public override void StartAttack(BossController ctx)
@@ -48,6 +49,9 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
 
             ctx.NavMeshAgent.ResetPath();
             ctx.NavMeshAgent.stoppingDistance = 0;
+            
+            //reset minigun rotation
+            minigun.transform.rotation = Quaternion.Euler(0, 0, -90);
             
             bool reachedTop = false;
             
@@ -123,7 +127,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
 
                     if (secondsTillLastShot >= secondsBetweenShots)
                     {
-                        GameObject bullet = Instantiate(bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
+                        GameObject bullet = Instantiate(bulletPrefab, minigun.transform.position, Quaternion.identity);
 
                         //rotate downwards
                         bullet.transform.rotation = Quaternion.Euler(0, 0, -90);

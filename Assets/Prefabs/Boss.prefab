@@ -795,7 +795,7 @@ MonoBehaviour:
   attackDuration: 15
   secondsBetweenShots: 0.2
   bulletSpeed: 1.25
-  _bulletSpawnPoint: {fileID: 6992623923143700880}
+  minigun: {fileID: 8471814948705618468}
   bulletPrefab: {fileID: 2015684106694484879, guid: a6b39aad2ed51a84094f5a1ab79d131d, type: 3}
   _attackSound:
     clip: {fileID: 8300000, guid: defe893ad499b534eb89e2859843fb6f, type: 3}
@@ -833,8 +833,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41536582e5ba6af47bedff156e201617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDuration: 6
+  attackDuration: 12
   moveSpeed: 5
+  _attackSound:
+    clip: {fileID: 8300000, guid: defe893ad499b534eb89e2859843fb6f, type: 3}
+    volume: 0.5
+  _bulletPrefab: {fileID: 5981027238127665226, guid: bd17be733a54354459803df378e823d4, type: 3}
+  _bulletSpeed: 13
+  secondsBetweenShots: 0.3
+  maxAngleDeviation: 20
+  minigun: {fileID: 8471814948705618468}
 --- !u!114 &-6984643285377032830
 MonoBehaviour:
   m_ObjectHideFlags: 0

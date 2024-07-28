@@ -45,25 +45,10 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
 
             ctx.NavMeshAgent.ResetPath();
 
-            // Set random diagonal direction (northwest, northeast, southwest, southeast)
-            int direction = Random.Range(0, 4);
-            
-            //set velocity based on direction (x,y)
-            switch (direction)
-            {
-                case 0:
-                    vel = new Vector3(1, 1, 0).normalized * rollSpeed;
-                    break;
-                case 1:
-                    vel = new Vector3(1, -1, 0).normalized * rollSpeed;
-                    break;
-                case 2:
-                    vel = new Vector3(-1, 1, 0).normalized * rollSpeed;
-                    break;
-                case 3:
-                    vel = new Vector3(-1, -1, 0).normalized * rollSpeed;
-                    break;
-            }
+            // Set first direction to player
+            Vector3 playerPos = ctx.Player.position;
+            vel = (playerPos - ctx.transform.position).normalized * rollSpeed;
+            vel = new Vector3(vel.x, vel.y, 0);
 
             while (elapsedTime < attackDuration)
             {
