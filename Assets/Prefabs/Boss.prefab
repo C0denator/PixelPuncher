@@ -755,7 +755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eye: {fileID: 4861995460589463906}
-  core: {fileID: 0}
+  core: {fileID: 6211492982251396582}
   _secondsBetweenAttacks: 2
   _attacks:
   - Attack: {fileID: -7262659044578049045}
@@ -792,8 +792,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df7d125f9d2fe6468dde7f9534b8303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollSpeed: 5
+  rollSpeed: 10
   attackDuration: 10
+  vel: {x: 0, y: 0, z: 0}
+  _attackSound:
+    clip: {fileID: 8300000, guid: f4529d0e5b18c7e4ebc4815a22d30e91, type: 3}
+    volume: 0.5
+  _bulletPrefab: {fileID: 2015684106694484879, guid: a6b39aad2ed51a84094f5a1ab79d131d, type: 3}
+  _bulletSpeed: 10
 --- !u!195 &2980508556700516531
 NavMeshAgent:
   m_ObjectHideFlags: 0

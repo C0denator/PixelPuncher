@@ -29,6 +29,8 @@ namespace GameProg.Enemies.SpecificBehaviour
         private bool _secondPhase;
         
         public Transform Player => _player;
+        
+        public GameObject Core => core;
         public Health.Health Health => _health;
         public NavMeshAgent NavMeshAgent => _navMeshAgent;
         public CircleCollider2D Collider => _collider;

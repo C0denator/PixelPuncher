@@ -368,7 +368,7 @@ MonoBehaviour:
   - {fileID: 1754421886716813612, guid: cd688802e9dee6342a94f82927961675, type: 3}
   - {fileID: 8241666297283251434, guid: 203d4c7d41fa73043add630706920cbc, type: 3}
   - {fileID: 2451253443366623538, guid: 1f720ff0ec8316d47959e45949eaa596, type: 3}
-  numberOfRooms: 2
+  numberOfRooms: 1
   debugMode: 0
 --- !u!1 &1054228300
 GameObject:
