@@ -116,6 +116,12 @@ namespace GameProg.Enemies.SpecificBehaviour
             //set player target
             Vector3 target = new Vector3(player.transform.position.x, player.transform.position.y, 0);
             
+            int amountOfBullets = bulletsPerShot;
+            
+            //randomly add or subtract one bullet
+            
+            amountOfBullets += UnityEngine.Random.Range(-1, 2);
+            
             yield return new WaitForSeconds(0.1f);
 
             for (int i = 0; i < bulletsPerShot; i++)
@@ -145,8 +151,50 @@ namespace GameProg.Enemies.SpecificBehaviour
                 
                 SpawnBullet(angleDiff, target);
                 
-                //yield return new WaitForSeconds(0.1f);
+            }
+            
+            //with a chance of 50% shoot another bullet salvo
+            
+            if (UnityEngine.Random.Range(0, 2) == 1)
+            {
+                yield return new WaitForSeconds(0.3f);
                 
+                amountOfBullets = bulletsPerShot;
+            
+                //randomly add or subtract one bullet
+            
+                amountOfBullets += UnityEngine.Random.Range(-1, 2);
+            
+                yield return new WaitForSeconds(0.1f);
+
+                for (int i = 0; i < bulletsPerShot; i++)
+                {
+                    //calculate angle difference; difference is 0 for the middle bullet and max for first and last
+
+                    float angleDiff = 0;
+                
+                    if (i < (bulletsPerShot-1f) / 2f)
+                    {
+                        //diverge to the left
+                        float t = i / ((bulletsPerShot-1f) / 2f);
+                        //Debug.Log("i = " + i + " t = " + t);
+                        angleDiff = Mathf.Lerp(sprayAngle, 0, t);
+                    
+                    }else if (i > (bulletsPerShot-1f) / 2f)
+                    {
+                        //diverge to the right
+                        float t = i / ((bulletsPerShot-1f) / 2f);
+                        t -= 1;
+                        //Debug.Log("i = " + i + " t = " + t);
+                        angleDiff = Mathf.Lerp(0, -sprayAngle, t);
+                    
+                    }
+                
+                    //Debug.Log("i = " + i + " angleDiff = " + angleDiff);
+                
+                    SpawnBullet(angleDiff, target);
+                
+                }
             }
             
             _attackInProgress = false;

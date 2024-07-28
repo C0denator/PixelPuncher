@@ -13,7 +13,7 @@ namespace GameProg.Player
     {
         [SerializeField] private Camera playerCamera;
         [SerializeField] [Range(0f,2f)] private float invincibleTimeAfterHit = 0.5f;
-        [SerializeField] [Range(0.1f,10f)] private float moveSpeed = 5f;
+        [SerializeField] [Range(0.1f,20f)] private float moveSpeed = 5f;
         [SerializeField] [Range(20f,50f)] private float dashSpeed = 5f;
         [SerializeField] [Range(0.1f,0.5f)] private float dashDuration = 0.5f;
         [SerializeField] [Range(0f,3f)] private float dashCooldown = 1f;
@@ -109,8 +109,8 @@ namespace GameProg.Player
                 else //dash still active
                 {
                     //move player
-                    Vector2 move = _dashDirection * (dashSpeed * Time.fixedDeltaTime);
-                    _rigidbody2D.MovePosition((Vector2)transform.position + move);
+                    Vector2 move = _dashDirection * dashSpeed;
+                    _rigidbody2D.velocity = move;
                     
                     return;
                 }
@@ -122,10 +122,10 @@ namespace GameProg.Player
             
             //move player
             Vector3 vel = new Vector3(
-                _movementInput.x * moveSpeed * Time.fixedDeltaTime,
-                _movementInput.y * moveSpeed * Time.fixedDeltaTime,
+                _movementInput.x * moveSpeed,
+                _movementInput.y * moveSpeed,
                 0f);
-            _rigidbody2D.MovePosition(transform.position + vel);
+            _rigidbody2D.velocity = vel;
                 
             //set velocity for animator
             _animator.SetFloat(Velocity, _movementInput.magnitude);

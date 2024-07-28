@@ -412,7 +412,7 @@ MonoBehaviour:
     volume: 0.25
   damage: 1
   attackCooldown: 1
-  attackRange: 5
+  attackRange: 7
   bulletSpeed: 15
 --- !u!195 &5071627278290660665
 NavMeshAgent:
