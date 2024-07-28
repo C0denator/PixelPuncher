@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
+using GameProg.Player;
 using Sound;
 using UnityEngine;
-using Action = Unity.Plastic.Newtonsoft.Json.Serialization.Action;
 
-namespace GameProg.Player
+namespace Player
 {
     public class WeaponLogic : MonoBehaviour, IWeapon
     {

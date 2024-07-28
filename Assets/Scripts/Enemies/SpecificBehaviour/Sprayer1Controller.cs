@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Sound;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace GameProg.Enemies.SpecificBehaviour
 {   
@@ -28,6 +29,7 @@ namespace GameProg.Enemies.SpecificBehaviour
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
         private AudioSource _audioSource;
+        private GameMaster _gameMaster;
         
         
         [CanBeNull] private Coroutine _attackCoroutine;
@@ -43,6 +45,7 @@ namespace GameProg.Enemies.SpecificBehaviour
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _audioSource = FindObjectOfType<GlobalSound>().globalAudioSource;
+            _gameMaster = FindObjectOfType<GameMaster>();
             
             //error handling
             //if (_rb == null) Debug.LogError("Rigidbody2D component not found");
@@ -51,13 +54,14 @@ namespace GameProg.Enemies.SpecificBehaviour
             if (_animator == null) Debug.LogError("Animator component not found");
             if (bulletPrefab == null) Debug.LogError("Bullet prefab not set");
             if (_audioSource == null) Debug.LogError("Audio source not found");
+            if (_gameMaster == null) Debug.LogError("GameMaster not found");
             
             //set up agent for 2D
             _navMeshAgent.updateRotation = false;
             _navMeshAgent.updateUpAxis = false;
             
             //set stuff
-            _cooldownTimer = attackCooldown;
+            _cooldownTimer = Random.Range(1, attackCooldown);
         }
         
 
@@ -167,23 +171,23 @@ namespace GameProg.Enemies.SpecificBehaviour
             
                 yield return new WaitForSeconds(0.1f);
 
-                for (int i = 0; i < bulletsPerShot; i++)
+                for (int i = 0; i < amountOfBullets; i++)
                 {
                     //calculate angle difference; difference is 0 for the middle bullet and max for first and last
 
                     float angleDiff = 0;
                 
-                    if (i < (bulletsPerShot-1f) / 2f)
+                    if (i < (amountOfBullets-1f) / 2f)
                     {
                         //diverge to the left
-                        float t = i / ((bulletsPerShot-1f) / 2f);
+                        float t = i / ((amountOfBullets-1f) / 2f);
                         //Debug.Log("i = " + i + " t = " + t);
                         angleDiff = Mathf.Lerp(sprayAngle, 0, t);
                     
-                    }else if (i > (bulletsPerShot-1f) / 2f)
+                    }else if (i > (amountOfBullets-1f) / 2f)
                     {
                         //diverge to the right
-                        float t = i / ((bulletsPerShot-1f) / 2f);
+                        float t = i / ((amountOfBullets-1f) / 2f);
                         t -= 1;
                         //Debug.Log("i = " + i + " t = " + t);
                         angleDiff = Mathf.Lerp(0, -sprayAngle, t);
@@ -211,7 +215,20 @@ namespace GameProg.Enemies.SpecificBehaviour
             _audioSource.PlayOneShot(attackSound.clip, attackSound.volume);
             
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            Vector2 direction = (target - transform.position).normalized;
+            
+            Vector3 direction = Vector3.zero;
+
+            if (_gameMaster.GigachadMode)
+            {
+                //calculate direction to future player position
+                direction = CalculateLaunchDirection(transform.position, bulletSpeed, target, player.GetComponent<Rigidbody2D>().velocity);
+            }
+            else
+            {
+                //calculate direction to current player
+                direction = (target - transform.position).normalized;
+            }
+            
             bullet.transform.rotation = Quaternion.Euler(0,0,Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             
             //apply the angle Difference
@@ -220,6 +237,69 @@ namespace GameProg.Enemies.SpecificBehaviour
             bullet.GetComponent<Rigidbody2D>().velocity = bullet.transform.right * bulletSpeed;
             
             bullet.GetComponent<EnemyBullet>().Damage = damage;
+        }
+        
+        private Vector2 CalculateLaunchDirection(Vector2 projectilePosition, float projectileSpeed,
+            Vector2 targetPosition, Vector2 targetVelocity)
+        {
+            Debug.Log("Calculating launch direction");
+            Debug.Log("Projectile position: " + projectilePosition);
+            Debug.Log("Projectile speed: " + projectileSpeed);
+            Debug.Log("Target position: " + targetPosition);
+            Debug.Log("Target velocity: " + targetVelocity);
+            
+            //calculate time to hit target
+            Vector2 targetRelativePosition = targetPosition - projectilePosition;
+            Vector2 targetRelativeVelocity = targetVelocity;
+            
+            //calculate coefficients for quadratic equation a*t^2 + b*t + c = 0
+            float a = Vector2.Dot(targetRelativeVelocity, targetRelativeVelocity) - projectileSpeed * projectileSpeed;
+            float b = 2 * Vector2.Dot(targetRelativeVelocity, targetRelativePosition);
+            float c = Vector2.Dot(targetRelativePosition, targetRelativePosition);
+            
+            //calculate discriminant
+            float discriminant = b * b - 4 * a * c;
+            
+            //if discriminant is negative, target cannot be hit
+            if (discriminant < 0)
+            {
+                Debug.LogWarning("Target cannot be hit");
+                return Vector2.zero;
+            }
+            
+            //calculate square root of discriminant
+            float sqrtDiscriminant = Mathf.Sqrt(discriminant);
+            
+            //calculate two possible solutions for t
+            float t1 = (-b + sqrtDiscriminant) / (2 * a);
+            float t2 = (-b - sqrtDiscriminant) / (2 * a);
+            
+            //get bigger solution
+            float t = t1 > t2 ? t1 : t2;
+            
+            //if t<0, get smaller solution
+            if (t < 0) t = t1 < t2 ? t1 : t2;
+            
+            //check if t is positive
+            if (t > 0)
+            {
+                //calculate future target position
+                Vector2 futureTargetPosition = targetPosition + targetVelocity * t;
+                
+                //calculate direction to future target position and normalize it
+                Vector2 launchDirection = (futureTargetPosition - projectilePosition).normalized;
+                
+                Debug.Log("Solution found: " + launchDirection);
+                Vector2 normaleDirection = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y).normalized;
+                Debug.Log("Normal direction: " + normaleDirection);
+                
+                return launchDirection;
+            }
+            
+            Debug.LogWarning("Target cannot be hit");
+            return Vector2.zero;
+            
+            
         }
 
         [Serializable]

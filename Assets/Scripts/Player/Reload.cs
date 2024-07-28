@@ -1,7 +1,6 @@
-using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
 
-namespace GameProg.Player
+namespace Player
 {
     public class Reload : MonoBehaviour
     {

@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Sound;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace GameProg.Enemies.SpecificBehaviour
 {   
@@ -26,6 +27,7 @@ namespace GameProg.Enemies.SpecificBehaviour
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
         private AudioSource _audioSource;
+        private GameMaster _gameMaster;
         
         
         [CanBeNull] private Coroutine _attackCoroutine;
@@ -41,6 +43,7 @@ namespace GameProg.Enemies.SpecificBehaviour
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _audioSource = FindObjectOfType<GlobalSound>().globalAudioSource;
+            _gameMaster = FindObjectOfType<GameMaster>();
             
             //error handling
             //if (_rb == null) Debug.LogError("Rigidbody2D component not found");
@@ -49,13 +52,14 @@ namespace GameProg.Enemies.SpecificBehaviour
             if (_animator == null) Debug.LogError("Animator component not found");
             if (bulletPrefab == null) Debug.LogError("Bullet prefab not set");
             if (_audioSource == null) Debug.LogError("Audio source not found");
+            if (_gameMaster == null) Debug.LogError("GameMaster not found");
             
             //set up agent for 2D
             _navMeshAgent.updateRotation = false;
             _navMeshAgent.updateUpAxis = false;
             
             //set stuff
-            _cooldownTimer = attackCooldown;
+            _cooldownTimer = Random.Range(1, attackCooldown);
         }
         
 
@@ -112,16 +116,14 @@ namespace GameProg.Enemies.SpecificBehaviour
             _attackInProgress = true;
             
             yield return new WaitForSeconds(0.2f);
-            
-            SpawnBullet();
-            
 
-            yield return new WaitForSeconds(0.3f);
-            
-            //shoot another bullet
-            
-            SpawnBullet();
-            
+            int amountOfBullets = Random.Range(1, 4);
+
+            for (int i = 0; i < amountOfBullets; i++)
+            {
+                SpawnBullet();
+                yield return new WaitForSeconds(0.2f);
+            }
             
             yield return new WaitForSeconds(0.3f);
             
@@ -140,11 +142,21 @@ namespace GameProg.Enemies.SpecificBehaviour
             //spawn bullet
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             
-            //calculate launch direction
-            Vector3 launchDirection = CalculateLaunchDirection(transform.position, bulletSpeed, player.transform.position, player.GetComponent<Rigidbody2D>().velocity);
+            Vector3 launchDirection = Vector3.zero;
+
+            if (_gameMaster.GigachadMode)
+            {
+                //calculate direction to future player position
+                launchDirection = CalculateLaunchDirection(transform.position, bulletSpeed, player.transform.position, player.GetComponent<Rigidbody2D>().velocity);
+            }
+            else
+            {
+                //calculate direction to current player position
+                launchDirection = (player.transform.position - transform.position).normalized;
+            }
             
             //rotate bullet
-            bullet.transform.rotation = Quaternion.LookRotation(Vector3.forward, launchDirection);
+            bullet.transform.rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(launchDirection.x, launchDirection.y, 0));
             bullet.transform.Rotate(Vector3.forward, 90);
             
             //set velocity

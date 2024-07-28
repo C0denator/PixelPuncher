@@ -1,6 +1,6 @@
-using Unity.Plastic.Newtonsoft.Json.Serialization;
+using System;
 
-namespace GameProg.Player
+namespace Player
 {
     public interface IWeapon
     {
