@@ -1,14 +1,10 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
 {
-    public class FlyAttack : BossAttack
+    public class LaserAttack : BossAttack
     {
-        [SerializeField] [Range(0.1f,5f)] private float amplitude;
-        [SerializeField] [Range(0.1f,5f)] private float frequency;
-        [SerializeField] [Range(0.1f,5f)] private float horizontalSpeed;
         [SerializeField] [Range(3f,10f)] private float attackDuration;
         
         private float _elapsedTime;
@@ -22,7 +18,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
         {
             if(_attackCoroutine == null)
             {
-                _attackCoroutine = StartCoroutine(FlyAttackCoroutine());
+                _attackCoroutine = StartCoroutine(LaserAttackCoroutine());
             }
             else
             {
@@ -30,9 +26,9 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
             }
         }
         
-        private IEnumerator FlyAttackCoroutine()
+        private IEnumerator LaserAttackCoroutine()
         {
-            Debug.Log("Fly attack started");
+            Debug.Log("Laser attack started");
             
             //TODO: Implement attack
             yield return new WaitForSeconds(attackDuration);

@@ -692,6 +692,8 @@ GameObject:
   - component: {fileID: -246574559378672133}
   - component: {fileID: -865285591626872570}
   - component: {fileID: -7262659044578049045}
+  - component: {fileID: 8815189261691795475}
+  - component: {fileID: -6984643285377032830}
   - component: {fileID: 2980508556700516531}
   - component: {fileID: 1098518664931263962}
   - component: {fileID: 8270318111115292070}
@@ -757,13 +759,22 @@ MonoBehaviour:
   eye: {fileID: 4861995460589463906}
   core: {fileID: 6211492982251396582}
   _secondsBetweenAttacks: 2
-  _attacks:
-  - Attack: {fileID: -7262659044578049045}
-    IsAvailable: 1
+  _firstPhaseAttacks:
+  - {fileID: -865285591626872570}
+  - {fileID: 8815189261691795475}
+  _secondPhaseAttacks:
+  - {fileID: -7262659044578049045}
+  - {fileID: -6984643285377032830}
   _destroySound:
-    clip: {fileID: 0}
-    volume: 0
+    clip: {fileID: 8300000, guid: 43582791a4ee89447b32b695cad59a51, type: 3}
+    volume: 0.4
+  _destroyObjects:
+  - {fileID: 7171077947371602712}
+  - {fileID: 6995501843691390756}
+  - {fileID: 8471814948705618468}
+  - {fileID: 8216482102769897971}
   _currentAttack: {fileID: 0}
+  _lastAttack: {fileID: 0}
 --- !u!114 &-865285591626872570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -800,6 +811,32 @@ MonoBehaviour:
     volume: 0.5
   _bulletPrefab: {fileID: 2015684106694484879, guid: a6b39aad2ed51a84094f5a1ab79d131d, type: 3}
   _bulletSpeed: 10
+--- !u!114 &8815189261691795475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8854570724913615862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41536582e5ba6af47bedff156e201617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDuration: 5.76
+--- !u!114 &-6984643285377032830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8854570724913615862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb825f90da0b11c45b6c32c48753600e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDuration: 0
 --- !u!195 &2980508556700516531
 NavMeshAgent:
   m_ObjectHideFlags: 0

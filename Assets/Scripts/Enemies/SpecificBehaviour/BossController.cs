@@ -13,13 +13,15 @@ namespace GameProg.Enemies.SpecificBehaviour
         [SerializeField] private GameObject eye;
         [SerializeField] private GameObject core;
         [SerializeField] [Range(0f,3f)] private float _secondsBetweenAttacks;
-        [SerializeField] private List<BossAttackListItem> _attacks;
+        [SerializeField] private List<BossAttack> _firstPhaseAttacks;
+        [SerializeField] private List<BossAttack> _secondPhaseAttacks;
         [SerializeField] private AudioClipWithVolume _destroySound;
+        [SerializeField] private List<GameObject> _destroyObjects; //objects to destroy on second phase
         
         private Transform _player;
         private Health.Health _health;
-        private int _lastAttackIndex;
         [SerializeField] private BossAttack _currentAttack;
+        [SerializeField] private BossAttack _lastAttack;
         private NavMeshAgent _navMeshAgent;
         private Coroutine _waitCoroutine;
         private AudioSource _audioSource;
@@ -46,7 +48,8 @@ namespace GameProg.Enemies.SpecificBehaviour
             //error handling
             if (_player == null) Debug.LogError("Player not found in BossController");
             if (_health == null) Debug.LogError("Player health not found in BossController");
-            if(_attacks.Count == 0) Debug.LogError("No attacks set in BossController");
+            if(_firstPhaseAttacks.Count == 0) Debug.LogError("No first phase attacks found in BossController");
+            if(_secondPhaseAttacks.Count == 0) Debug.LogError("No second phase attacks found in BossController");
             if (_navMeshAgent == null) Debug.LogError("NavMeshAgent not found in BossController");
             if (_audioSource == null) Debug.LogError("Global audio source not found in BossController");
             if (_collider == null) Debug.LogError("Collider not found in BossController");
@@ -62,9 +65,6 @@ namespace GameProg.Enemies.SpecificBehaviour
             
             //start waiting coroutine
             _waitCoroutine = StartCoroutine(WaitCoroutine());
-            
-            //set last attack index to -1
-            _lastAttackIndex = -1;
         }
 
         private void FixedUpdate()
@@ -93,11 +93,13 @@ namespace GameProg.Enemies.SpecificBehaviour
 
         private IEnumerator WaitCoroutine()
         {
+            _currentAttack = null;
+            
             //set random target for boss in close range
-            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 10;
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 30;
             randomDirection += transform.position;
             NavMeshHit hit;
-            NavMesh.SamplePosition(randomDirection, out hit, 10, 1);
+            NavMesh.SamplePosition(randomDirection, out hit, 30, 1);
             Vector3 finalPosition = hit.position;
             _navMeshAgent.SetDestination(finalPosition);
             
@@ -107,83 +109,87 @@ namespace GameProg.Enemies.SpecificBehaviour
             
             StartRandomAttack();
         }
+        
+        private IEnumerator SecondPhaseCoroutine()
+        {
+            //make invulnerable
+            _health.invincible = true;
+            
+            _secondPhase = true;
+                
+            //stop current attack
+            if (_currentAttack != null)
+            {
+                _currentAttack.StopAttack();
+            }
+                
+            //stop coroutine
+            if (_waitCoroutine != null) StopCoroutine(_waitCoroutine);
+            
+            //destroy objects
+            foreach (var obj in _destroyObjects)
+            {
+                Destroy(obj);
+                //play destroy sound
+                _audioSource.PlayOneShot(_destroySound.clip, _destroySound.volume);
+                
+                yield return new WaitForSeconds(0.25f);
+            }
+            
+            //make vulnerable
+            _health.invincible = false;
+            
+            //start waiting coroutine
+            _waitCoroutine = StartCoroutine(WaitCoroutine());
+            
+            yield return null;
+        }
 
         private void StartRandomAttack()
         {
-            int randomIndex;
-            BossAttack randomAttack;
-            
-            if (_attacks.Count > 1)
+            if (!_secondPhase)
             {
-                //get list of available attacks
-                List<BossAttackListItem> availableAttacks = new List<BossAttackListItem>();
+                //get available attacks; cant be last attack
+                List<BossAttack> availableAttacks = _firstPhaseAttacks.FindAll(x => x != _lastAttack);
                 
-                if(availableAttacks.Count == 0)
+                if (availableAttacks.Count == 0)
                 {
-                    Debug.LogWarning("No attacks available");
+                    Debug.LogError("No available attacks found");
                     return;
                 }
-
-                foreach (var attack in _attacks)
-                {
-                    if (attack.IsAvailable)
-                    {
-                        availableAttacks.Add(attack);
-                    }
-                }
-
-                //pick random attack
-                randomIndex = UnityEngine.Random.Range(0, availableAttacks.Count);
-                randomAttack = availableAttacks[randomIndex].Attack;
                 
-                //find index of attack in _attacks list
-                for (int i = 0; i < _attacks.Count; i++)
-                {
-                    if (_attacks[i].Attack == randomAttack)
-                    {
-                        randomIndex = i;
-                        break;
-                    }
-                }
-                
-            }
-            else if(_attacks.Count == 1)
-            {
-                randomIndex = 0;
-                randomAttack = _attacks[0].Attack;
+                int randomIndex = UnityEngine.Random.Range(0, availableAttacks.Count);
+                _currentAttack = availableAttacks[randomIndex];
+
             }
             else
             {
-                Debug.LogWarning("No attacks available");
-                return;
+                //get random attack
+                List<BossAttack> availableAttacks = _secondPhaseAttacks.FindAll(x => x != _lastAttack);
+                
+                if (availableAttacks.Count == 0)
+                {
+                    Debug.LogError("No available attacks found");
+                    return;
+                }
+                
+                int randomIndex = UnityEngine.Random.Range(0, availableAttacks.Count);
+                _currentAttack = availableAttacks[randomIndex];
             }
-
-            //set last attack as available again
-            
-            if (_lastAttackIndex != -1)
-            {
-                var lastAttack = _attacks[_lastAttackIndex];
-                lastAttack.IsAvailable = true;
-                _attacks[_lastAttackIndex] = lastAttack;
-            }
-            
-            //set new attack as unavailable
-            var newAttack = _attacks[randomIndex];
-            newAttack.IsAvailable = false;
-            _attacks[randomIndex] = newAttack;
-            
-            //set new attack as last attack
-            _lastAttackIndex = randomIndex;
-            
-            //set current attack
-            _currentAttack = randomAttack;
             
             //start attack
             _currentAttack.StartAttack(this);
+            
         }
         
         private void HandleOnAttackFinished()
         {
+            
+            //set last attack
+            _lastAttack = _currentAttack;
+            
+            _currentAttack = null;
+            
             Debug.Log("Attack finished");
             
             //start waiting coroutine
@@ -203,34 +209,8 @@ namespace GameProg.Enemies.SpecificBehaviour
             
             if(_health.CurrentHealth <= _health.MaxHealth / 2 && !_secondPhase)
             {
-                _secondPhase = true;
-                
-                //disable flying attack
-                for(int i = 0; i < _attacks.Count; i++)
-                {
-                    if (_attacks[i].Attack is FlyAttack)
-                    {
-                        var attack = _attacks[i];
-                        attack.IsAvailable = false;
-                        _attacks[i] = attack;
-                        
-                        break;
-                    }
-                }
-                
-                //enable roll attack
-                for(int i = 0; i < _attacks.Count; i++)
-                {
-                    if (_attacks[i].Attack is RollAttack)
-                    {
-                        var attack = _attacks[i];
-                        attack.IsAvailable = true;
-                        _attacks[i] = attack;
-                        
-                        break;
-                    }
-                }
-
+                //start second phase
+                StartCoroutine(SecondPhaseCoroutine());
             }
         }
         
@@ -248,9 +228,14 @@ namespace GameProg.Enemies.SpecificBehaviour
             _health.OnDeath += HandleOnDeath;
             
             //subscribe to attack finished event
-            foreach (var attack in _attacks)
+            foreach (var attack in _firstPhaseAttacks)
             {
-                attack.Attack.OnAttackFinished += HandleOnAttackFinished;
+                attack.OnAttackFinished += HandleOnAttackFinished;
+            }
+            
+            foreach (var attack in _secondPhaseAttacks)
+            {
+                attack.OnAttackFinished += HandleOnAttackFinished;
             }
         }
         
@@ -260,20 +245,18 @@ namespace GameProg.Enemies.SpecificBehaviour
             _health.OnDeath -= HandleOnDeath;
             
             //unsubscribe from attack finished event
-            foreach (var attack in _attacks)
+            foreach (var attack in _firstPhaseAttacks)
             {
-                attack.Attack.OnAttackFinished -= HandleOnAttackFinished;
+                attack.OnAttackFinished -= HandleOnAttackFinished;
+            }
+            
+            foreach (var attack in _secondPhaseAttacks)
+            {
+                attack.OnAttackFinished -= HandleOnAttackFinished;
             }
             
             //stop all coroutines
             if (_waitCoroutine != null) StopCoroutine(_waitCoroutine);
-        }
-        
-        [Serializable]
-        private struct BossAttackListItem
-        {
-            public BossAttack Attack;
-            public bool IsAvailable;
         }
         
         [Serializable]
