@@ -797,7 +797,7 @@ MonoBehaviour:
   secondsBetweenRockets: 3
   bulletSpeed: 1.25
   minigun: {fileID: 8471814948705618468}
-  mortar: {fileID: 7171077947371602712}
+  mortar: {fileID: 8471814948705618468}
   bulletPrefab: {fileID: 2015684106694484879, guid: a6b39aad2ed51a84094f5a1ab79d131d, type: 3}
   rocketPrefab: {fileID: 8454762919338009613, guid: 07b0c635071b8ef4d9ce709cae9b2dc6, type: 3}
   _attackSound:
@@ -816,7 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df7d125f9d2fe6468dde7f9534b8303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollSpeed: 10
+  rollSpeed: 13
   attackDuration: 10
   vel: {x: 0, y: 0, z: 0}
   _attackSound:
@@ -837,13 +837,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDuration: 12
-  moveSpeed: 5
+  moveSpeed: 4
   _attackSound:
     clip: {fileID: 8300000, guid: defe893ad499b534eb89e2859843fb6f, type: 3}
     volume: 0.5
   _bulletPrefab: {fileID: 5981027238127665226, guid: bd17be733a54354459803df378e823d4, type: 3}
-  _bulletSpeed: 13
-  secondsBetweenShots: 0.3
+  _bulletSpeed: 10
+  secondsBetweenShots: 0.2
   maxAngleDeviation: 20
   minigun: {fileID: 8471814948705618468}
 --- !u!114 &-6984643285377032830

@@ -77,7 +77,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                 }
                 
                 target += Vector3.up;
-                hit = Physics2D.Raycast(target, Vector3.up, 1.5f, LayerMask.GetMask("Wall"));
+                hit = Physics2D.Raycast(target, Vector3.up, 2f, LayerMask.GetMask("Wall"));
             } while (hit.collider == null);
             
             Debug.Log("Target found with " + i + " iterations");

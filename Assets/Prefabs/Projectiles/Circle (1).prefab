@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 2
-  _expandSpeed: 3
+  _expandSpeed: 4
   _damage: 1
 --- !u!58 &889733119903614443
 CircleCollider2D:
