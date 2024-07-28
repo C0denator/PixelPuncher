@@ -73,7 +73,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
                 }
                 
                 target += Vector3.up;
-                hit = Physics2D.Raycast(target, Vector3.up, 2f, LayerMask.GetMask("Wall"));
+                hit = Physics2D.Raycast(target, Vector3.up, 1f, LayerMask.GetMask("Wall"));
             } while (hit.collider == null);
             
             Debug.Log("Target found with " + i + " iterations");
@@ -81,7 +81,7 @@ namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
             Debug.Log("Boss position: " + ctx.transform.position);
             
             //spawn debug sphere
-            Instantiate(_debugSphere, target, Quaternion.identity);
+            //Instantiate(_debugSphere, target, Quaternion.identity);
             
             ctx.NavMeshAgent.SetDestination(target);
             

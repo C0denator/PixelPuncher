@@ -109,7 +109,16 @@ namespace GameProg.Enemies.SpecificBehaviour
             Vector3 finalPosition = hit.position;
             _navMeshAgent.SetDestination(finalPosition);
             
-            yield return new WaitForSeconds(_secondsBetweenAttacks);
+            //was the last attack a FlyAttack?
+            if(_lastAttack is FlyAttack)
+            {
+                yield return new WaitForSeconds(_secondsBetweenAttacks*2);
+            }else
+            {
+                yield return new WaitForSeconds(_secondsBetweenAttacks);
+            }
+            
+            
             
             _waitCoroutine = null;
             

@@ -736,7 +736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 40
+  maxHealth: 100
   invincible: 0
   hitSound:
     clip: {fileID: 8300000, guid: 8a34aba343ad1c9408ad7f9b5f0889e8, type: 3}
@@ -790,7 +790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amplitude: 0.05
-  frequency: 2
+  frequency: 4
   horizontalSpeed: 15
   attackDuration: 15
   secondsBetweenShots: 0.2

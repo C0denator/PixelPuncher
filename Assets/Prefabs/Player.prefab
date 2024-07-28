@@ -241,7 +241,7 @@ MonoBehaviour:
     volume: 0.25
   bulletSpeed: 20
   secondsBetweenShots: 0.15
-  damage: 10
+  damage: 1
   hasMagazine: 1
   reloadTime: 1
   magazineAmount: 6
