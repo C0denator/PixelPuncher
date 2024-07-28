@@ -123,8 +123,17 @@ namespace GameProg.Enemies.SpecificBehaviour
             int amountOfBullets = bulletsPerShot;
             
             //randomly add or subtract one bullet
+
+            if (_gameMaster.GigachadMode)
+            {
+                amountOfBullets += UnityEngine.Random.Range(2, 5);
+            }
+            else
+            {
+                amountOfBullets += UnityEngine.Random.Range(-1, 2);
+            }
             
-            amountOfBullets += UnityEngine.Random.Range(-1, 2);
+            
             
             yield return new WaitForSeconds(0.1f);
 
@@ -159,7 +168,7 @@ namespace GameProg.Enemies.SpecificBehaviour
             
             //with a chance of 50% shoot another bullet salvo
             
-            if (UnityEngine.Random.Range(0, 2) == 1)
+            if (UnityEngine.Random.Range(0, 2) == 1 || _gameMaster.GigachadMode)
             {
                 yield return new WaitForSeconds(0.3f);
                 

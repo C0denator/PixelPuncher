@@ -14,6 +14,12 @@ namespace GameProg.Enemies
             
             //set z position to 0
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            
+            //destroy if velocity is 0
+            if (GetComponent<Rigidbody2D>().velocity == Vector2.zero)
+            {
+                Destroy(gameObject);
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)

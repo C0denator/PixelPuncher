@@ -606,7 +606,7 @@ MonoBehaviour:
   damage: 1
   attackCooldown: 2.5
   attackRange: 8
-  bulletSpeed: 8
+  bulletSpeed: 9
   sprayAngle: 45
   bulletsPerShot: 5
 --- !u!195 &4606105783131023281

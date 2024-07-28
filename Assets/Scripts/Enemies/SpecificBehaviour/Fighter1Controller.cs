@@ -151,8 +151,8 @@ namespace GameProg.Enemies.SpecificBehaviour
             }
             else
             {
-                //calculate direction to current player position
-                launchDirection = (player.transform.position - transform.position).normalized;
+                //calculate wrong direction to future player position
+                launchDirection = CalculateLaunchDirection(transform.position, bulletSpeed*2f, player.transform.position, player.GetComponent<Rigidbody2D>().velocity);
             }
             
             //rotate bullet
