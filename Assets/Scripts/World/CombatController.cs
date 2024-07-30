@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace GameProg.World
+namespace World
 {
     [RequireComponent(typeof(Room))]
     public class CombatController : MonoBehaviour

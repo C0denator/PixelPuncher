@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
+namespace Enemies.SpecificBehaviour.BossAttacks
 {
     public class FlyAttack : BossAttack
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameProg.General
+namespace General
 {
     [ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]

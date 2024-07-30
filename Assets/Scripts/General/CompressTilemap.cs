@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace GameProg.General
+namespace General
 {
     [ExecuteInEditMode]
     public class CompressTilemap : MonoBehaviour

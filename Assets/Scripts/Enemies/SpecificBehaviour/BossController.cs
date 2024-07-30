@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameProg.Enemies.SpecificBehaviour.BossAttacks;
-using JetBrains.Annotations;
+using Enemies.SpecificBehaviour.BossAttacks;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace GameProg.Enemies.SpecificBehaviour
+namespace Enemies.SpecificBehaviour
 {
     public class BossController : MonoBehaviour
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
-namespace GameProg.World
+
+namespace World
 {
     public class BossDoor : MonoBehaviour
     {

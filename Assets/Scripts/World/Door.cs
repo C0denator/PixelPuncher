@@ -4,7 +4,7 @@ using Sound;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace GameProg.World
+namespace World
 {
     public class Door : MonoBehaviour
     {

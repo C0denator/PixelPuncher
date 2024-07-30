@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-namespace GameProg.Enemies.SpecificBehaviour
+namespace Enemies.SpecificBehaviour
 {   
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Animator))]

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using GameProg.World;
 using JetBrains.Annotations;
 using Sound;
 using UnityEngine;
@@ -9,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameMaster : MonoBehaviour
 {
     [SerializeField] private Music music;
-    [SerializeField] private World currentWorld;
+    [SerializeField] private World.World currentWorld;
     [SerializeField] [CanBeNull] private Camera currentCamera;
         
     private static GameMaster _instance;
@@ -76,7 +75,7 @@ public class GameMaster : MonoBehaviour
         _clearedRooms = 0;
             
         //find world
-        currentWorld = FindObjectOfType<World>();
+        currentWorld = FindObjectOfType<World.World>();
             
         if(currentWorld != null)
         {

@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameProg.UI
+namespace UI
 {
     public class FadeOut : MonoBehaviour
     {

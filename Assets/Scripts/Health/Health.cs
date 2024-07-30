@@ -2,7 +2,7 @@ using System;
 using Sound;
 using UnityEngine;
 
-namespace GameProg.Health
+namespace Health
 {
     public class Health : MonoBehaviour
     {

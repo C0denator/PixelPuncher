@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameProg.UI
+namespace UI
 {
     public class ClearCounter : MonoBehaviour
     {

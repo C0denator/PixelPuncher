@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using GameProg.Health;
 using UnityEngine;
 
 namespace Enemies
@@ -64,7 +62,7 @@ namespace Enemies
             if (other.gameObject.CompareTag("Player"))
             {
                 //look if the player has a health component
-                Health playerHealth = other.gameObject.GetComponent<Health>();
+                Health.Health playerHealth = other.gameObject.GetComponent<Health.Health>();
                 
                 //is the component enabled?
                 if (playerHealth.enabled)

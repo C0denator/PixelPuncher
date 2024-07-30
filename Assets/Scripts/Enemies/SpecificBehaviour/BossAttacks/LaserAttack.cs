@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
+namespace Enemies.SpecificBehaviour.BossAttacks
 {
     public class LaserAttack : BossAttack
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
+namespace Enemies.SpecificBehaviour.BossAttacks
 {
     public abstract class BossAttack : MonoBehaviour
     {

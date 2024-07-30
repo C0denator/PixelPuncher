@@ -1,8 +1,7 @@
-using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace GameProg.Player
+namespace Player
 {
     public class WeaponMaster : MonoBehaviour
     {

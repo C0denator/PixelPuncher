@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameProg.UI
+namespace UI
 {
     /// <summary>
     /// This script is used to grow and shrink objects.

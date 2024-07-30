@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameProg.Player
+namespace Player
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class WeaponMovement : MonoBehaviour

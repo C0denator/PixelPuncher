@@ -1,8 +1,6 @@
-using System;
-using GameProg.World;
 using UnityEngine;
 
-namespace GameProg.General
+namespace General
 {
     public class LoadingScreen : MonoBehaviour
     {

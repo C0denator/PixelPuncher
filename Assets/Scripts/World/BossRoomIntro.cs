@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Sound;
 using UnityEngine;
 
-namespace GameProg.World
+namespace World
 {
     public class BossRoomIntro : MonoBehaviour
     {

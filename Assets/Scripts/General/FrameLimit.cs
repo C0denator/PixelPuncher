@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameProg.General
+namespace General
 {
     public class FrameLimit : MonoBehaviour
     {

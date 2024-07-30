@@ -7,7 +7,7 @@ using Sound;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace GameProg.World
+namespace World
 {
     public class World : MonoBehaviour
     {

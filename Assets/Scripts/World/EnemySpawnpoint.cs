@@ -1,7 +1,9 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
-namespace GameProg.World
+namespace World
 {
     public class EnemySpawnpoint : MonoBehaviour
     {
@@ -26,7 +28,8 @@ namespace GameProg.World
             
             if(enemyPrefab == null) Debug.LogWarning("Enemy prefab not set in spawnpoint "+name);
         }
-
+        
+        #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             //draw the name of the prefab over the spawnpoint
@@ -50,5 +53,6 @@ namespace GameProg.World
                 Handles.Label(transform.position - new Vector3(0.5f,0f,0f), "Null");
             }
         }
+        #endif
     }
 }

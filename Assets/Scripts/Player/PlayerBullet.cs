@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameProg.Player
+namespace Player
 {
     public class PlayerBullet : MonoBehaviour
     {

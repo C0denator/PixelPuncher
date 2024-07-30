@@ -1,4 +1,4 @@
-namespace GameProg.Enemies
+namespace Enemies
 {
     public interface IEnemy
     {

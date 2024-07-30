@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameProg.Enemies
+namespace Enemies
 {
     public class EnemyBullet : MonoBehaviour
     {

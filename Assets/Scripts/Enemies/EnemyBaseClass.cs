@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace GameProg.Enemies
+namespace Enemies
 {
     [RequireComponent(typeof(Health.Health))]
     public class EnemyBaseClass : MonoBehaviour

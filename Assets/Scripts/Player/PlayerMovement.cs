@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
-using GameProg.World;
 using Sound;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace GameProg.Player
+namespace Player
 {
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Animator))]

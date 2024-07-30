@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
-namespace GameProg.Enemies.SpecificBehaviour.BossAttacks
+namespace Enemies.SpecificBehaviour.BossAttacks
 {
     public class RollAttack : BossAttack
     {

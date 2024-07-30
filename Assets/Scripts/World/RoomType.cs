@@ -1,4 +1,4 @@
-namespace GameProg.World
+namespace World
 {
     public enum RoomType
     {

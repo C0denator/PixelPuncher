@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameProg.UI
+namespace UI
 {
     public class PlayerHealthbar : MonoBehaviour
     {

@@ -1,8 +1,6 @@
-using System;
-using GameProg.World;
 using UnityEngine;
 
-namespace GameProg.UI
+namespace UI
 {
     public class GigachadButton : MonoBehaviour
     {
