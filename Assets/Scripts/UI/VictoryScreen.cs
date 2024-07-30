@@ -10,9 +10,10 @@ namespace UI
         [SerializeField] private float fadeOutTime = 1f;
         [SerializeField] private Image gigachad;
         [SerializeField] private float fadeInTime = 10f;
-        [SerializeField] private float quitTime = 79.685f;
+        private float quitTime = 79.685f;
         
         private GameMaster _gameMaster;
+        private float _elapsedTime;
 
         private void Awake()
         {
@@ -31,7 +32,9 @@ namespace UI
 
         private void FixedUpdate()
         {
-            if (Time.timeSinceLevelLoad > quitTime)
+            _elapsedTime += Time.fixedDeltaTime;
+            
+            if (_elapsedTime > quitTime)
             {
                 Application.Quit();
                 Debug.Log("Quit");
@@ -84,6 +87,8 @@ namespace UI
             tmp = gigachad.color;
             tmp.a = 0;
             gigachad.color = tmp;
+            
+            _elapsedTime = 0;
         }
     }
 }
