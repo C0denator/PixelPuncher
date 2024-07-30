@@ -177,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3478218372503984274, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
       propertyPath: invincible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8370123616100767719, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
       propertyPath: m_Name
@@ -380,7 +380,7 @@ MonoBehaviour:
   - {fileID: 6294838752123947024, guid: 43ce67acb87c3d440b733b9a629d4e0f, type: 3}
   - {fileID: 8975499485554481543, guid: dc51580756e7b3e40886d3f7a4b04fcd, type: 3}
   - {fileID: 3873443599062980693, guid: 278fba10d5393b44b8aacb2f16e3f4ac, type: 3}
-  numberOfRooms: 1
+  numberOfRooms: 6
   debugMode: 0
 --- !u!1 &1054228300
 GameObject:
