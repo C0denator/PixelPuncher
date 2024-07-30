@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Sound;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -25,7 +26,19 @@ namespace GameProg.World
         public GameObject Player => player;
         public List<Room> GeneratedRooms => generatedRooms;
         
+        private Music _music;
+        
         public event Action OnWorldGenerated;
+
+        private void Awake()
+        {
+            _music = FindObjectOfType<Music>();
+            
+            if (_music == null)
+            {
+                Debug.LogError("Music not found in World");
+            }
+        }
 
         private void Start()
         {
@@ -340,6 +353,11 @@ namespace GameProg.World
             //fire event
             OnWorldGenerated?.Invoke();
             Debug.Log("World generation finished");
+            
+            if (_music != null)
+            {
+                _music.PlayClip("World1");
+            }
             
             yield return null;
         }

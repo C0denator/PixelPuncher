@@ -127,10 +127,10 @@ public class GameMaster : MonoBehaviour
         }
             
         //if world1
-        if (currentWorld.name == "World1")
+        /*if (currentWorld.name == "World1")
         {
             music.PlayClip("World1");
-        }
+        }*/
             
         //subscribe to the room cleared event
         for(int i=0; i<currentWorld.GeneratedRooms.Count; i++)
