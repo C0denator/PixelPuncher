@@ -7,6 +7,8 @@ namespace General
     public class CompressTilemap : MonoBehaviour
     {
         [SerializeField] private Tilemap tilemap;
+        
+        #if UNITY_EDITOR
 
         // Update is called once per frame
         private void Update()
@@ -16,5 +18,7 @@ namespace General
                 tilemap.CompressBounds();
             }
         }
+        
+        #endif
     }
 }
