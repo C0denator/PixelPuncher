@@ -17,6 +17,7 @@ namespace Player
         [SerializeField] [Range(0.1f,0.5f)] private float dashDuration = 0.5f;
         [SerializeField] [Range(0f,3f)] private float dashCooldown = 1f;
         [SerializeField] private AudioClipWithVolume dashSound;
+        [SerializeField] private SpriteRenderer dashCooldownSprite;
         
         private Health.Health _health;
         private SpriteRenderer _spriteRenderer;
@@ -53,6 +54,7 @@ namespace Player
             if(_rigidbody2D == null) Debug.LogError("Rigidbody2D component not found");
             if(playerCamera == null) Debug.LogError("Player camera not set");
             if(_gameMaster == null) Debug.LogError("GameMaster not found");
+            if (dashCooldownSprite == null) Debug.LogError("Dash cooldown sprite not set");
             
         }
 
@@ -60,11 +62,14 @@ namespace Player
         {
             _isDashing = false;
             _elapsedDashTime = 0;
-            _elapsedDashCooldown = 0;
+            _elapsedDashCooldown = dashCooldown;
             
             //switch to player camera
             playerCamera.gameObject.SetActive(true);
             _gameMaster.CurrentCamera = playerCamera;
+            
+            //disable dash cooldown sprite
+            dashCooldownSprite.enabled = false;
         }
 
         private void Update()
@@ -104,6 +109,9 @@ namespace Player
                     
                     //enable health component
                     _health.enabled = true;
+                    
+                    //enable dash cooldown sprite
+                    dashCooldownSprite.enabled = true;
                 }
                 else //dash still active
                 {
@@ -117,6 +125,11 @@ namespace Player
             {
                 //increase cooldown counter
                 _elapsedDashCooldown += Time.fixedDeltaTime;
+            }
+            else
+            {
+                //disable dash cooldown sprite
+                dashCooldownSprite.enabled = false;
             }
             
             //move player
