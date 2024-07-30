@@ -91,11 +91,11 @@ namespace Enemies.SpecificBehaviour.BossAttacks
             
             if (ctx.GameMaster.GigachadMode)
             {
-                BulletAmount = 54;
+                BulletAmount = 36;
             }
             else
             {
-                BulletAmount = 36;
+                BulletAmount = 18;
             }
             
             

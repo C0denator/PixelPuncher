@@ -107,8 +107,8 @@ namespace Player
                     _animator.SetBool(IsDashing, false);
                     _elapsedDashTime = 0;
                     
-                    //enable health component
-                    _health.enabled = true;
+                    //make not invincible
+                    _health.invincible = false;
                     
                     //enable dash cooldown sprite
                     dashCooldownSprite.enabled = true;
@@ -167,8 +167,8 @@ namespace Player
                 _elapsedDashCooldown = 0;
                 _animator.SetBool(IsDashing, true);
                 
-                //disable health component
-                _health.enabled = false;
+                //make invincible
+                _health.invincible = true;
                 
                 //play dash sound
                 _audioSource.PlayOneShot(dashSound.clip, dashSound.volume);
