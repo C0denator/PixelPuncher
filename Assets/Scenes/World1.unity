@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 68240790014357368, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
       propertyPath: damage
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 791116838313154642, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -177,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3478218372503984274, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
       propertyPath: invincible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8370123616100767719, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
       propertyPath: m_Name
@@ -370,13 +370,18 @@ MonoBehaviour:
   player: {fileID: 0}
   generatedRooms: []
   CurrentRoom: {fileID: 0}
-  startRoom: {fileID: 1754421886716813612, guid: ca15ba8a26a32e544b47f7082ff9cb40, type: 3}
+  startRoom: {fileID: 61301520078438960, guid: ca15ba8a26a32e544b47f7082ff9cb40, type: 3}
   bossRoomPrefab: {fileID: 4906896466256603529, guid: e84f767bcc70a804ab7bb3d958bca7d6, type: 3}
   roomPrefabs:
   - {fileID: 1754421886716813612, guid: cd688802e9dee6342a94f82927961675, type: 3}
   - {fileID: 8241666297283251434, guid: 203d4c7d41fa73043add630706920cbc, type: 3}
   - {fileID: 2451253443366623538, guid: 1f720ff0ec8316d47959e45949eaa596, type: 3}
-  numberOfRooms: 1
+  - {fileID: 100798934091052075, guid: da8d3dbd08d2c3140821708512fb15a3, type: 3}
+  - {fileID: 1913157631830351926, guid: 1d390d4d3167bc849a5a6fd6afbb724e, type: 3}
+  - {fileID: 6294838752123947024, guid: 43ce67acb87c3d440b733b9a629d4e0f, type: 3}
+  - {fileID: 8975499485554481543, guid: dc51580756e7b3e40886d3f7a4b04fcd, type: 3}
+  - {fileID: 3873443599062980693, guid: 278fba10d5393b44b8aacb2f16e3f4ac, type: 3}
+  numberOfRooms: 6
   debugMode: 0
 --- !u!1 &1054228300
 GameObject:

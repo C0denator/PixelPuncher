@@ -736,7 +736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 100
+  maxHealth: 150
   invincible: 0
   hitSound:
     clip: {fileID: 8300000, guid: 8a34aba343ad1c9408ad7f9b5f0889e8, type: 3}

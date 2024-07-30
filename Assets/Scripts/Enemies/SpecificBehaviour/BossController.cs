@@ -228,7 +228,7 @@ namespace GameProg.Enemies.SpecificBehaviour
         {
             Debug.Log("Boss health changed");
             
-            if(_health.CurrentHealth <= _health.MaxHealth / 2 && !_secondPhase)
+            if(_health.CurrentHealth <= _health.MaxHealth / 3 && !_secondPhase)
             {
                 //start second phase
                 StartCoroutine(SecondPhaseCoroutine());
