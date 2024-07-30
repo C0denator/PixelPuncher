@@ -447,7 +447,7 @@ MonoBehaviour:
   fadeOutImage: {fileID: 956795726}
   fadeOutTime: 3
   gigachad: {fileID: 1502752472}
-  fadeInTime: 1000
+  fadeInTime: 500
 --- !u!1 &653927669
 GameObject:
   m_ObjectHideFlags: 0

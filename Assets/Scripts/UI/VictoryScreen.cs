@@ -60,7 +60,7 @@ namespace UI
     
         private IEnumerator FadeIn()
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(5f);
             
             float elapsedTime = 0;
             Color color = gigachad.color;

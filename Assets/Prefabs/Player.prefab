@@ -240,7 +240,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: f5d86e975f71a4341abfe56668d26425, type: 3}
     volume: 0.25
   bulletSpeed: 20
-  secondsBetweenShots: 0.15
+  secondsBetweenShots: 0.1
   damage: 1
   hasMagazine: 1
   reloadTime: 1
@@ -575,7 +575,7 @@ MonoBehaviour:
   moveSpeed: 7.5
   dashSpeed: 40
   dashDuration: 0.15
-  dashCooldown: 3
+  dashCooldown: 2
   dashSound:
     clip: {fileID: 8300000, guid: b537546d1b39a1b448111cef8099f323, type: 3}
     volume: 0.25

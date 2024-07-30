@@ -126,7 +126,7 @@ namespace Enemies.SpecificBehaviour
 
             if (_gameMaster.GigachadMode)
             {
-                amountOfBullets += UnityEngine.Random.Range(2, 5);
+                amountOfBullets += UnityEngine.Random.Range(2, 4);
             }
             else
             {

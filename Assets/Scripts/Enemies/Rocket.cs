@@ -117,7 +117,7 @@ namespace Enemies
             if (_gameMaster.GigachadMode)
             {
                 //shoot rocket
-                _rb.velocity = transform.right * speed * 3;
+                _rb.velocity = transform.right * speed * 2;
             }
             else
             {
@@ -141,6 +141,12 @@ namespace Enemies
                 //play explosion sound
                 _audioSource.PlayOneShot(explosionSound.clip, explosionSound.volume);
                 
+                //if player is hit deal damage
+                if (other.gameObject.CompareTag("Player"))
+                {
+                    other.gameObject.GetComponent<Health.Health>().DoDamage(1);
+                }
+
                 //destroy rocket
                 Destroy(gameObject);
             }

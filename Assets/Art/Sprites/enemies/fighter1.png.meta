@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1c1813a26fc81584bbc3e75493e0fcd7
+guid: 3bb8e02996d2c784c96494aca51afe33
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fighter1_0
+      name: fighter1_V3_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9115b264f1955d2479c1952b7697f253
-      internalID: -1424171226
+      spriteID: 07c0772fc8d7e9842a157df0fa0b24e8
+      internalID: 923381113
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fighter1_1
+      name: fighter1_V3_1
       rect:
         serializedVersion: 2
         x: 12
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3523c169ab1b0cb488f9cc1f3bb294c5
-      internalID: 1574649374
+      spriteID: befa4e612f9dab14296b738d134a7237
+      internalID: -835861666
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fighter1_2
+      name: fighter1_V3_2
       rect:
         serializedVersion: 2
         x: 24
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6587216e2ce97c54ea036a099e3ace0e
-      internalID: 2127187379
+      spriteID: c10b1da13e0797f49bd0f2cbaec62a63
+      internalID: -1200593192
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fighter1_3
+      name: fighter1_V3_3
       rect:
         serializedVersion: 2
         x: 36
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30eda5dc0a34f234db2a77a08e652c4c
-      internalID: 1735885254
+      spriteID: 0c3c0fa1dbe61d142a087f136b60763b
+      internalID: -1796260087
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fighter1_4
+      name: fighter1_V3_4
       rect:
         serializedVersion: 2
         x: 48
@@ -195,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1aea18aed25bc14f9f5a547b180b255
-      internalID: 224884512
+      spriteID: 46708414a3e4c354da3c2e0a58580a27
+      internalID: -1169279814
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fighter1_5
+      name: fighter1_V3_5
       rect:
         serializedVersion: 2
         x: 60
@@ -216,14 +216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2330e66c82d67b4789b8714c9bd4949
-      internalID: 473047496
+      spriteID: 03eafebdb1a2fa84981f05d37a93c882
+      internalID: -1512684151
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fighter1_6
+      name: fighter1_V3_6
       rect:
         serializedVersion: 2
         x: 72
@@ -237,14 +237,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2de07ea87a6ac54439ddfb70b4a1c5ca
-      internalID: 1500670521
+      spriteID: 35fe0a5bdaf299a4b9d6f039d755608e
+      internalID: 1432361416
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fighter1_7
+      name: fighter1_V3_7
       rect:
         serializedVersion: 2
         x: 84
@@ -258,14 +258,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cdf59e7e9d0a0e54daf8585cbc665188
-      internalID: 1880517735
+      spriteID: 81769b5e2d8b7024f8d4edb647c29f21
+      internalID: -211869571
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fighter1_8
+      name: fighter1_V3_8
       rect:
         serializedVersion: 2
         x: 96
@@ -279,14 +279,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db9b76241a6cde747bd1d2b4a2763cc9
-      internalID: -1497767543
+      spriteID: d31d1943a6d69ee4a88bc2d2b52f9d09
+      internalID: 1742410850
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fighter1_9
+      name: fighter1_V3_9
       rect:
         serializedVersion: 2
         x: 108
@@ -300,14 +300,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: feb03115c68354c4fbc228c4269ffa5d
-      internalID: 1096375534
+      spriteID: 1fff93fde3c2de444a13299c28eec98b
+      internalID: -1760563291
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fighter1_10
+      name: fighter1_V3_10
       rect:
         serializedVersion: 2
         x: 120
@@ -321,8 +321,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea331e0dc7f686d41b63a8c3574f89d2
-      internalID: -647493374
+      spriteID: a366bf67d933f364e84f14790cf289b8
+      internalID: 1179701129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fighter1_V3_11
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b05caf78266643a48aab3568b02091ac
+      internalID: 1423230630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fighter1_V3_12
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e76a588f0e9ed594cadbbdeaf3f4d1c7
+      internalID: -1183938875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fighter1_V3_13
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d072f46ebf9554c409aafccc153b18c9
+      internalID: 331709859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fighter1_V3_14
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 830bc0ff50c0b124daa1a7a3f4f1f072
+      internalID: -47962549
       vertices: []
       indices: 
       edges: []
@@ -338,17 +422,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      fighter1_0: -1424171226
-      fighter1_1: 1574649374
-      fighter1_10: -647493374
-      fighter1_2: 2127187379
-      fighter1_3: 1735885254
-      fighter1_4: 224884512
-      fighter1_5: 473047496
-      fighter1_6: 1500670521
-      fighter1_7: 1880517735
-      fighter1_8: -1497767543
-      fighter1_9: 1096375534
+      fighter1_V3_0: 923381113
+      fighter1_V3_1: -835861666
+      fighter1_V3_10: 1179701129
+      fighter1_V3_11: 1423230630
+      fighter1_V3_12: -1183938875
+      fighter1_V3_13: 331709859
+      fighter1_V3_14: -47962549
+      fighter1_V3_2: -1200593192
+      fighter1_V3_3: -1796260087
+      fighter1_V3_4: -1169279814
+      fighter1_V3_5: -1512684151
+      fighter1_V3_6: 1432361416
+      fighter1_V3_7: -211869571
+      fighter1_V3_8: 1742410850
+      fighter1_V3_9: -1760563291
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

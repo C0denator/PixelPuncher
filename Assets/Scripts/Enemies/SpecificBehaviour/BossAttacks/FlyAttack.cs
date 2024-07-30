@@ -94,6 +94,7 @@ namespace Enemies.SpecificBehaviour.BossAttacks
             //Instantiate(_debugSphere, target, Quaternion.identity);
             
             ctx.NavMeshAgent.SetDestination(target);
+            ctx.NavMeshAgent.speed = 10f;
             
             //wait for agent find path
             while(ctx.NavMeshAgent.pathPending)
@@ -147,12 +148,12 @@ namespace Enemies.SpecificBehaviour.BossAttacks
                         if (ctx.GameMaster.GigachadMode)
                         {
                             //set velocity
-                            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(ySin*100f, -2f) * bulletSpeed;
+                            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(ySin*50f, -2f) * bulletSpeed;
                         }
                         else
                         {
                             //set velocity
-                            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(ySin*10f, -1f) * bulletSpeed;
+                            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(ySin*10f, -2f) * bulletSpeed;
                         }
                         
                         //play sound
