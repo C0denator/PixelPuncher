@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace UI
 {
+    /// <summary>
+    /// Handles the life cycle of the victory screen
+    /// </summary>
     public class VictoryScreen : MonoBehaviour
     {
         [SerializeField] private Image fadeOutImage;

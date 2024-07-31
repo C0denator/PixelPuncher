@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace General
 {
+    /// <summary>
+    /// Post processing effect that simulates a CRT screen
+    /// </summary>
     [ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]
 

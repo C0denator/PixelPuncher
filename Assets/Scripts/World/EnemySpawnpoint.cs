@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace World
 {
+    /// <summary>
+    /// Component for Spawnpoint Prefab. Holds data for the enemy prefab and the wave it should spawn at.
+    /// </summary>
     public class EnemySpawnpoint : MonoBehaviour
     {
         [SerializeField] private GameObject enemyPrefab;

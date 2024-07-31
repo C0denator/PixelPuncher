@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Player
 {
+    /// <summary>
+    /// Handles the animation and display of the reload bar
+    /// </summary>
     public class Reload : MonoBehaviour
     {
         private SpriteRenderer reloadBar;

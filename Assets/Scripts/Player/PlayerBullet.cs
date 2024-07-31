@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Player
 {
+    /// <summary>
+    /// Component for the player bullets
+    /// </summary>
     public class PlayerBullet : MonoBehaviour
     {
 

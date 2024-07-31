@@ -8,6 +8,9 @@ using Random = UnityEngine.Random;
 
 namespace Enemies.SpecificBehaviour
 {   
+    /// <summary>
+    /// Fighter enemy that shoots accurate bullets at the player
+    /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(EnemyBaseClass))]
@@ -162,7 +165,11 @@ namespace Enemies.SpecificBehaviour
             //set velocity
             bullet.GetComponent<Rigidbody2D>().velocity = launchDirection * bulletSpeed;
         }
-
+        
+        /// <summary>
+        /// Calculates the direction in which a projectile has to be launched to hit a moving target
+        /// </summary>
+        /// <returns>Normalized direction vector</returns>
         private Vector2 CalculateLaunchDirection(Vector2 projectilePosition, float projectileSpeed,
             Vector2 targetPosition, Vector2 targetVelocity)
         {

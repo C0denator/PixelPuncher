@@ -6,10 +6,13 @@ using UnityEngine.Tilemaps;
 
 namespace World
 {
+    /// <summary>
+    /// Component to handle doors between rooms. Each door has a reference to the room it belongs to and the room it leads to.
+    /// </summary>
     public class Door : MonoBehaviour
     {
-        public Room roomA; //the room this door belongs to
-        [CanBeNull] public Room roomB; //the room this door leads to
+        public Room roomA; //the room this door originally belongs to
+        [CanBeNull] public Room roomB; //the room this door leads to; is null before world generation
         private Animator animator;
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private BoxCollider2D _boxCollider2D;
@@ -17,7 +20,8 @@ namespace World
         [SerializeField] private bool isBossDoor;
         
         public SpriteRenderer SpriteRenderer => _spriteRenderer;
-
+        
+        //is the door marked for deletion? Fixes the issue of Destroy() not being instant
         public bool MarkedForDeletion = false; 
         
         private static readonly int IsOpen = Animator.StringToHash("IsOpen");
@@ -41,7 +45,9 @@ namespace World
             roomCount++;
         }
 
-
+        /// <summary>
+        /// Called during world generation to initialize the door. The door looks for other doors or walls to connect and reference them.
+        /// </summary>
         public void Initialize()
         {
             //return if the door is marked for deletion
@@ -117,6 +123,7 @@ namespace World
                         
                         if (_spriteRenderer.sortingOrder >= otherDoor.SpriteRenderer.sortingOrder)
                         {
+                            //save hte reference to the other room
                             roomB = otherDoor.roomA;
                             
                             //add itself to the list of the other room
@@ -163,7 +170,10 @@ namespace World
                 Close();
             }
         }
-
+        
+        /// <summary>
+        /// Deletes all tiles of the room walls that are touching the collider of this door.
+        /// </summary>
         public void DeleteOverlappingTiles()
         {
             if(MarkedForDeletion) return;
@@ -173,10 +183,12 @@ namespace World
             Tilemap tilemapB = roomB?.Walls;
             
             Debug.Log("Looking for tiles to delete on position "+transform.position);
-                            
+            
+            //Update the tilemaps manually (because the collision would otherwise not be detected)
             tilemapA.RefreshAllTiles();
             tilemapB?.RefreshAllTiles();
             
+            //delete tile by setting it to null
             tilemapA.SetTile(tilemapA.WorldToCell(transform.position), null);
             tilemapB?.SetTile(tilemapB.WorldToCell(transform.position), null);
         }

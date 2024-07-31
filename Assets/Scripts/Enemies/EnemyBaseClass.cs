@@ -4,6 +4,9 @@ using Random = UnityEngine.Random;
 
 namespace Enemies
 {
+    /// <summary>
+    /// Base class for all enemies. Handles death and debris spawning.
+    /// </summary>
     [RequireComponent(typeof(Health.Health))]
     public class EnemyBaseClass : MonoBehaviour
     {

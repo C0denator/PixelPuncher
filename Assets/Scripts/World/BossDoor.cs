@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace World
 {
+    /// <summary>
+    /// This script is used to open the boss door when all rooms are cleared.
+    /// </summary>
     public class BossDoor : MonoBehaviour
     {
         [SerializeField] private Transform player;

@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace UI
 {
+    /// <summary>
+    /// Component to fade out an image
+    /// </summary>
     public class FadeOut : MonoBehaviour
     {
         [SerializeField] [Range(0.1f,3f)] private float fadeOutTime = 1f;

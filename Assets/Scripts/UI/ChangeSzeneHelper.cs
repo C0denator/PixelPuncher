@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace UI
 {
+    /// <summary>
+    /// Helper class to change the scene
+    /// </summary>
     public class ChangeSzeneHelper : MonoBehaviour
     {
         

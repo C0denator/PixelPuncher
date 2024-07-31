@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace World
 {
+    /// <summary>
+    /// Component to show an intro for the boss room
+    /// </summary>
     public class BossRoomIntro : MonoBehaviour
     {
         

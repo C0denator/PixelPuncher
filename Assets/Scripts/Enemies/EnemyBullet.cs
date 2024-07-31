@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Enemies
 {
+    /// <summary>
+    /// Component to control the enemy bullet
+    /// </summary>
     public class EnemyBullet : MonoBehaviour
     {
         

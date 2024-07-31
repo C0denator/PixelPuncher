@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Player
 {
+    /// <summary>
+    /// Component for a specific weapon. Holds all data for the weapon
+    /// </summary>
     public class WeaponLogic : MonoBehaviour, IWeapon
     {
         [Header("References")]

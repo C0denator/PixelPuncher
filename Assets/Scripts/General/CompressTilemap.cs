@@ -3,6 +3,9 @@ using UnityEngine.Tilemaps;
 
 namespace General
 {
+    /// <summary>
+    /// Compresses the bounds of a tilemap in edit mode, because the bounds are otherwise not updated
+    /// </summary>
     [ExecuteInEditMode]
     public class CompressTilemap : MonoBehaviour
     {

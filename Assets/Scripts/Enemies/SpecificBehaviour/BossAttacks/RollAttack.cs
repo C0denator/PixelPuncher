@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Enemies.SpecificBehaviour.BossAttacks
 {
+    /// <summary>
+    /// Boss attack where the boss rolls around the room and shoots bullets on collision with walls
+    /// </summary>
     public class RollAttack : BossAttack
     {
         [SerializeField] [Range(5,20f)] private float rollSpeed;
@@ -47,7 +50,8 @@ namespace Enemies.SpecificBehaviour.BossAttacks
             Vector3 playerPos = ctx.Player.position;
             vel = (playerPos - ctx.transform.position).normalized * rollSpeed;
             vel = new Vector3(vel.x, vel.y, 0);
-
+        
+            // attack loop
             while (elapsedTime < attackDuration)
             {
                 elapsedTime += Time.deltaTime;
@@ -97,8 +101,6 @@ namespace Enemies.SpecificBehaviour.BossAttacks
             {
                 BulletAmount = 18;
             }
-            
-            
             
             //spawn a ring around the boss  
             for (int i = 0; i < BulletAmount; i++)

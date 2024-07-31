@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 
 namespace Player
 {
+    /// <summary>
+    /// Handles the movement of the player, including dashing
+    /// </summary>
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Animator))]
     public class PlayerMovement : MonoBehaviour

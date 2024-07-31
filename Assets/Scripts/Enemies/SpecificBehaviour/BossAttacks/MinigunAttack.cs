@@ -6,6 +6,9 @@ using Random = UnityEngine.Random;
 
 namespace Enemies.SpecificBehaviour.BossAttacks
 {
+    /// <summary>
+    /// Boss attack where the boss shoots a minigun at the player while charging at them+
+    /// </summary>
     public class MinigunAttack : BossAttack
     {
         [SerializeField] [Range(3f,20f)] private float attackDuration;
@@ -59,7 +62,8 @@ namespace Enemies.SpecificBehaviour.BossAttacks
             ctx.MiniGunAnimator.SetTrigger("Fire");
             
             float secondsTillLastShot = secondsBetweenShots;
-
+            
+            //attack loop
             while (_elapsedTime < attackDuration)
             {
                 _elapsedTime += Time.deltaTime;
@@ -72,17 +76,17 @@ namespace Enemies.SpecificBehaviour.BossAttacks
                 float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
                 minigun.transform.rotation = Quaternion.Euler(0, 0, angle);
                 
-                
                 if (_elapsedTime > 1f)
                 {
                     secondsTillLastShot += Time.deltaTime;
                     
+                    //shoot if enough time has passed
                     if(secondsTillLastShot >= secondsBetweenShots)
                     {
                         //shoot
                         GameObject bullet = Instantiate(_bulletPrefab, minigun.transform.position, Quaternion.identity);
                         
-                        //look at player
+                        //rotate bullet towards player
                         lookDir = ctx.Player.position - minigun.transform.position;
                         angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
                         bullet.transform.rotation = Quaternion.Euler(0, 0, angle);

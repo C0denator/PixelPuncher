@@ -9,6 +9,9 @@ using UnityEngine.Serialization;
 
 namespace World
 {
+    /// <summary>
+    /// Component to control the world. Generates all rooms.
+    /// </summary>
     public class World : MonoBehaviour
     {
         [SerializeField] private GameObject playerPrefab;
@@ -104,7 +107,7 @@ namespace World
 
                         Debug.Log("Trying with prefab: "+newRoom.name);
                         
-                        //for all doors in the new room
+                        //for all doors in the new room, check if the new room can be placed
                         for (int i = 0; i < newRoom.Doors.Count; i++)
                         {
                             Debug.Log("Checking door "+i);
@@ -350,10 +353,13 @@ namespace World
             /*//spawn the player in the starting room
             player = Instantiate(playerPrefab, startRoom.transform.position, Quaternion.identity);*/
             
+            //geeration finished
+            
             //fire event
             OnWorldGenerated?.Invoke();
             Debug.Log("World generation finished");
             
+            //start music
             if (_music != null)
             {
                 _music.PlayClip("World1");

@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace UI
 {
+    /// <summary>
+    /// This script is used to display the player's health.
+    /// </summary>
     public class PlayerHealthbar : MonoBehaviour
     {
         [SerializeField] private GameObject heartPrefab;

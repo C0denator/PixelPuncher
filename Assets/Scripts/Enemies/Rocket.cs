@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Enemies
 {
+    /// <summary>
+    /// Rocket that aims at the player and explodes on impact. Spawns a instance of the explosion prefab
+    /// </summary>
     public class Rocket : MonoBehaviour
     {
         [SerializeField] private float speed = 5f;

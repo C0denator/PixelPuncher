@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Health
 {
+    /// <summary>
+    /// Health component for objects that can take damage. Also handles sound effects for taking damage and dying
+    /// </summary>
     public class Health : MonoBehaviour
     {
         [SerializeField] private int currentHealth;

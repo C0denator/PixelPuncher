@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Enemies.SpecificBehaviour.BossAttacks
 {
+    /// <summary>
+    /// Boss attack, which was not implemented yet
+    /// </summary>
     public class LaserAttack : BossAttack
     {
         [SerializeField] [Range(3f,10f)] private float attackDuration;

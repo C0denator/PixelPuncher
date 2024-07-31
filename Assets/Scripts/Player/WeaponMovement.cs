@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Player
 {
+    /// <summary>
+    /// Aims the weapon at the position of the mouse
+    /// </summary>
     [RequireComponent(typeof(SpriteRenderer))]
     public class WeaponMovement : MonoBehaviour
     {

@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Sound
 {
+    /// <summary>
+    /// Component to play music. Holds all music clips. [Singleton]
+    /// </summary>
     public class Music : MonoBehaviour
     {
         [SerializeField] private AudioSource audioSourceA;

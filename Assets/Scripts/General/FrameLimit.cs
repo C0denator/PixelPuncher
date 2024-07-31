@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace General
 {
+    /// <summary>
+    /// Limits the frame rate of the game
+    /// </summary>
     public class FrameLimit : MonoBehaviour
     {
         [SerializeField] private int targetFrameRate = 60;

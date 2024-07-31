@@ -7,6 +7,9 @@ using UnityEngine.AI;
 
 namespace Enemies.SpecificBehaviour
 {
+    /// <summary>
+    /// Controller for the boss enemy. Handles attacks and phases
+    /// </summary>
     public class BossController : MonoBehaviour
     {
         [SerializeField] private GameObject eye;
@@ -99,7 +102,8 @@ namespace Enemies.SpecificBehaviour
                 }
             }
         }
-
+    
+        /// Coroutine for waiting between attacks
         private IEnumerator WaitCoroutine()
         {
             _currentAttack = null;
@@ -128,6 +132,9 @@ namespace Enemies.SpecificBehaviour
             StartRandomAttack();
         }
         
+        /// <summary>
+        /// Coroutine for the second phase transition
+        /// </summary>
         private IEnumerator SecondPhaseCoroutine()
         {
             Debug.Log("Second phase started");

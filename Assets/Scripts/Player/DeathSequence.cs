@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Player
 {
+    /// <summary>
+    /// Handles the death sequence of the player
+    /// </summary>
     public class DeathSequence : MonoBehaviour
     {
         [SerializeField] private Camera _deathCamera;
@@ -54,7 +57,8 @@ namespace Player
             Time.timeScale = 0;
             
             yield return new WaitForSecondsRealtime(1f);
-
+            
+            //zoom in on player
             while (_deathCamera.orthographicSize > 5)
             {
                 _deathCamera.orthographicSize -= 10 * Time.unscaledDeltaTime;
@@ -66,7 +70,8 @@ namespace Player
             
             //play death sound
             _playerHealth.AudioSource.PlayOneShot(_deathSound.clip, _deathSound.volume);
-
+            
+            //shrink player
             while (transform.localScale.y > 0)
             {
                 transform.localScale -= new Vector3(0, 1, 0) * Time.unscaledDeltaTime;

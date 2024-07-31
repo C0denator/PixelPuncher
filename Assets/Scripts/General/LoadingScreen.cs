@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace General
 {
+    /// <summary>
+    /// Shows a loading screen while the world is being generated
+    /// </summary>
     public class LoadingScreen : MonoBehaviour
     {
         [SerializeField] private World.World _world;

@@ -2,6 +2,9 @@ using System;
 
 namespace Player
 {
+    /// <summary>
+    /// Interface for weapons
+    /// </summary>
     public interface IWeapon
     {
         public event Action OnReloadStart;

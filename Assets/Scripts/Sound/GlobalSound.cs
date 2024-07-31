@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Sound
 {
+    /// <summary>
+    /// Component to play global sounds. [Singleton]
+    /// </summary>
     public class GlobalSound : MonoBehaviour
     {
     

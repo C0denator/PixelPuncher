@@ -3,7 +3,10 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class Circle : MonoBehaviour
+    /// <summary>
+    /// Explosion that damages the player
+    /// </summary>
+    public class Explosion : MonoBehaviour
     {
         [SerializeField] private float _lifeTime = 1f;
         [SerializeField] private float _expandSpeed = 1f;
@@ -51,7 +54,6 @@ namespace Enemies
             yield return null;
         }
 
-        // Update is called once per frame
         private void OnEnable()
         {
             _timeLeft = _lifeTime;

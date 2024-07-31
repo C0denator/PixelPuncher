@@ -6,6 +6,9 @@ using Random = UnityEngine.Random;
 
 namespace Enemies.SpecificBehaviour.BossAttacks
 {
+    /// <summary>
+    /// Boss attack where the boss flies to the top and rains bullets and rockets down on the player
+    /// </summary>
     public class FlyAttack : BossAttack
     {
         [SerializeField] [Range(0.01f,1f)] private float amplitude;
@@ -38,6 +41,7 @@ namespace Enemies.SpecificBehaviour.BossAttacks
         {
             if (ctx.GameMaster.GigachadMode)
             {
+                // increase attack speed in gigachad mode
                 secondsBetweenShots *= 0.75f;
                 secondsBetweenRockets *= 0.75f;
             }
@@ -71,7 +75,9 @@ namespace Enemies.SpecificBehaviour.BossAttacks
             RaycastHit2D hit;
             int i = 0;
             int maxIterations = 100;
-
+            
+            //find the highest point above the boss in the room
+            
             do
             {
                 i++;
@@ -93,13 +99,13 @@ namespace Enemies.SpecificBehaviour.BossAttacks
             //spawn debug sphere
             //Instantiate(_debugSphere, target, Quaternion.identity);
             
+            //move boss to found point
             ctx.NavMeshAgent.SetDestination(target);
             ctx.NavMeshAgent.speed = 10f;
             
             //wait for agent find path
             while(ctx.NavMeshAgent.pathPending)
             {
-                Debug.Log("Path pending");
                 yield return null;
             }
             
@@ -125,17 +131,19 @@ namespace Enemies.SpecificBehaviour.BossAttacks
             float secondsTillLastShot = secondsBetweenShots;
             float secondsTillLastRocket = secondsBetweenRockets;
             
+            //attack loop
+            
             while (_elapsedTime < attackDuration)
             {
                 _elapsedTime += Time.deltaTime;
                 
+                //sinusoidal up and down movement (to simulate flying via jetpack)
                 float ySin = Mathf.Sin(Time.time * frequency) * amplitude;
                 sinVector = new Vector3(0, ySin, 0);
 
                 if (_elapsedTime > 1f)
                 {
-                    //shoot bullet
-
+                    //shoot bullet if enough time has passed
                     if (secondsTillLastShot >= secondsBetweenShots)
                     {
                         GameObject bullet = Instantiate(bulletPrefab, minigun.transform.position, Quaternion.identity);
@@ -143,8 +151,6 @@ namespace Enemies.SpecificBehaviour.BossAttacks
                         //rotate downwards
                         bullet.transform.rotation = Quaternion.Euler(0, 0, -90);
                         
-                        
-
                         if (ctx.GameMaster.GigachadMode)
                         {
                             //set velocity
@@ -167,7 +173,7 @@ namespace Enemies.SpecificBehaviour.BossAttacks
                     
                     }
                     
-                    //shoot rocket
+                    //shoot rocket if enough time has passed
                     if (secondsTillLastRocket >= secondsBetweenRockets)
                     {
                         GameObject rocket = Instantiate(rocketPrefab, mortar.transform.position, Quaternion.identity);
@@ -202,12 +208,14 @@ namespace Enemies.SpecificBehaviour.BossAttacks
                 hit = Physics2D.Raycast(origin, vel, 2, LayerMask.GetMask("Wall"));
                 if (hit.collider != null)
                 {
-                    // Reflect velocity 
+                    // invert x velocity if wall is hit
                     vel = new Vector3(-vel.x, vel.y, 0);
                 }
 
                 yield return null;
             }
+            
+            //attack time is over
             
             //stop minigun animation
             ctx.MiniGunAnimator.SetTrigger("Stop");

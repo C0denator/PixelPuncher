@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace UI
 {
+    /// <summary>
+    /// Handles the UI element that shows the number of cleared rooms
+    /// </summary>
     public class ClearCounter : MonoBehaviour
     {
         [SerializeField] private TMPro.TextMeshProUGUI _counterText;

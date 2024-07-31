@@ -5,6 +5,9 @@ using UnityEngine.Serialization;
 
 namespace World
 {
+    /// <summary>
+    /// Component to control combat in a room. Finds all spawnpoints in the room and spawns enemies according to the wave they are assigned to.
+    /// </summary>
     [RequireComponent(typeof(Room))]
     public class CombatController : MonoBehaviour
     {

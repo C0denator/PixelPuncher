@@ -5,6 +5,9 @@ using Sound;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Singleton class to control the game. Handles scene switching, music and victory conditions.
+/// </summary>
 public class GameMaster : MonoBehaviour
 {
     [SerializeField] private Music music;
@@ -156,6 +159,10 @@ public class GameMaster : MonoBehaviour
         StartCoroutine(VictorySequence());
     }
     
+    /// <summary>
+    /// Coroutine which plays directly before the victory screen is shown
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator VictorySequence()
     {
         //stop all music
@@ -170,7 +177,8 @@ public class GameMaster : MonoBehaviour
         currentCamera = Camera.main;
         
         float sizeChange = 0.1f;
-
+        
+        //zoom out until the world cannot be seen anymore
         while (currentCamera.orthographicSize < 100000)
         {
             currentCamera.orthographicSize += sizeChange;

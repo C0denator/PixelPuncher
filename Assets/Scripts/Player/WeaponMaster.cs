@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 namespace Player
 {
+    /// <summary>
+    /// Sets the current weapon and handles the shooting input and reloading events
+    /// </summary>
     public class WeaponMaster : MonoBehaviour
     {
         [SerializeField] private Reload _reloadBar;

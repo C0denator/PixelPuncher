@@ -4,13 +4,16 @@ using UnityEngine.Tilemaps;
 
 namespace World
 {
+    /// <summary>
+    /// Component to control a room in the game. Holds references to doors, walls and the world it is in.
+    /// </summary>
     public class Room : MonoBehaviour
     {
         [SerializeField] private RoomType roomType;
-        [SerializeField] private List<Door> doors;
+        [SerializeField] private List<Door> doors; //all doors in the room
         public TilemapRenderer wallsRenderer;
-        public Tilemap Walls;
-        [SerializeField] private CompositeCollider2D spaceCollider; //the inside of the room
+        public Tilemap Walls; //the walls of the room
+        [SerializeField] private CompositeCollider2D spaceCollider; //the inside of the room (trigger)
         
         public World World { get; private set; }
         public RoomType RoomType => roomType;
@@ -23,7 +26,10 @@ namespace World
         public System.Action OnRoomExit;
 
         public System.Action OnRoomCleared; 
-    
+        
+        /// <summary>
+        /// Called during world generation, after all rooms have been placed
+        /// </summary>
         public void InitializeRoom()
         {
             //get references
@@ -51,6 +57,9 @@ namespace World
             
         }
         
+        /// <summary>
+        /// Called during world generation, after all rooms have been initialized
+        /// </summary>
         public void InitializeDoors()
         {
             Debug.Log("Initializing doors for room "+name);

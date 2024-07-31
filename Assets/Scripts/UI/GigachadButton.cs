@@ -1,7 +1,10 @@
 using UnityEngine;
 
 namespace UI
-{
+{ 
+    /// <summary>
+    /// Handles the UI element that toggles the difficulty
+    /// </summary>
     public class GigachadButton : MonoBehaviour
     {
         [SerializeField] private TMPro.TMP_Text buttonText;
