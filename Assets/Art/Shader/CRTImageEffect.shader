@@ -37,10 +37,8 @@ Shader "Custom/CRTShader"
             };
 
             sampler2D _MainTex;
-            float4 _MainTex_TexelSize;
             float _CurvatureCenter;
             float _CurvatureEdge;
-            float _Curvature;
             float _VignetteIntensity;
             float _VignetteSmoothness;
             float _ScanlineIntensity;
@@ -50,45 +48,63 @@ Shader "Custom/CRTShader"
             v2f vert (appdata_t v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.vertex = UnityObjectToClipPos(v.vertex); 
                 o.uv = v.uv;
                 return o;
             }
 
-            float4 frag (v2f i) : SV_Target
+            // manipulate the UV coordinates to apply a curvature effect
+            float2 ApplyCurvature(float2 uv)
             {
-                float2 uv = i.uv;
-
-                // Apply CRT curvature with separate parameters for center and edges
                 uv = uv * 2.0 - 1.0; // Transform UV coordinates from [0, 1] to [-1, 1]
                 float dist = length(uv);
                 float theta = atan2(uv.y, uv.x);
-                
-                // Mix between center curvature and edge curvature
                 float curvature = lerp(_CurvatureCenter, _CurvatureEdge, dist);
-                dist = pow(dist, 1.0 + curvature * 0.5); // Radial distortion
-                
+                dist = pow(dist, 1.0 + curvature * 0.5);
                 uv = dist * float2(cos(theta), sin(theta));
                 uv = (uv + 1.0) * 0.5; // Transform UV coordinates back to [0, 1]
+                return uv;
+            }
 
-                // Prevent sampling outside texture coordinates
+            // draw scanlines over the image
+            float4 ApplyScanline(float4 color, float2 uv)
+            {
+                float scanline = sin((uv.y + _ScanlineTime * _ScanlineSpeed) * 100.0) * 0.5 + 0.5;
+                color.rgb *= lerp(1.0, scanline, _ScanlineIntensity);
+                return color;
+            }
+
+            // apply a vignette effect to the image
+            float4 ApplyVignette(float4 color, float2 uv)
+            {
+                float2 position = uv - 0.5;
+                float vignetteDist = length(position);
+                float vignette = smoothstep(0.5 - _VignetteSmoothness, 0.5 + _VignetteSmoothness, 1.0 - vignetteDist * _VignetteIntensity);
+                color.rgb *= vignette;
+                return color;
+            }
+
+            float4 frag(v2f i) : SV_Target
+            {
+                // step 1: apply the curvature effect
+                float2 uv = ApplyCurvature(i.uv);
+
+                //  discard pixels outside the texture
                 if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0)
                 {
                     return float4(0, 0, 0, 1);
                 }
 
+                // step 2: sample the texture
                 float4 color = tex2D(_MainTex, uv);
 
-                // Apply vignette effect
-                float2 position = i.uv - 0.5;
-                float vignetteDist = length(position);
-                float vignette = smoothstep(0.5 - _VignetteSmoothness, 0.5 + _VignetteSmoothness, 1.0 - vignetteDist * _VignetteIntensity);
-                color.rgb *= vignette;
+                // step 3: apply the scanline effect
+                color = ApplyScanline(color, i.uv);
 
-                // Apply scanline effect
-                float scanline = sin((i.uv.y + _ScanlineTime * _ScanlineSpeed) * 100.0) * 0.5 + 0.5;
-                color.rgb *= lerp(1.0, scanline, _ScanlineIntensity);
+                // step 4: apply the vignette effect
+                color = ApplyVignette(color, i.uv);
 
+                // step 5: return the final color of the pixel
                 return color;
             }
             ENDCG
