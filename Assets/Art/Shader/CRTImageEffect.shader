@@ -79,22 +79,16 @@ Shader "Custom/CRTShader"
                 //make each second line black
                 float scanlineFactor = (sin(curvedUV.y * _ScanlinePeriod*3.14159265359) + 1.0) * 0.5;
 
-                //clamp the scanline value to [0, 1]
-
+                // Invert scanline factor based on the interlacing bool
                 if(_InterlacingBool > 0.5f)
                 {
                     scanlineFactor = 1 - scanlineFactor;
                 }
-                
-                if (scanlineFactor > 0.5f)
-                {
-                    scanlineFactor = 1.0f;
-                }
-                else
-                {
-                    scanlineFactor = 1 * _ScanlineMinValue;
-                }
 
+                // Clamp the scanline value to [0, 1] using lerp
+                scanlineFactor = lerp(_ScanlineMinValue, 1.0f, step(0.5f, scanlineFactor));
+
+                // Apply scanline factor to the color
                 color.rgb *= scanlineFactor;
 
                 return color;
