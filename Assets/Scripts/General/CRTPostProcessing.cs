@@ -17,7 +17,7 @@ namespace General
         {
             if (crtMaterial != null)
             {
-                crtMaterial.SetFloat(ScanlineTime, Time.time);
+                crtMaterial.SetFloat(ScanlineTime, Time.unscaledTime);
                 Graphics.Blit(source, destination, crtMaterial);
             }
             else

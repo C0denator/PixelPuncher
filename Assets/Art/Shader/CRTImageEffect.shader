@@ -7,11 +7,10 @@ Shader "Custom/CRTShader"
         _CurvatureEdge ("Curvature Edge", Range(0, 1)) = 0.5
         _VignetteIntensity ("Vignette Intensity", Range(0, 1)) = 0.5
         _VignetteSmoothness ("Vignette Smoothness", Range(0, 1)) = 0.5
-        _ScanlineIntensity ("Scanline Intensity", Range(0, 1)) = 0.5
+        _ScanlineIntensity ("Scanline Intensity", Range(0, 2)) = 1
         _ScanlineSpeed ("Scanline Speed", Range(0, 10)) = 1.0
         _ScanlineTime ("_ScanlineTime", Float) = 3.0
-    }
-    SubShader
+    }    SubShader
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
@@ -48,8 +47,10 @@ Shader "Custom/CRTShader"
             v2f vert (appdata_t v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex); 
+                o.vertex = UnityObjectToClipPos(v.vertex);
+
                 o.uv = v.uv;
+                
                 return o;
             }
 
@@ -57,8 +58,8 @@ Shader "Custom/CRTShader"
             float2 ApplyCurvature(float2 uv)
             {
                 uv = uv * 2.0 - 1.0; // Transform UV coordinates from [0, 1] to [-1, 1]
-                float dist = length(uv);
-                float theta = atan2(uv.y, uv.x);
+                float dist = length(uv); // Calculate the distance from the center
+                float theta = atan2(uv.y, uv.x);// Calculate the angle from the center
                 float curvature = lerp(_CurvatureCenter, _CurvatureEdge, dist);
                 dist = pow(dist, 1.0 + curvature * 0.5);
                 uv = dist * float2(cos(theta), sin(theta));
@@ -69,8 +70,8 @@ Shader "Custom/CRTShader"
             // draw scanlines over the image
             float4 ApplyScanline(float4 color, float2 uv)
             {
-                float scanline = sin((uv.y + _ScanlineTime * _ScanlineSpeed) * 100.0) * 0.5 + 0.5;
-                color.rgb *= lerp(1.0, scanline, _ScanlineIntensity);
+                float scanline = sin((uv.y + _ScanlineTime * _ScanlineSpeed) * 100.0) * 0.5f + 1.0;
+                color.rgb *= 1 + scanline * _ScanlineIntensity;
                 return color;
             }
 

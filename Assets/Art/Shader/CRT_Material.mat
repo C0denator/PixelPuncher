@@ -63,8 +63,8 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Curvature: 0.324
-    - _CurvatureCenter: 0.04
-    - _CurvatureEdge: 0.192
+    - _CurvatureCenter: 0
+    - _CurvatureEdge: 0.254
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _Distortion: 0.464
@@ -79,7 +79,7 @@ Material:
     - _Parallax: 0.02
     - _ScanlineIntensity: 0.392
     - _ScanlineSpeed: 10
-    - _ScanlineTime: 0.47709194
+    - _ScanlineTime: 22.589737
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
