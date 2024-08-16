@@ -47,9 +47,6 @@ Shader "Custom/CRTShader"
             float _ScanlineMinValue;
             float _InterlacingBool;
 
-            //constant pi
-            const float PI = 3.14159265359;
-
             v2f vert (appdata_t v)
             {
                 v2f o;
@@ -80,7 +77,7 @@ Shader "Custom/CRTShader"
                 float2 curvedUV = ApplyCurvature(uv);
                 
                 //make each second line black
-                float scanlineFactor = (sin(curvedUV.y * _ScanlinePeriod) + 1.0) * 0.5;
+                float scanlineFactor = (sin(curvedUV.y * _ScanlinePeriod*3.14159265359) + 1.0) * 0.5;
 
                 //clamp the scanline value to [0, 1]
 

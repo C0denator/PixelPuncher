@@ -64,7 +64,7 @@ Material:
     - _BumpScale: 1
     - _Curvature: 0.324
     - _CurvatureCenter: 0
-    - _CurvatureEdge: 0.316
+    - _CurvatureEdge: 0.306
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _Distortion: 0.464
@@ -73,21 +73,24 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Glow: 0.161
+    - _InterlacingBool: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ScanlineIntensity: 1
-    - _ScanlineSpeed: 10
-    - _ScanlineTime: 75.187515
+    - _ScanlineIntensity: 0.67
+    - _ScanlineMinValue: 0.5
+    - _ScanlinePeriod: 1080
+    - _ScanlineSpeed: 0
+    - _ScanlineTime: 19.720295
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Time: 2
     - _UVSec: 0
     - _Vignette: 0.449
-    - _VignetteExponent: 1.28
-    - _VignetteFactor: 0.62
+    - _VignetteExponent: 2.07
+    - _VignetteFactor: 0.43
     - _VignetteIntensity: 0.644
     - _VignetteSmoothness: 0.293
     - _ZWrite: 1

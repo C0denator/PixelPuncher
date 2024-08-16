@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: ShaderSettings
   m_EditorClassIdentifier: 
   vignetteEffect: 1
-  vignetteExponent: 1.28
-  vignetteFactor: 0.62
+  vignetteExponent: 2.07
+  vignetteFactor: 0.43
+  scanlineEffect: 1
+  interlaceEffect: 1
+  interlacingPerSecond: 30.2
+  scanlineIntensity: 0.5

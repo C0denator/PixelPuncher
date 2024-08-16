@@ -50,11 +50,6 @@ namespace General
             {
                 crtMaterial.SetFloat(VignetteFactor, _shaderSettings.VignetteFactor);
                 crtMaterial.SetFloat(VignetteExponent, _shaderSettings.VignetteExponent);
-                
-                //get height of the screen in pixels
-                float screenHeight = Camera.main.pixelHeight;
-                Debug.Log("Screen height in pixel: " + screenHeight);
-                crtMaterial.SetFloat(ScanlinePeriod, screenHeight);
 
                 if (_shaderSettings.ScanlineEffect)
                 {
