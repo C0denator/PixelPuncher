@@ -9,7 +9,7 @@ namespace General
     [ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]
 
-    public class CRTPostProcessing : MonoBehaviour
+    public class ShaderController : MonoBehaviour
     {
         public Material crtMaterial;
         [SerializeField] private ShaderSettings _shaderSettings;
@@ -21,6 +21,7 @@ namespace General
         private Coroutine _interlaceCoroutine;
         private bool _interlacingBool = false;
         private static readonly int InterlacingBool = Shader.PropertyToID("_InterlacingBool");
+        private static readonly int ScanlineMinValue = Shader.PropertyToID("_ScanlineMinValue");
 
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
@@ -54,18 +55,36 @@ namespace General
                 float screenHeight = Camera.main.pixelHeight;
                 Debug.Log("Screen height in pixel: " + screenHeight);
                 crtMaterial.SetFloat(ScanlinePeriod, screenHeight);
-                
-                //set the interlacing effect
-                if (_shaderSettings.InterlaceEffect && _shaderSettings.ScanlineEffect)
+
+                if (_shaderSettings.ScanlineEffect)
                 {
-                    if (_interlaceCoroutine == null)
+                    //set the interlacing effect
+                    if (_shaderSettings.InterlaceEffect)
                     {
-                        _interlaceCoroutine = StartCoroutine(InterlaceCoroutine());
-                        Debug.Log("Starting interlace coroutine");
+                        if (_interlaceCoroutine == null)
+                        {
+                            _interlaceCoroutine = StartCoroutine(InterlaceCoroutine());
+                            Debug.Log("Starting interlace coroutine");
+                        }
                     }
+                    else
+                    {
+                        if (_interlaceCoroutine != null)
+                        {
+                            StopCoroutine(_interlaceCoroutine);
+                            _interlaceCoroutine = null;
+                            Debug.Log("Stopping interlace coroutine");
+                        }
+                    }
+                
+                    crtMaterial.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
+                
+                    crtMaterial.SetFloat(ScanlineMinValue, 1 - _shaderSettings.ScanlineIntensity);
                 }
                 else
                 {
+                    crtMaterial.SetFloat(ScanlineMinValue, 1);
+                    
                     if (_interlaceCoroutine != null)
                     {
                         StopCoroutine(_interlaceCoroutine);
@@ -74,7 +93,6 @@ namespace General
                     }
                 }
                 
-                crtMaterial.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
             }
         }
 

@@ -13,6 +13,7 @@ public class ShaderSettings : ScriptableObject
     [SerializeField] private bool scanlineEffect = true;
     [SerializeField] private bool interlaceEffect = true;
     [SerializeField] [Range(0f, 60f)] private float interlacingPerSecond = 30f;
+    [SerializeField] [Range(0f,1f)] private float scanlineIntensity = 1f;
     
     public static event Action OnSettingsChanged;
     
@@ -101,6 +102,26 @@ public class ShaderSettings : ScriptableObject
         set
         {
             interlacingPerSecond = value;
+            OnSettingsChanged?.Invoke();
+        }
+    }
+    
+    public float ScanlineIntensity
+    {
+        get
+        {
+            if (scanlineEffect)
+            {
+                return scanlineIntensity;
+            }
+            else
+            {
+                return 0f;
+            }
+        }
+        set
+        {
+            scanlineIntensity = value;
             OnSettingsChanged?.Invoke();
         }
     }
