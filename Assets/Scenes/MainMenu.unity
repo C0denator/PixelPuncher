@@ -1350,6 +1350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crtMaterial: {fileID: 2100000, guid: 491b97ced486f5543aafe0370d9510a7, type: 2}
+  _shaderSettings: {fileID: 11400000, guid: ae271a626e5f15f48853a80cff3b3c9f, type: 2}
 --- !u!1 &1605064123
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,11 +5,12 @@ Shader "Custom/CRTShader"
         _MainTex ("Texture", 2D) = "white" {}
         _CurvatureCenter ("Curvature Center", Range(0, 1)) = 0.5
         _CurvatureEdge ("Curvature Edge", Range(0, 1)) = 0.5
-        _VignetteIntensity ("Vignette Intensity", Range(0, 1)) = 0.5
-        _VignetteSmoothness ("Vignette Smoothness", Range(0, 1)) = 0.5
-        _ScanlineIntensity ("Scanline Intensity", Range(0, 2)) = 1
-        _ScanlineSpeed ("Scanline Speed", Range(0, 10)) = 1.0
-        _ScanlineTime ("_ScanlineTime", Float) = 3.0
+        _VignetteExponent ("Vignette Exponent", Range(0, 4)) = 1
+        _VignetteFactor ("Vignette Factor", Range(0, 2)) = 1
+        _ScanlinePeriod ("Scanline Period", Range(0, 1500.0)) = 1000.0
+        _ScanlineMinValue ("Scanline Min Value", Range(0, 1)) = 0.0
+        _ScanlineSpeed ("Scanline Speed", Range(0, 400)) = 1.0
+        _InterlacingBool ("Interlacing", Range(0, 1)) = 0.0
     }    SubShader
     {
         Tags { "RenderType"="Opaque" }
@@ -38,11 +39,16 @@ Shader "Custom/CRTShader"
             sampler2D _MainTex;
             float _CurvatureCenter;
             float _CurvatureEdge;
-            float _VignetteIntensity;
+            float _VignetteExponent;
+            float _VignetteFactor;
             float _VignetteSmoothness;
-            float _ScanlineIntensity;
             float _ScanlineSpeed;
-            float _ScanlineTime;
+            float _ScanlinePeriod;
+            float _ScanlineMinValue;
+            float _InterlacingBool;
+
+            //constant pi
+            const float PI = 3.14159265359;
 
             v2f vert (appdata_t v)
             {
@@ -70,18 +76,40 @@ Shader "Custom/CRTShader"
             // draw scanlines over the image
             float4 ApplyScanline(float4 color, float2 uv)
             {
-                float scanline = sin((uv.y + _ScanlineTime * _ScanlineSpeed) * 100.0) * 0.5f + 1.0;
-                color.rgb *= 1 + scanline * _ScanlineIntensity;
+                //apply curvature to UV coordinates before applying the scanline effect
+                float2 curvedUV = ApplyCurvature(uv);
+                
+                //make each second line black
+                float scanlineFactor = (sin(curvedUV.y * _ScanlinePeriod) + 1.0) * 0.5;
+
+                //clamp the scanline value to [0, 1]
+
+                if(_InterlacingBool > 0.5f)
+                {
+                    scanlineFactor = 1 - scanlineFactor;
+                }
+                
+                if (scanlineFactor > 0.5f)
+                {
+                    scanlineFactor = 1.0f;
+                }
+                else
+                {
+                    scanlineFactor = 1 * _ScanlineMinValue;
+                }
+
+                color.rgb *= scanlineFactor;
+
                 return color;
             }
 
             // apply a vignette effect to the image
             float4 ApplyVignette(float4 color, float2 uv)
             {
-                float2 position = uv - 0.5;
-                float vignetteDist = length(position);
-                float vignette = smoothstep(0.5 - _VignetteSmoothness, 0.5 + _VignetteSmoothness, 1.0 - vignetteDist * _VignetteIntensity);
-                color.rgb *= vignette;
+                float2 position = uv * 2.0 - 1.0;
+                float dist = length(position);
+                dist = pow(dist, _VignetteExponent) * _VignetteFactor;
+                color.rgb *= 1.0 - dist;
                 return color;
             }
 
