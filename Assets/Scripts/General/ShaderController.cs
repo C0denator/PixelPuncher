@@ -11,7 +11,8 @@ namespace General
 
     public class ShaderController : MonoBehaviour
     {
-        public Material crtMaterial;
+        public Material crtImageMat;
+        public Material crtCurvatureMat;
         [SerializeField] private ShaderSettings _shaderSettings;
         private static readonly int ScanlineTime = Shader.PropertyToID("_ScanlineTime");
         private static readonly int VignetteFactor = Shader.PropertyToID("_VignetteFactor");
@@ -25,31 +26,42 @@ namespace General
 
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
-            if (crtMaterial != null)
+            if (crtImageMat != null && crtCurvatureMat != null)
             {
-                crtMaterial.SetFloat(ScanlineTime, Time.unscaledTime);
+                crtImageMat.SetFloat(ScanlineTime, Time.unscaledTime);
 
                 if (_shaderSettings.InterlaceEffect)
                 {
                     //set interlaceBool
-                    crtMaterial.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
+                    crtImageMat.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
                 }
                 
-                Graphics.Blit(source, destination, crtMaterial);
+                //create temporary render texture
+                RenderTexture temp = RenderTexture.GetTemporary(source.width, source.height);
+                
+                //apply the image effects
+                Graphics.Blit(source, temp, crtImageMat);
+                
+                //apply the curvature effect
+                Graphics.Blit(temp, destination, crtCurvatureMat);
+                
+                //release the temporary render texture
+                RenderTexture.ReleaseTemporary(temp);
             }
             else
             {
                 Graphics.Blit(source, destination);
+                Debug.LogError("CRT shader materials not set in ShaderController");
             }
         }
         
         public void UpdateShaderProperties()
         {
             Debug.Log("Updating shader properties");
-            if (crtMaterial != null)
+            if (crtImageMat != null)
             {
-                crtMaterial.SetFloat(VignetteFactor, _shaderSettings.VignetteFactor);
-                crtMaterial.SetFloat(VignetteExponent, _shaderSettings.VignetteExponent);
+                crtImageMat.SetFloat(VignetteFactor, _shaderSettings.VignetteFactor);
+                crtImageMat.SetFloat(VignetteExponent, _shaderSettings.VignetteExponent);
 
                 if (_shaderSettings.ScanlineEffect)
                 {
@@ -72,13 +84,13 @@ namespace General
                         }
                     }
                 
-                    crtMaterial.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
+                    crtImageMat.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
                 
-                    crtMaterial.SetFloat(ScanlineMinValue, 1 - _shaderSettings.ScanlineIntensity);
+                    crtImageMat.SetFloat(ScanlineMinValue, 1 - _shaderSettings.ScanlineIntensity);
                 }
                 else
                 {
-                    crtMaterial.SetFloat(ScanlineMinValue, 1);
+                    crtImageMat.SetFloat(ScanlineMinValue, 1);
                     
                     if (_interlaceCoroutine != null)
                     {
@@ -91,7 +103,7 @@ namespace General
             }
         }
 
-        private void OnStart()
+        private void Start()
         {
             if (_shaderSettings == null)
             {

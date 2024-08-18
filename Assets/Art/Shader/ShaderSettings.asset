@@ -17,5 +17,5 @@ MonoBehaviour:
   vignetteFactor: 0.43
   scanlineEffect: 1
   interlaceEffect: 1
-  interlacingPerSecond: 30.2
-  scanlineIntensity: 0.5
+  interlacingPerSecond: 50
+  scanlineIntensity: 0.221

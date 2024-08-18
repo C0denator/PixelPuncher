@@ -179,6 +179,10 @@ PrefabInstance:
       propertyPath: _shaderSettings
       value: 
       objectReference: {fileID: 11400000, guid: ae271a626e5f15f48853a80cff3b3c9f, type: 2}
+    - target: {fileID: 2678215484680509360, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3478218372503984274, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
       propertyPath: invincible
       value: 0
@@ -192,6 +196,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+--- !u!20 &231454695 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8476066417251857737, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
+  m_PrefabInstance: {fileID: 231454694}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &292243676
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,11 +716,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _counterText: {fileID: 1345181783}
---- !u!20 &1551493256 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 2816199197607054025, guid: 9366a2786b7174d46b4dc5acc36432aa, type: 3}
-  m_PrefabInstance: {fileID: 231454694}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1726045561
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +868,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 1551493256}
+  m_Camera: {fileID: 231454695}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
