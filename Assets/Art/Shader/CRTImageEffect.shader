@@ -3,11 +3,12 @@ Shader "Custom/CRTShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _SimulatedHeight ("Simulated Height", Int) = 480
+        _SimulatedWidth ("Simulated Width", Int) = 854
         _CurvatureCenter ("Curvature Center", Range(0, 1)) = 0.5
         _CurvatureEdge ("Curvature Edge", Range(0, 1)) = 0.5
         _VignetteExponent ("Vignette Exponent", Range(0, 4)) = 1
         _VignetteFactor ("Vignette Factor", Range(0, 2)) = 1
-        _ScanlinePeriod ("Scanline Period", Range(0, 1500.0)) = 1000.0
         _ScanlineMinValue ("Scanline Min Value", Range(0, 1)) = 0.0
         _ScanlineSpeed ("Scanline Speed", Range(0, 400)) = 1.0
         _InterlacingBool ("Interlacing", Range(0, 1)) = 0.0
@@ -37,13 +38,14 @@ Shader "Custom/CRTShader"
             };
 
             sampler2D _MainTex;
+            int _SimulatedHeight;
+            int _SimulatedWidth;
             float _CurvatureCenter;
             float _CurvatureEdge;
             float _VignetteExponent;
             float _VignetteFactor;
             float _VignetteSmoothness;
             float _ScanlineSpeed;
-            float _ScanlinePeriod;
             float _ScanlineMinValue;
             float _InterlacingBool;
 
@@ -77,7 +79,7 @@ Shader "Custom/CRTShader"
                 float2 curvedUV = ApplyCurvature(uv);
                 
                 //make each second line black
-                float scanlineFactor = (sin(curvedUV.y * _ScanlinePeriod*3.14159265359) + 1.0) * 0.5;
+                float scanlineFactor = (sin(curvedUV.y * _SimulatedHeight*3.14159265359) + 1.0) * 0.5;
 
                 // Invert scanline factor based on the interlacing bool
                 if(_InterlacingBool > 0.5f)
