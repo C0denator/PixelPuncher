@@ -42,7 +42,6 @@ namespace General
                 //create temporary render textures
                 RenderTexture temp1 = RenderTexture.GetTemporary(source.width, source.height);
                 RenderTexture temp2 = RenderTexture.GetTemporary(source.width, source.height);
-                RenderTexture temp3 = RenderTexture.GetTemporary(source.width, source.height);
                 
                 //apply the scanlines effect
                 Graphics.Blit(source, temp1, crtScanlinesMat);
@@ -51,15 +50,14 @@ namespace General
                 Graphics.Blit(temp1, temp2, crtChromMat);
                 
                 //apply the glow effect
-                Graphics.Blit(temp2, temp3, crtGlowMat);
+                Graphics.Blit(temp2, temp1, crtGlowMat);
                 
                 //apply the curvature effect
-                Graphics.Blit(temp3, destination, crtCurvatureMat);
+                Graphics.Blit(temp1, destination, crtCurvatureMat);
                 
                 //release the temporary render textures
                 RenderTexture.ReleaseTemporary(temp1);
                 RenderTexture.ReleaseTemporary(temp2);
-                RenderTexture.ReleaseTemporary(temp3);
             }
             else
             {
