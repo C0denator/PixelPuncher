@@ -73,10 +73,16 @@ Material:
     - _DetailNormalMapScale: 1
     - _Distortion: 0.464
     - _DstBlend: 0
+    - _GloomIterations: 2
+    - _GloomRadius: 5
+    - _GloomStrength: 0.353
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Glow: 0.161
+    - _GlowRadius: 10
+    - _GlowStrength: 0.507
+    - _GlowThreshold: 0.54
     - _HorizontalMinValue: 0.742
     - _HorizontalScanlines: 354
     - _InterlacingBool: 0
@@ -89,7 +95,7 @@ Material:
     - _ScanlineOffset: 1
     - _ScanlinePeriod: 480
     - _ScanlineSpeed: 0
-    - _ScanlineTime: 4.4221683
+    - _ScanlineTime: 0.8263691
     - _SimulatedHeight: 480
     - _SimulatedWidth: 640
     - _SmoothnessTextureChannel: 0

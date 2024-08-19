@@ -13,6 +13,9 @@ Shader "Custom/CRT_Image"
         _ChromaticAberrationFactor ("Chromatic Aberration Factor", Range(0, 0.1)) = 0.05
         _ChromaticAberrationExponent ("Chromatic Aberration Exponent", Range(0, 2)) = 1.0
         _ChromaticAberrationStrength ("Chromatic Aberration Strength", Range(0, 1)) = 0.5
+        _GlowStrength ("Glow Strength", Range(0, 1)) = 0.5
+        _GlowRadius ("Glow Radius", Range(0, 10)) = 5.0
+        _GlowThreshold ("Glow Threshold", Range(0,3)) = 1.0
     }
     SubShader
     {
@@ -46,6 +49,10 @@ Shader "Custom/CRT_Image"
             float _ChromaticAberrationFactor;
             float _ChromaticAberrationExponent;
             float _ChromaticAberrationStrength;
+            float _GlowStrength;
+            float _GlowRadius;
+            float _GlowThreshold;
+            
 
             v2f vert (appdata_full v)
             {
@@ -75,6 +82,47 @@ Shader "Custom/CRT_Image"
                 color.rgb *= horizontalFactor * verticalFactor;
 
                 return color;
+            }
+
+            float4 ApplyGlow(float4 color, float2 uv)
+            {
+                // Sample neighboring pixels
+                float2 texelSize = 1.0 / _ScreenParams.xy;
+
+                float4 averageColor = float4(0.0, 0.0, 0.0, 0.0);
+                int sampleCount = 0;
+                float distance = 0.0;
+                float weight = 0.0;
+
+                //Iterate over a diamond shape around the pixel
+                for(int y = -_GlowRadius; y <= _GlowRadius; y++)
+                {
+                    //calc amount of iterations for this row
+                    int xMax = _GlowRadius - abs(y);
+
+                    for (int x = -xMax; x <= xMax; x++)
+                    {
+                        //sample the pixel
+                        float2 offset = float2(x, y) * texelSize;
+                        float4 sample = tex2D(_MainTex, uv + offset);
+
+                        //calculate the distance to the center; the closer the pixel, the more weight it has
+                        distance = length(float2(x, y));
+                        weight = 1.0 - distance / _GlowRadius;
+
+                        //add the sample to the average color
+                        averageColor += sample * weight * _GlowStrength;
+                        sampleCount++;
+                    }
+                }
+                
+                //Calculate the average color
+                averageColor /= sampleCount;
+                
+
+                float isGlowColor = step(_GlowThreshold, color.r + color.g + color.b);
+                return lerp(averageColor, color, isGlowColor);
+                
             }
 
             float4 ApplyChromaticAberration(float4 color, float2 uv)
@@ -126,8 +174,11 @@ Shader "Custom/CRT_Image"
             float4 frag (v2f i) : SV_Target
             {
                 float4 color = tex2D(_MainTex, i.uv);
-                color = ApplyScanlines(color, i.uv);
                 color = ApplyChromaticAberration(color, i.uv);
+                color = ApplyScanlines(color, i.uv);
+
+                color = ApplyGlow(color, i.uv);
+                
                 color = DrawBorder(color, i.uv);
                 return color;
             }
