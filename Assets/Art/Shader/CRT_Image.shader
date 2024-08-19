@@ -3,8 +3,10 @@ Shader "Custom/CRT_Image"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _ScanlinePeriod ("Scanline Period", Range(0, 1500.0)) = 480.0
-        _ScanlineMinValue ("Scanline Min Value", Range(0, 1)) = 0.0
+        _HorizontalScanlines ("Horizontal Scanlines", Range(0, 1500.0)) = 480.0
+        _VerticalScanlines ("Vertical Scanlines", Range(0, 1500.0)) = 960.0
+        _HorizontalMinValue ("Horizontal Min Value", Range(0, 1)) = 0.0
+        _VerticalMinValue ("Vertical Min Value", Range(0, 1)) = 0.0
         _ScanlineSpeed ("Scanline Speed", Range(0, 400)) = 1.0
         _InterlacingBool ("Interlacing", Range(0, 1)) = 0.0
         _VignetteExponent ("Vignette Exponent", Range(0, 4)) = 1
@@ -30,8 +32,10 @@ Shader "Custom/CRT_Image"
             };
 
             sampler2D _MainTex;
-            float _ScanlinePeriod;
-            float _ScanlineMinValue;
+            float _HorizontalScanlines;
+            float _VerticalScanlines;
+            float _HorizontalMinValue;
+            float _VerticalMinValue;
             float _ScanlineSpeed;
             float _InterlacingBool;
             float _VignetteExponent;
@@ -46,22 +50,23 @@ Shader "Custom/CRT_Image"
             }
 
             // draw scanlines over the image
-            float4 ApplyScanline(float4 color, float2 uv)
+            float4 ApplyScanlines(float4 color, float2 uv)
             {
-                //make each second line black
-                float scanlineFactor = (sin(uv.y * _ScanlinePeriod*3.14159265359) + 1.0) * 0.5;
+                float horizontalFactor = (sin(uv.y * _HorizontalScanlines*3.14159265359) + 1.0) * 0.5;
+                float verticalFactor = (sin(uv.x * _VerticalScanlines*3.14159265359) + 1.0) * 0.5;
 
                 // Invert scanline factor based on the interlacing bool
                 if(_InterlacingBool > 0.5f)
                 {
-                    scanlineFactor = 1 - scanlineFactor;
+                    horizontalFactor = 1 - horizontalFactor;
                 }
 
                 // Clamp the scanline value to [0, 1] using lerp
-                scanlineFactor = lerp(_ScanlineMinValue, 1.0f, step(0.5f, scanlineFactor));
+                horizontalFactor = lerp(_HorizontalMinValue, 1.0f, step(0.5f, horizontalFactor));
+                verticalFactor = lerp(_VerticalMinValue, 1.0f, step(0.5f, verticalFactor));
 
                 // Apply scanline factor to the color
-                color.rgb *= scanlineFactor;
+                color.rgb *= horizontalFactor * verticalFactor;
 
                 return color;
             }
@@ -79,7 +84,7 @@ Shader "Custom/CRT_Image"
             float4 frag (v2f i) : SV_Target
             {
                 float4 color = tex2D(_MainTex, i.uv);
-                color = ApplyScanline(color, i.uv);
+                color = ApplyScanlines(color, i.uv);
                 color = ApplyVignette(color, i.uv);
                 return color;
             }
