@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace General
 {
@@ -11,9 +12,10 @@ namespace General
 
     public class ShaderController : MonoBehaviour
     {
-        public Material crtImageMat;
+        [FormerlySerializedAs("crtImageMat")] public Material crtScanlinesMat;
         public Material crtCurvatureMat;
         public Material crtGlowMat;
+        public Material crtChromMat;
         [SerializeField] private ShaderSettings _shaderSettings;
         private static readonly int ScanlineTime = Shader.PropertyToID("_ScanlineTime");
         private static readonly int VignetteFactor = Shader.PropertyToID("_VignetteFactor");
@@ -27,32 +29,37 @@ namespace General
 
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
-            if (crtImageMat != null && crtCurvatureMat != null && crtGlowMat != null)
+            if (crtScanlinesMat != null && crtCurvatureMat != null && crtGlowMat != null)
             {
-                crtImageMat.SetFloat(ScanlineTime, Time.unscaledTime);
+                crtScanlinesMat.SetFloat(ScanlineTime, Time.unscaledTime);
 
                 if (_shaderSettings.InterlaceEffect)
                 {
                     //set interlaceBool
-                    crtImageMat.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
+                    crtScanlinesMat.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
                 }
                 
                 //create temporary render textures
                 RenderTexture temp1 = RenderTexture.GetTemporary(source.width, source.height);
                 RenderTexture temp2 = RenderTexture.GetTemporary(source.width, source.height);
+                RenderTexture temp3 = RenderTexture.GetTemporary(source.width, source.height);
                 
-                //apply the image effects
-                Graphics.Blit(source, temp1, crtImageMat);
+                //apply the scanlines effect
+                Graphics.Blit(source, temp1, crtScanlinesMat);
+                
+                //apply the chromatic aberration effect
+                Graphics.Blit(temp1, temp2, crtChromMat);
                 
                 //apply the glow effect
-                Graphics.Blit(temp1, temp2, crtGlowMat);
+                Graphics.Blit(temp2, temp3, crtGlowMat);
                 
                 //apply the curvature effect
-                Graphics.Blit(temp2, destination, crtCurvatureMat);
+                Graphics.Blit(temp3, destination, crtCurvatureMat);
                 
                 //release the temporary render textures
                 RenderTexture.ReleaseTemporary(temp1);
                 RenderTexture.ReleaseTemporary(temp2);
+                RenderTexture.ReleaseTemporary(temp3);
             }
             else
             {
@@ -64,10 +71,10 @@ namespace General
         public void UpdateShaderProperties()
         {
             Debug.Log("Updating shader properties");
-            if (crtImageMat != null)
+            if (crtScanlinesMat != null)
             {
-                crtImageMat.SetFloat(VignetteFactor, _shaderSettings.VignetteFactor);
-                crtImageMat.SetFloat(VignetteExponent, _shaderSettings.VignetteExponent);
+                crtScanlinesMat.SetFloat(VignetteFactor, _shaderSettings.VignetteFactor);
+                crtScanlinesMat.SetFloat(VignetteExponent, _shaderSettings.VignetteExponent);
 
                 if (_shaderSettings.ScanlineEffect)
                 {
@@ -90,13 +97,13 @@ namespace General
                         }
                     }
                 
-                    crtImageMat.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
+                    crtScanlinesMat.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
                 
-                    crtImageMat.SetFloat(ScanlineMinValue, 1 - _shaderSettings.ScanlineIntensity);
+                    crtScanlinesMat.SetFloat(ScanlineMinValue, 1 - _shaderSettings.ScanlineIntensity);
                 }
                 else
                 {
-                    crtImageMat.SetFloat(ScanlineMinValue, 1);
+                    crtScanlinesMat.SetFloat(ScanlineMinValue, 1);
                     
                     if (_interlaceCoroutine != null)
                     {

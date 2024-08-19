@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CRT_Image
-  m_Shader: {fileID: 4800000, guid: 5c3b7a14386e13442a7cf77bc10f0e37, type: 3}
+  m_Name: CRT_Chrom
+  m_Shader: {fileID: 4800000, guid: 6c33aed772878204e8ad5f2d3a919cf6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -61,55 +61,24 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BorderThickness: 0.0058
     - _BumpScale: 1
-    - _ChromaticAberrationExponent: 0.684
-    - _ChromaticAberrationFactor: 0.0028
+    - _ChromaticAberrationExponent: 1
+    - _ChromaticAberrationFactor: 0.0039
     - _ChromaticAberrationStrength: 1
-    - _Curvature: 0.324
-    - _CurvatureCenter: 0
-    - _CurvatureEdge: 0.306
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _Distortion: 0.464
     - _DstBlend: 0
-    - _GloomIterations: 2
-    - _GloomRadius: 5
-    - _GloomStrength: 0.353
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Glow: 0.161
-    - _GlowRadius: 10
-    - _GlowStrength: 0.507
-    - _GlowThreshold: 0.21
-    - _HorizontalMinValue: 0.649
-    - _HorizontalScanlines: 354
-    - _InterlacingBool: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ScanlineIntensity: 0.67
-    - _ScanlineMinValue: 0.779
-    - _ScanlineOffset: 1
-    - _ScanlinePeriod: 480
-    - _ScanlineSpeed: 0
-    - _ScanlineTime: 17.606981
-    - _SimulatedHeight: 480
-    - _SimulatedWidth: 640
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Time: 2
     - _UVSec: 0
-    - _VerticalMinValue: 0.784
-    - _VerticalScanlines: 1218
-    - _Vignette: 0.449
-    - _VignetteExponent: 2.07
-    - _VignetteFactor: 0.43
-    - _VignetteIntensity: 0.644
-    - _VignetteSmoothness: 0.293
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
