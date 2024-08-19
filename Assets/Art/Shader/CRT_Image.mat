@@ -61,7 +61,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BorderThickness: 0.0058
     - _BumpScale: 1
+    - _ChromaticAberrationExponent: 0.684
+    - _ChromaticAberrationFactor: 0.0028
+    - _ChromaticAberrationStrength: 0
     - _Curvature: 0.324
     - _CurvatureCenter: 0
     - _CurvatureEdge: 0.306
@@ -73,7 +77,9 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Glow: 0.161
-    - _InterlacingBool: 1
+    - _HorizontalMinValue: 0.742
+    - _HorizontalScanlines: 354
+    - _InterlacingBool: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -83,7 +89,7 @@ Material:
     - _ScanlineOffset: 1
     - _ScanlinePeriod: 480
     - _ScanlineSpeed: 0
-    - _ScanlineTime: 20739.615
+    - _ScanlineTime: 4.4221683
     - _SimulatedHeight: 480
     - _SimulatedWidth: 640
     - _SmoothnessTextureChannel: 0
@@ -91,6 +97,8 @@ Material:
     - _SrcBlend: 1
     - _Time: 2
     - _UVSec: 0
+    - _VerticalMinValue: 0.784
+    - _VerticalScanlines: 1218
     - _Vignette: 0.449
     - _VignetteExponent: 2.07
     - _VignetteFactor: 0.43

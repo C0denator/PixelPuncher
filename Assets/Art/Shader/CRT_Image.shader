@@ -3,14 +3,16 @@ Shader "Custom/CRT_Image"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _BorderThickness ("Border Thickness", Range(0, 0.02)) = 0.01
         _HorizontalScanlines ("Horizontal Scanlines", Range(0, 1500.0)) = 480.0
         _VerticalScanlines ("Vertical Scanlines", Range(0, 1500.0)) = 960.0
         _HorizontalMinValue ("Horizontal Min Value", Range(0, 1)) = 0.0
         _VerticalMinValue ("Vertical Min Value", Range(0, 1)) = 0.0
         _ScanlineSpeed ("Scanline Speed", Range(0, 400)) = 1.0
         _InterlacingBool ("Interlacing", Range(0, 1)) = 0.0
-        _VignetteExponent ("Vignette Exponent", Range(0, 4)) = 1
-        _VignetteFactor ("Vignette Factor", Range(0, 2)) = 1
+        _ChromaticAberrationFactor ("Chromatic Aberration Factor", Range(0, 0.1)) = 0.05
+        _ChromaticAberrationExponent ("Chromatic Aberration Exponent", Range(0, 1)) = 2.0
+        _ChromaticAberrationStrength ("Chromatic Aberration Strength", Range(0, 0.5)) = 0.005
     }
     SubShader
     {
@@ -32,6 +34,7 @@ Shader "Custom/CRT_Image"
             };
 
             sampler2D _MainTex;
+            float _BorderThickness;
             float _HorizontalScanlines;
             float _VerticalScanlines;
             float _HorizontalMinValue;
@@ -40,6 +43,9 @@ Shader "Custom/CRT_Image"
             float _InterlacingBool;
             float _VignetteExponent;
             float _VignetteFactor;
+            float _ChromaticAberrationFactor;
+            float _ChromaticAberrationExponent;
+            float _ChromaticAberrationStrength;
 
             v2f vert (appdata_full v)
             {
@@ -71,21 +77,56 @@ Shader "Custom/CRT_Image"
                 return color;
             }
 
-            // apply a vignette effect to the image
-            float4 ApplyVignette(float4 color, float2 uv)
+            float4 ApplyChromaticAberration(float4 color, float2 uv)
             {
                 float2 position = uv * 2.0 - 1.0;
                 float dist = length(position);
-                dist = pow(dist, _VignetteExponent) * _VignetteFactor;
-                color.rgb *= 1.0 - dist;
+                float factor = pow(dist, _ChromaticAberrationExponent) * _ChromaticAberrationFactor;
+
+                //move positionb ack to Range [0, 1]
+                //position = (position + 1.0) * 0.5;
+
+                //move uv coordinates of each channel by a different amount
+                float2 uvRed = uv + position * factor; 
+                float2 uvGreen = uv;                           
+                float2 uvBlue = uv - position * factor;
+
+                //sample the texture at the new uv coordinates
+                float4 colorRed = tex2D(_MainTex, uvRed);
+                float4 colorGreen = tex2D(_MainTex, uvGreen);
+                float4 colorBlue = tex2D(_MainTex, uvBlue);
+
+                //combine the three channels
+                color.r = colorRed.r;
+                color.g = colorGreen.g;
+                color.b = colorBlue.b;
+                
                 return color;
+            }
+
+            float4 DrawBorder(float4 color, float2 uv)
+            {
+                //get screen ratio
+                float screenRatio = _ScreenParams.x / _ScreenParams.y;
+
+                //look if the pixel is in the border
+                float borderX = step(uv.x, _BorderThickness) + step(1.0 - _BorderThickness, uv.x);
+                float borderY = step(uv.y, _BorderThickness * screenRatio) + step(1.0 - _BorderThickness * screenRatio, uv.y);
+
+                //combine both arguments
+                float isBorder = step(0.5, borderX + borderY);
+
+                //return white if the pixel is in the border
+                return lerp(color, float4(1.0, 1.0, 1.0, 1.0), isBorder);
+                
             }
 
             float4 frag (v2f i) : SV_Target
             {
                 float4 color = tex2D(_MainTex, i.uv);
                 color = ApplyScanlines(color, i.uv);
-                color = ApplyVignette(color, i.uv);
+                //color = ApplyChromaticAberration(color, i.uv);
+                color = DrawBorder(color, i.uv);
                 return color;
             }
             ENDHLSL
