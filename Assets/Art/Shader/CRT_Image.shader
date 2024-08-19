@@ -11,8 +11,8 @@ Shader "Custom/CRT_Image"
         _ScanlineSpeed ("Scanline Speed", Range(0, 400)) = 1.0
         _InterlacingBool ("Interlacing", Range(0, 1)) = 0.0
         _ChromaticAberrationFactor ("Chromatic Aberration Factor", Range(0, 0.1)) = 0.05
-        _ChromaticAberrationExponent ("Chromatic Aberration Exponent", Range(0, 1)) = 2.0
-        _ChromaticAberrationStrength ("Chromatic Aberration Strength", Range(0, 0.5)) = 0.005
+        _ChromaticAberrationExponent ("Chromatic Aberration Exponent", Range(0, 2)) = 1.0
+        _ChromaticAberrationStrength ("Chromatic Aberration Strength", Range(0, 1)) = 0.5
     }
     SubShader
     {
@@ -96,12 +96,14 @@ Shader "Custom/CRT_Image"
                 float4 colorGreen = tex2D(_MainTex, uvGreen);
                 float4 colorBlue = tex2D(_MainTex, uvBlue);
 
+                float4 newColor = float4(0.0, 0.0, 0.0, 1.0);
+
                 //combine the three channels
-                color.r = colorRed.r;
-                color.g = colorGreen.g;
-                color.b = colorBlue.b;
-                
-                return color;
+                newColor.r = lerp(color.r, colorRed.r, _ChromaticAberrationStrength);
+                newColor.g = lerp(color.g, colorGreen.g, _ChromaticAberrationStrength);
+                newColor.b = lerp(color.b, colorBlue.b, _ChromaticAberrationStrength);
+
+                return lerp(color, newColor, _ChromaticAberrationStrength);
             }
 
             float4 DrawBorder(float4 color, float2 uv)
@@ -125,7 +127,7 @@ Shader "Custom/CRT_Image"
             {
                 float4 color = tex2D(_MainTex, i.uv);
                 color = ApplyScanlines(color, i.uv);
-                //color = ApplyChromaticAberration(color, i.uv);
+                color = ApplyChromaticAberration(color, i.uv);
                 color = DrawBorder(color, i.uv);
                 return color;
             }
