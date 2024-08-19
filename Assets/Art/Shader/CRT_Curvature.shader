@@ -3,6 +3,7 @@ Shader "Custom/CRT_Curvature"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _BorderThickness ("Border Thickness", Range(0, 0.02)) = 0.01
         _CurvatureCenter ("Curvature Center", Range(0, 1)) = 0.5
         _CurvatureEdge ("Curvature Edge", Range(0, 1)) = 0.5
         _VignetteExponent ("Vignette Exponent", Range(0, 4)) = 1
@@ -33,6 +34,7 @@ Shader "Custom/CRT_Curvature"
             };
 
             sampler2D _MainTex;
+            float _BorderThickness;
             float _CurvatureCenter;
             float _CurvatureEdge;
             float _VignetteExponent;
@@ -69,15 +71,34 @@ Shader "Custom/CRT_Curvature"
                 return color;
             }
 
+            float4 DrawBorder(float4 color, float2 uv)
+            {
+                //get screen ratio
+                float screenRatio = _ScreenParams.x / _ScreenParams.y;
+
+                //get curved UV
+                float2 curvedUV = ApplyCurvature(uv);
+
+                //look if the pixel is in the border
+                float borderX = step(curvedUV.x, _BorderThickness) + step(1.0 - _BorderThickness, curvedUV.x);
+                float borderY = step(curvedUV.y, _BorderThickness * screenRatio) + step(1.0 - _BorderThickness * screenRatio, curvedUV.y);
+
+                //combine both arguments
+                float isBorder = step(0.5, borderX + borderY);
+
+                //return white if the pixel is in the border
+                return lerp(color, float4(1.0, 1.0, 1.0, 1.0), isBorder);
+                
+            }
+
             float4 frag(v2f i) : SV_Target
             {
-                // step 1: apply the curvature effect
                 float2 uv = ApplyCurvature(i.uv);
 
-                // step 2: sample the texture
                 float4 color = tex2D(_MainTex, uv);
 
-                // step 3: apply the vignette effect
+                color = DrawBorder(color, i.uv);
+
                 color = ApplyVignette(color, i.uv);
 
                 //  discard pixels outside the texture

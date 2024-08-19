@@ -61,6 +61,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BorderThickness: 0.0055
     - _BumpScale: 1
     - _CurvatureCenter: 0
     - _CurvatureEdge: 0.164
@@ -79,7 +80,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _VignetteExponent: 1.44
-    - _VignetteFactor: 0.42
+    - _VignetteFactor: 0.48
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

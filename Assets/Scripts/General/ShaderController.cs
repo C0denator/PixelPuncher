@@ -13,6 +13,7 @@ namespace General
     {
         public Material crtImageMat;
         public Material crtCurvatureMat;
+        public Material crtGlowMat;
         [SerializeField] private ShaderSettings _shaderSettings;
         private static readonly int ScanlineTime = Shader.PropertyToID("_ScanlineTime");
         private static readonly int VignetteFactor = Shader.PropertyToID("_VignetteFactor");
@@ -26,7 +27,7 @@ namespace General
 
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
-            if (crtImageMat != null && crtCurvatureMat != null)
+            if (crtImageMat != null && crtCurvatureMat != null && crtGlowMat != null)
             {
                 crtImageMat.SetFloat(ScanlineTime, Time.unscaledTime);
 
@@ -36,17 +37,22 @@ namespace General
                     crtImageMat.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
                 }
                 
-                //create temporary render texture
-                RenderTexture temp = RenderTexture.GetTemporary(source.width, source.height);
+                //create temporary render textures
+                RenderTexture temp1 = RenderTexture.GetTemporary(source.width, source.height);
+                RenderTexture temp2 = RenderTexture.GetTemporary(source.width, source.height);
                 
                 //apply the image effects
-                Graphics.Blit(source, temp, crtImageMat);
+                Graphics.Blit(source, temp1, crtImageMat);
+                
+                //apply the glow effect
+                Graphics.Blit(temp1, temp2, crtGlowMat);
                 
                 //apply the curvature effect
-                Graphics.Blit(temp, destination, crtCurvatureMat);
+                Graphics.Blit(temp2, destination, crtCurvatureMat);
                 
-                //release the temporary render texture
-                RenderTexture.ReleaseTemporary(temp);
+                //release the temporary render textures
+                RenderTexture.ReleaseTemporary(temp1);
+                RenderTexture.ReleaseTemporary(temp2);
             }
             else
             {

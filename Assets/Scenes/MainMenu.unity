@@ -1255,6 +1255,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 8143596049125642667, guid: 24a53d2a070e1bf4cb84dd16a5fe7223, type: 3}
+      propertyPath: crtGlowMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 6ef403029e656434f8ce19c673340fb7, type: 2}
     - target: {fileID: 8673440780597152223, guid: 24a53d2a070e1bf4cb84dd16a5fe7223, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
