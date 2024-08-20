@@ -27,6 +27,8 @@ namespace General
         private static readonly int InterlacingBool = Shader.PropertyToID("_InterlacingBool");
         private static readonly int ScanlineMinValue = Shader.PropertyToID("_ScanlineMinValue");
 
+        public float InterlaceFrequency = 50;
+
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
             if (crtScanlinesMat != null && crtCurvatureMat != null && crtGlowMat != null)
@@ -140,8 +142,16 @@ namespace General
         {
             while (true)
             {
-                _interlacingBool = !_interlacingBool;
-                yield return new WaitForSecondsRealtime(1f / _shaderSettings.InterlacingPerSecond);
+                if(InterlaceFrequency!=0) _interlacingBool = !_interlacingBool;
+
+                if (InterlaceFrequency == 0)
+                {
+                    yield return new WaitForSecondsRealtime(0.1f);
+                }
+                else
+                {
+                    yield return new WaitForSecondsRealtime(1f / InterlaceFrequency);
+                }
             }
         }
     }
