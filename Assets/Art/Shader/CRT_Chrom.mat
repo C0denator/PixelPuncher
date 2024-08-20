@@ -63,7 +63,7 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _ChromaticAberrationExponent: 1
-    - _ChromaticAberrationFactor: 0.0039
+    - _ChromaticAberrationFactor: 0.004038744
     - _ChromaticAberrationStrength: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
