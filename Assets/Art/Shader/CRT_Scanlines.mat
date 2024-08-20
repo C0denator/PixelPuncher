@@ -95,7 +95,7 @@ Material:
     - _ScanlineOffset: 0.5
     - _ScanlinePeriod: 480
     - _ScanlineSpeed: 0
-    - _ScanlineTime: 31.447878
+    - _ScanlineTime: 4.7125216
     - _SimulatedHeight: 480
     - _SimulatedWidth: 640
     - _SmoothnessTextureChannel: 0
