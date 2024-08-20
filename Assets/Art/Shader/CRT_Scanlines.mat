@@ -85,6 +85,8 @@ Material:
     - _GlowThreshold: 0.21
     - _HorizontalMinValue: 0.649
     - _HorizontalScanlines: 480
+    - _HorizontalStrength: 0.40392673
+    - _InterlaceFrequency: 50
     - _InterlacingBool: 1
     - _Metallic: 0
     - _Mode: 0
@@ -92,10 +94,10 @@ Material:
     - _Parallax: 0.02
     - _ScanlineIntensity: 0.67
     - _ScanlineMinValue: 0.779
-    - _ScanlineOffset: 0.5
+    - _ScanlineOffset: 0.50171995
     - _ScanlinePeriod: 480
     - _ScanlineSpeed: 0
-    - _ScanlineTime: 11.591456
+    - _ScanlineTime: 356.15884
     - _SimulatedHeight: 480
     - _SimulatedWidth: 640
     - _SmoothnessTextureChannel: 0
@@ -105,6 +107,7 @@ Material:
     - _UVSec: 0
     - _VerticalMinValue: 0.784
     - _VerticalScanlines: 1260
+    - _VerticalStrength: 0.1271098
     - _Vignette: 0.449
     - _VignetteExponent: 2.07
     - _VignetteFactor: 0.43

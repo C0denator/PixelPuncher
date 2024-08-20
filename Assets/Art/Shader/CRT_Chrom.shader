@@ -3,7 +3,7 @@ Shader "Custom/CRT_Chrom"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _ChromaticAberrationFactor ("Chromatic Aberration Factor", Range(0, 0.1)) = 0.05
+        _ChromaticAberrationFactor ("Chromatic Aberration Factor", Range(0, 0.01)) = 0.005
         _ChromaticAberrationExponent ("Chromatic Aberration Exponent", Range(0, 2)) = 1.0
         _ChromaticAberrationStrength ("Chromatic Aberration Strength", Range(0, 1)) = 0.5
     }
