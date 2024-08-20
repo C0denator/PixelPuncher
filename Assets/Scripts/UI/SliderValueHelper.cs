@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UI
@@ -6,6 +7,8 @@ namespace UI
     {
         private TMPro.TMP_Text _text;
         private UnityEngine.UI.Slider _slider;
+        [SerializeField] private Material material;
+        [SerializeField] private String propertyName;
 
         private void Awake()
         {
@@ -22,7 +25,26 @@ namespace UI
                 Debug.LogError("Slider component not found");
             }
             
-            _text.text = _slider.value.ToString();
+            if (material == null)
+            {
+                Debug.LogError("Material not set");
+            }
+            
+            if (propertyName == null)
+            {
+                Debug.LogError("Property name not set");
+            }
+            
+            //find the property
+            if (material.HasProperty(propertyName))
+            {
+                _slider.value = material.GetFloat(propertyName);
+                ShowText(_slider.value);
+            }
+            else
+            {
+                Debug.LogError("Property not found: " + propertyName);
+            }
         }
         
         private void OnEnable()
@@ -37,7 +59,21 @@ namespace UI
         
         private void OnValueChanged(float value)
         {
-            _text.text = value.ToString();
+            ShowText(value);
+            material.SetFloat(propertyName, value);
+        }
+        
+        private void ShowText(float value)
+        {
+            
+            if(value%1 == 0) //if the value is a whole number
+            {
+                _text.text = value.ToString("F0");
+                return;
+            }
+            
+            //only show 3 decimal places
+            _text.text = value.ToString("F3");
         }
     }
 }
