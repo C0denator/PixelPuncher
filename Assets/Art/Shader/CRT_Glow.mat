@@ -69,7 +69,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _GlowRadius: 10
-    - _GlowStrength: 0.5
+    - _GlowStrength: 0.24046998
     - _GlowThreshold: 0.26
     - _Metallic: 0
     - _Mode: 0

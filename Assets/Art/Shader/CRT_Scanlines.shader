@@ -54,9 +54,9 @@ Shader "Custom/CRT_Image"
                 float horizontalFactor = (sin(uv.y * _HorizontalScanlines*3.14159265359) + 1.0) * 0.5;
                 float verticalFactor = (sin(uv.x * _VerticalScanlines*3.14159265359) + 1.0) * 0.5;
 
-                // if horizontal factor == 1, move pixel to the right by 1
-                float texelSize = 1.0 / _ScreenParams.x;
-                color = tex2D(_MainTex, uv + step(0.5, horizontalFactor) * float2(texelSize*_ScanlineOffset, 0.0));
+                // if horizontal factor == 1, move pixel to the right by 1/1920 of the screen width
+                float texelSize = _ScreenParams.x / pow(1920.0, 2.0);
+                color = tex2D(_MainTex, uv + step(0.5, horizontalFactor) * float2(texelSize*_ScanlineOffset, 0.0f));
 
                 // Invert scanline factor based on the interlacing bool
                 if(_InterlacingBool > 0.5f)

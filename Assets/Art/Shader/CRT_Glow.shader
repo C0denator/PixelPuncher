@@ -47,8 +47,8 @@ Shader "Custom/CRT_Glow"
             {
                 if(_GlowRadius == 0) return color;
                 
-                // Sample neighboring pixels
-                float2 texelSize = 1.0 / _ScreenParams.xy;
+                // pixelSize = 1/1920 of the screen width
+                float2 pixelSize = (_ScreenParams.x / pow(1080, 2.0)) ;
 
                 float4 averageColor = float4(0.0, 0.0, 0.0, 0.0);
                 int sampleCount = 0;
@@ -64,7 +64,7 @@ Shader "Custom/CRT_Glow"
                     for (int x = -xMax; x <= xMax; x++)
                     {
                         //sample the pixel
-                        float2 offset = float2(x, y) * texelSize;
+                        float2 offset = float2(x, y) * pixelSize;
                         float4 sample = tex2D(_MainTex, uv + offset);
 
                         //calculate the distance to the center; the closer the pixel, the more weight it has
