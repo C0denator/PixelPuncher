@@ -18,14 +18,20 @@ namespace UI
         
         public void EnableObjects()
         {
-            foreach (var obj in objectsToEnable)
+            if (objectsToEnable.Count > 0)
             {
-                obj.SetActive(true);
+                foreach (var obj in objectsToEnable)
+                {
+                    obj.SetActive(true);
+                }
             }
             
-            foreach (var obj in objectsToDisable)
+            if (objectsToDisable.Count > 0)
             {
-                obj.SetActive(false);
+                foreach (var obj in objectsToDisable)
+                {
+                    obj.SetActive(false);
+                }
             }
         }
     }

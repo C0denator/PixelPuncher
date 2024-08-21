@@ -14690,8 +14690,8 @@ MonoBehaviour:
   crtCurvatureMat: {fileID: 2100000, guid: a2719c68fa47efe419141fc3c54ffee6, type: 2}
   crtGlowMat: {fileID: 2100000, guid: 6ef403029e656434f8ce19c673340fb7, type: 2}
   crtChromMat: {fileID: 2100000, guid: 933fff718f5342643a0675c489721ea3, type: 2}
-  _shaderSettings: {fileID: 11400000, guid: ae271a626e5f15f48853a80cff3b3c9f, type: 2}
   InterlaceFrequency: 50
+  _shaderSettings: {fileID: 11400000, guid: ae271a626e5f15f48853a80cff3b3c9f, type: 2}
 --- !u!4 &8673440781762143746
 Transform:
   m_ObjectHideFlags: 0

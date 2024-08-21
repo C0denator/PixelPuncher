@@ -23,6 +23,17 @@ public class InterlaceSlider : MonoBehaviour
             Debug.LogError("Slider component not found");
         }
         
+        if(_controller == null)
+        {
+            //try finding the controller on the main camera
+            _controller = Camera.main.GetComponent<ShaderController>();
+
+            if (_controller == null)
+            {
+                Debug.LogError("ShaderController reference not set in InterlaceSlider");
+            }
+        }
+        
         _slider.value = _controller.InterlaceFrequency;
         ShowText(_slider.value);
     }

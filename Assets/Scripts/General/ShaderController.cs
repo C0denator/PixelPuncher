@@ -16,6 +16,7 @@ namespace General
         public Material crtCurvatureMat;
         public Material crtGlowMat;
         public Material crtChromMat;
+        public float InterlaceFrequency = 50;
         [SerializeField] private ShaderSettings _shaderSettings;
         private static readonly int ScanlineTime = Shader.PropertyToID("_ScanlineTime");
         private static readonly int VignetteFactor = Shader.PropertyToID("_VignetteFactor");
@@ -26,8 +27,6 @@ namespace General
         private bool _interlacingBool = false;
         private static readonly int InterlacingBool = Shader.PropertyToID("_InterlacingBool");
         private static readonly int ScanlineMinValue = Shader.PropertyToID("_ScanlineMinValue");
-
-        public float InterlaceFrequency = 50;
 
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {

@@ -69,6 +69,7 @@ namespace Player
         
         private void HandleShoot(InputAction.CallbackContext context)
         {
+            if(Time.timeScale == 0) return;
             _currentWeaponScript.HandleShoot();
         }
 
