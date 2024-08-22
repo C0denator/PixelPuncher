@@ -51,9 +51,6 @@ Shader "Custom/CRT_Chrom"
                 float dist = length(position);
                 float factor = pow(dist, _ChromaticAberrationExponent) * _ChromaticAberrationFactor;
 
-                //move positionb ack to Range [0, 1]
-                //position = (position + 1.0) * 0.5;
-
                 //move uv coordinates of each channel by a different amount
                 float2 uvRed = uv + position * factor; 
                 float2 uvGreen = uv;                           

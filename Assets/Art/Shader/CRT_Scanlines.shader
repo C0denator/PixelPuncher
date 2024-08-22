@@ -51,6 +51,7 @@ Shader "Custom/CRT_Image"
             // draw scanlines over the image
             float4 ApplyScanlines(float4 color, float2 uv)
             {
+                // Calculate the horizontal and vertical scanline factors
                 float horizontalFactor = (sin(uv.y * _HorizontalScanlines*3.14159265359) + 1.0) * 0.5;
                 float verticalFactor = (sin(uv.x * _VerticalScanlines*3.14159265359) + 1.0) * 0.5;
 
@@ -58,13 +59,10 @@ Shader "Custom/CRT_Image"
                 float texelSize = _ScreenParams.x / pow(1920.0, 2.0);
                 color = tex2D(_MainTex, uv + step(0.5, horizontalFactor) * float2(texelSize*_ScanlineOffset, 0.0f));
 
-                // Invert scanline factor based on the interlacing bool
-                if(_InterlacingBool > 0.5f)
-                {
-                    horizontalFactor = 1 - horizontalFactor;
-                }
-
-                // Clamp the scanline value to [0, 1] using lerp
+                // Apply interlacing effect
+                horizontalFactor = lerp(horizontalFactor, 1.0f - horizontalFactor, step(0.5f, _InterlacingBool));
+                
+                // Clamp the scanline value to [0, 1] and apply strength
                 horizontalFactor = lerp(1.0f - _HorizontalStrength, 1.0f, step(0.5f, horizontalFactor));
                 verticalFactor = lerp(1.0f - _VerticalStrength, 1.0f, step(0.5f, verticalFactor));
 
