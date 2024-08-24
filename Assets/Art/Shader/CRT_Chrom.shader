@@ -49,7 +49,7 @@ Shader "Custom/CRT_Chrom"
             {
                 float2 position = uv * 2.0 - 1.0;
                 float dist = length(position);
-                float factor = pow(dist, _ChromaticAberrationExponent) * _ChromaticAberrationFactor;
+                float factor = pow(dist* _ChromaticAberrationFactor, _ChromaticAberrationExponent) ;
 
                 //move uv coordinates of each channel by a different amount
                 float2 uvRed = uv + position * factor; 
@@ -64,9 +64,9 @@ Shader "Custom/CRT_Chrom"
                 float4 newColor = float4(0.0, 0.0, 0.0, 1.0);
 
                 //combine the three channels
-                newColor.r = lerp(color.r, colorRed.r, _ChromaticAberrationStrength);
-                newColor.g = lerp(color.g, colorGreen.g, _ChromaticAberrationStrength);
-                newColor.b = lerp(color.b, colorBlue.b, _ChromaticAberrationStrength);
+                newColor.r = colorRed.r;
+                newColor.g = colorGreen.g;
+                newColor.b = colorBlue.b;
 
                 return lerp(color, newColor, _ChromaticAberrationStrength);
             }
