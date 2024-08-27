@@ -4,9 +4,12 @@ Shader "Custom/CRT_Glow"
     {
         _MainTex ("Texture", 2D) = "white" {}
         
-        _GlowStrength ("Glow Strength", Range(0, 1)) = 0.5
-        _GlowRadius ("Glow Radius", Range(0, 10)) = 5.0
-        _GlowThreshold ("Glow Threshold", Range(0,3)) = 1.0
+        _Strength ("Glow Strength", Range(0, 1)) = 0.5
+        _Radius ("Glow Radius", Range(0, 10)) = 5.0
+        _Threshold ("Glow Threshold", Range(0,3)) = 1.0
+        _f ("Glow Factor", Range(0, 1)) = 0.25
+        _e ("Glow Exponent", Range(0, 15)) = 5
+        _a ("Glow Additive", Range(-1, 1)) = 0.0
     }
     SubShader
     {
@@ -28,9 +31,12 @@ Shader "Custom/CRT_Glow"
             };
 
             sampler2D _MainTex;
-            float _GlowStrength;
-            float _GlowRadius;
-            float _GlowThreshold;
+            float _Strength;
+            float _Radius;
+            float _Threshold;
+            float _f;
+            float _e;
+            float _a;
             
 
             v2f vert (appdata_full v)
@@ -45,21 +51,21 @@ Shader "Custom/CRT_Glow"
 
             float4 ApplyGlow(float4 color, float2 uv)
             {
-                if(_GlowRadius == 0) return color;
+                if(_Radius == 0) return color;
                 
-                // pixelSize = 1/1920 of the screen width
-                float2 pixelSize = (_ScreenParams.x / pow(1080, 2.0)) ;
+                // pixelSize = 1/1080 of the screen width
+                float2 pixelSize = _ScreenParams.x / (1080 * 1080);
 
                 float4 averageColor = float4(0.0, 0.0, 0.0, 0.0);
                 int sampleCount = 0;
-                float distance = 0.0;
-                float weight = 0.0;
+                float distance = 0;
+                float weight = 0;
 
                 //Iterate over a diamond shape around the pixel
-                for(int y = -_GlowRadius; y <= _GlowRadius; y++)
+                for(int y = -_Radius; y <= _Radius; y++)
                 {
                     //calc amount of iterations for this row
-                    int xMax = _GlowRadius - abs(y);
+                    int xMax = _Radius - abs(y);
 
                     for (int x = -xMax; x <= xMax; x++)
                     {
@@ -68,11 +74,14 @@ Shader "Custom/CRT_Glow"
                         float4 sample = tex2D(_MainTex, uv + offset);
 
                         //calculate the distance to the center; the closer the pixel, the more weight it has
-                        distance = length(float2(x, y));
-                        weight = 1.0 - distance / _GlowRadius;
+                        distance = length(float2(x, y)) + 1;
+                        weight = pow((distance- _a) * _f, -_e) ;
+
+                        //clamp the weight to [0, 1]
+                        weight = saturate(weight);
 
                         //add the sample to the average color
-                        averageColor += sample * weight * _GlowStrength;
+                        averageColor += sample * weight * _Strength;
                         sampleCount++;
                     }
                 }
@@ -81,7 +90,7 @@ Shader "Custom/CRT_Glow"
                 averageColor /= sampleCount;
                 
 
-                float isGlowColor = step(_GlowThreshold, color.r + color.g + color.b);
+                float isGlowColor = step(_Threshold, color.r + color.g + color.b);
                 return lerp(averageColor, color, isGlowColor);
                 
             }
