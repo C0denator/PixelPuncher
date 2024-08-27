@@ -54,7 +54,7 @@ Shader "Custom/CRT_Glow"
                 if(_Radius == 0) return color;
                 
                 // pixelSize = 1/1080 of the screen width
-                float2 pixelSize = _ScreenParams.x / (1080 * 1080);
+                float2 pixelSize = _ScreenParams.x / ( _ScreenParams.x * 1080.0);
 
                 float4 averageColor = float4(0.0, 0.0, 0.0, 0.0);
                 int sampleCount = 0;

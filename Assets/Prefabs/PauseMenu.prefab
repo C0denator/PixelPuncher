@@ -5211,7 +5211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.50980395}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6539,7 +6539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 6ef403029e656434f8ce19c673340fb7, type: 2}
-  propertyName: _GlowStrength
+  propertyName: _Strength
 --- !u!1 &5315735276092733308
 GameObject:
   m_ObjectHideFlags: 0
@@ -10724,7 +10724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 6ef403029e656434f8ce19c673340fb7, type: 2}
-  propertyName: _GlowRadius
+  propertyName: _Radius
 --- !u!1 &8270419584423924528
 GameObject:
   m_ObjectHideFlags: 0

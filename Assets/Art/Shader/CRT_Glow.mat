@@ -78,17 +78,17 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Radius: 5
+    - _Radius: 10
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Strength: 0.5
-    - _Threshold: 1
+    - _Strength: 1
+    - _Threshold: 0.3
     - _UVSec: 0
     - _ZWrite: 1
-    - _a: 0
-    - _e: 5
-    - _f: 0.25
+    - _a: -0
+    - _e: 3.69
+    - _f: 0.228
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
