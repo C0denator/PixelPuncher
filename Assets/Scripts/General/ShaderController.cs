@@ -12,32 +12,28 @@ namespace General
 
     public class ShaderController : MonoBehaviour
     {
-        [FormerlySerializedAs("crtImageMat")] public Material crtScanlinesMat;
+        public Material crtScanlinesMat;
         public Material crtCurvatureMat;
         public Material crtGlowMat;
         public Material crtChromMat;
         public float InterlaceFrequency = 50;
         [SerializeField] private ShaderSettings _shaderSettings;
-        private static readonly int ScanlineTime = Shader.PropertyToID("_ScanlineTime");
         private static readonly int VignetteFactor = Shader.PropertyToID("_VignetteFactor");
         private static readonly int VignetteExponent = Shader.PropertyToID("_VignetteExponent");
-        private static readonly int ScanlinePeriod = Shader.PropertyToID("_ScanlinePeriod");
         
         private Coroutine _interlaceCoroutine;
         private bool _interlacingBool = false;
-        private static readonly int InterlacingBool = Shader.PropertyToID("_InterlacingBool");
-        private static readonly int ScanlineMinValue = Shader.PropertyToID("_ScanlineMinValue");
+        private static readonly int Interlace = Shader.PropertyToID("_Interlace");
 
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
             if (crtScanlinesMat != null && crtCurvatureMat != null && crtGlowMat != null)
             {
-                crtScanlinesMat.SetFloat(ScanlineTime, Time.unscaledTime);
 
                 if (_shaderSettings.InterlaceEffect)
                 {
                     //set interlaceBool
-                    crtScanlinesMat.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
+                    crtScanlinesMat.SetFloat(Interlace, _interlacingBool ? 1 : 0);
                 }
                 
                 //create temporary render textures
@@ -66,54 +62,6 @@ namespace General
                 Debug.LogError("CRT shader materials not set in ShaderController");
             }
         }
-        
-        public void UpdateShaderProperties()
-        {
-            Debug.Log("Updating shader properties");
-            if (crtScanlinesMat != null)
-            {
-                crtScanlinesMat.SetFloat(VignetteFactor, _shaderSettings.VignetteFactor);
-                crtScanlinesMat.SetFloat(VignetteExponent, _shaderSettings.VignetteExponent);
-
-                if (_shaderSettings.ScanlineEffect)
-                {
-                    //set the interlacing effect
-                    if (_shaderSettings.InterlaceEffect)
-                    {
-                        if (_interlaceCoroutine == null)
-                        {
-                            _interlaceCoroutine = StartCoroutine(InterlaceCoroutine());
-                            Debug.Log("Starting interlace coroutine");
-                        }
-                    }
-                    else
-                    {
-                        if (_interlaceCoroutine != null)
-                        {
-                            StopCoroutine(_interlaceCoroutine);
-                            _interlaceCoroutine = null;
-                            Debug.Log("Stopping interlace coroutine");
-                        }
-                    }
-                
-                    crtScanlinesMat.SetFloat(InterlacingBool, _interlacingBool ? 1 : 0);
-                
-                    crtScanlinesMat.SetFloat(ScanlineMinValue, 1 - _shaderSettings.ScanlineIntensity);
-                }
-                else
-                {
-                    crtScanlinesMat.SetFloat(ScanlineMinValue, 1);
-                    
-                    if (_interlaceCoroutine != null)
-                    {
-                        StopCoroutine(_interlaceCoroutine);
-                        _interlaceCoroutine = null;
-                        Debug.Log("Stopping interlace coroutine");
-                    }
-                }
-                
-            }
-        }
 
         private void Start()
         {
@@ -125,27 +73,29 @@ namespace General
 
         private void OnEnable()
         {
-            //subscribe to the settings changed event
-            ShaderSettings.OnSettingsChanged += UpdateShaderProperties;
-            
-            UpdateShaderProperties();
+            //start the interlace coroutine
+            _interlaceCoroutine = StartCoroutine(InterlaceCoroutine());
         }
         
         private void OnDisable()
         {
-            //unsubscribe from the settings changed event
-            ShaderSettings.OnSettingsChanged -= UpdateShaderProperties;
+            //stop the interlace coroutine
+            StopCoroutine(_interlaceCoroutine);
         }
         
         private IEnumerator InterlaceCoroutine()
         {
+            Debug.Log("InterlaceCoroutine started");
+            
             while (true)
             {
                 if(InterlaceFrequency!=0) _interlacingBool = !_interlacingBool;
+                
+                crtScanlinesMat.SetFloat(Interlace, _interlacingBool ? 1 : 0);
 
                 if (InterlaceFrequency == 0)
                 {
-                    yield return new WaitForSecondsRealtime(0.1f);
+                    yield return new WaitForSecondsRealtime(0.5f);
                 }
                 else
                 {

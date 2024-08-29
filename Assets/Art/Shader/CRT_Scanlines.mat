@@ -66,10 +66,13 @@ Material:
     - _ChromaticAberrationExponent: 0.684
     - _ChromaticAberrationFactor: 0.0028
     - _ChromaticAberrationStrength: 1
+    - _ColStrength: 0.12821515
+    - _Cols: 480
     - _Curvature: 0.324
     - _CurvatureCenter: 0
     - _CurvatureEdge: 0.306
     - _Cutoff: 0.5
+    - _Debug: 2
     - _DetailNormalMapScale: 1
     - _Distortion: 0.464
     - _DstBlend: 0
@@ -84,20 +87,24 @@ Material:
     - _GlowStrength: 0.507
     - _GlowThreshold: 0.21
     - _HorizontalMinValue: 0.649
-    - _HorizontalScanlines: 480
-    - _HorizontalStrength: 0.40392673
+    - _HorizontalScanlines: 132
+    - _HorizontalStrength: 0.2844167
+    - _Interlace: 0
     - _InterlaceFrequency: 50
-    - _InterlacingBool: 1
+    - _InterlacingBool: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _Offset: 1.1097955
     - _Parallax: 0.02
+    - _RowStrength: 0.5429757
+    - _Rows: 640
     - _ScanlineIntensity: 0.67
     - _ScanlineMinValue: 0.779
     - _ScanlineOffset: 2.0361114
     - _ScanlinePeriod: 480
     - _ScanlineSpeed: 0
-    - _ScanlineTime: 2.2425625
+    - _ScanlineTime: 263.45337
     - _SimulatedHeight: 480
     - _SimulatedWidth: 640
     - _SmoothnessTextureChannel: 0
@@ -106,8 +113,8 @@ Material:
     - _Time: 2
     - _UVSec: 0
     - _VerticalMinValue: 0.784
-    - _VerticalScanlines: 1260
-    - _VerticalStrength: 0.1271098
+    - _VerticalScanlines: 154
+    - _VerticalStrength: 0.2708579
     - _Vignette: 0.449
     - _VignetteExponent: 2.07
     - _VignetteFactor: 0.43

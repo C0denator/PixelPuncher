@@ -60,16 +60,9 @@ namespace General
         
         public void Unpause()
         {
-            if(_isPaused && Time.timeScale == 0)
-            {
-                Time.timeScale = 1;
-                _isPaused = false;
-                _pauseMenu.SetActive(false);
-            }
-            else
-            {
-                Debug.Log("Cant unpause right now");
-            }
+            Time.timeScale = 1;
+            _isPaused = false;
+            _pauseMenu.SetActive(false);
         }
     }
 }

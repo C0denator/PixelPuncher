@@ -669,7 +669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 491b97ced486f5543aafe0370d9510a7, type: 2}
-  propertyName: _ScanlineOffset
+  propertyName: _Offset
 --- !u!1 &555668473987797564
 GameObject:
   m_ObjectHideFlags: 0
@@ -2590,7 +2590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 491b97ced486f5543aafe0370d9510a7, type: 2}
-  propertyName: _VerticalStrength
+  propertyName: _ColStrength
 --- !u!1 &2237394490341691072
 GameObject:
   m_ObjectHideFlags: 0
@@ -4255,7 +4255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 491b97ced486f5543aafe0370d9510a7, type: 2}
-  propertyName: _VerticalScanlines
+  propertyName: _Cols
 --- !u!1 &4021182656668204542
 GameObject:
   m_ObjectHideFlags: 0
@@ -5829,7 +5829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 491b97ced486f5543aafe0370d9510a7, type: 2}
-  propertyName: _HorizontalStrength
+  propertyName: _RowStrength
 --- !u!1 &4646988800673028989
 GameObject:
   m_ObjectHideFlags: 0
@@ -9984,7 +9984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 491b97ced486f5543aafe0370d9510a7, type: 2}
-  propertyName: _HorizontalScanlines
+  propertyName: _Rows
 --- !u!1 &8023162418342825162
 GameObject:
   m_ObjectHideFlags: 0

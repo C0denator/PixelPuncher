@@ -3,12 +3,12 @@ Shader "Custom/CRT_Image"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _HorizontalScanlines ("Horizontal Scanlines", Range(0, 1500.0)) = 480.0
-        _VerticalScanlines ("Vertical Scanlines", Range(0, 1500.0)) = 960.0
-        _HorizontalStrength ("Horizontal Strength", Range(0, 1)) = 0.0
-        _VerticalStrength ("Vertical Strength", Range(0, 1)) = 0.0
-        _InterlacingBool ("Interlacing", Range(0, 1)) = 0.0
-        _ScanlineOffset ("Scanline Offset", Range(0, 4)) = 1.0
+        _Rows ("Horizontal Scanlines", Range(0, 1500.0)) = 480.0
+        _Cols ("Vertical Scanlines", Range(0, 1500.0)) = 960.0
+        _RowStrength ("Horizontal Strength", Range(0, 1)) = 0.0
+        _ColStrength ("Vertical Strength", Range(0, 1)) = 0.0
+        _Interlace ("Interlacing", Range(0, 1)) = 0.0
+        _Offset ("Scanline Offset", Range(0, 4)) = 1.0
     }
     SubShader
     {
@@ -30,14 +30,12 @@ Shader "Custom/CRT_Image"
             };
 
             sampler2D _MainTex;
-            float _HorizontalScanlines;
-            float _VerticalScanlines;
-            float _HorizontalStrength;
-            float _VerticalStrength;
-            float _InterlacingBool;
-            float _ScanlineOffset;
-            float _VignetteExponent;
-            float _VignetteFactor;
+            float _Rows;
+            float _Cols;
+            float _RowStrength;
+            float _ColStrength;
+            float _Interlace;
+            float _Offset;
             
 
             v2f vert (appdata_full v)
@@ -49,22 +47,22 @@ Shader "Custom/CRT_Image"
             }
 
             // draw scanlines over the image
-            float4 ApplyScanlines(float4 color, float2 uv)
+            float4 ApplyScanlines(float2 uv)
             {
                 // Calculate the horizontal and vertical scanline factors
-                float horizontalFactor = (sin(uv.y * _HorizontalScanlines*3.14159265359) + 1.0) * 0.5;
-                float verticalFactor = (sin(uv.x * _VerticalScanlines*3.14159265359) + 1.0) * 0.5;
+                float horizontalFactor = (sin(uv.y * _Rows*3.14159265359) + 1.0) * 0.5;
+                float verticalFactor = (sin(uv.x * _Cols*3.14159265359) + 1.0) * 0.5;
 
                 // if horizontal factor == 1, move pixel to the right by 1/1920 of the screen width
-                float texelSize = _ScreenParams.x / pow(1920.0, 2.0);
-                color = tex2D(_MainTex, uv + step(0.5, horizontalFactor) * float2(texelSize*_ScanlineOffset, 0.0f));
+                float texelSize = 1/1920.0;
+                float4 color = tex2D(_MainTex, uv + step(0.5, horizontalFactor) * float2(texelSize*_Offset, 0.0f));
 
                 // Apply interlacing effect
-                horizontalFactor = lerp(horizontalFactor, 1.0f - horizontalFactor, step(0.5f, _InterlacingBool));
+                horizontalFactor = lerp(horizontalFactor, 1.0f - horizontalFactor, step(0.5f, _Interlace));
                 
                 // Clamp the scanline value to [0, 1] and apply strength
-                horizontalFactor = lerp(1.0f - _HorizontalStrength, 1.0f, step(0.5f, horizontalFactor));
-                verticalFactor = lerp(1.0f - _VerticalStrength, 1.0f, step(0.5f, verticalFactor));
+                horizontalFactor = lerp(1.0f - _RowStrength, 1.0f, step(0.5f, horizontalFactor));
+                verticalFactor = lerp(1.0f - _ColStrength, 1.0f, step(0.5f, verticalFactor));
 
                 // Apply scanline factor to the color
                 color.rgb *= horizontalFactor * verticalFactor;
@@ -76,7 +74,7 @@ Shader "Custom/CRT_Image"
             {
                 float4 color = tex2D(_MainTex, i.uv);
                 
-                color = ApplyScanlines(color, i.uv);
+                color = ApplyScanlines(i.uv);
                 
                 return color;
             }
