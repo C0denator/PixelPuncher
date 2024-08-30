@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace General
 {
@@ -17,7 +16,6 @@ namespace General
         public Material crtGlowMat;
         public Material crtChromMat;
         public float InterlaceFrequency = 50;
-        [SerializeField] private ShaderSettings _shaderSettings;
         private static readonly int VignetteFactor = Shader.PropertyToID("_VignetteFactor");
         private static readonly int VignetteExponent = Shader.PropertyToID("_VignetteExponent");
         
@@ -29,13 +27,6 @@ namespace General
         {
             if (crtScanlinesMat != null && crtCurvatureMat != null && crtGlowMat != null)
             {
-
-                if (_shaderSettings.InterlaceEffect)
-                {
-                    //set interlaceBool
-                    crtScanlinesMat.SetFloat(Interlace, _interlacingBool ? 1 : 0);
-                }
-                
                 //create temporary render textures
                 RenderTexture temp1 = RenderTexture.GetTemporary(source.width, source.height);
                 RenderTexture temp2 = RenderTexture.GetTemporary(source.width, source.height);
@@ -63,24 +54,22 @@ namespace General
             }
         }
 
-        private void Start()
-        {
-            if (_shaderSettings == null)
-            {
-                Debug.LogError("ShaderSettings reference not set in CRTPostProcessing");
-            }
-        }
-
         private void OnEnable()
         {
             //start the interlace coroutine
+            
+            if (_interlaceCoroutine != null) StopCoroutine(_interlaceCoroutine);
             _interlaceCoroutine = StartCoroutine(InterlaceCoroutine());
         }
         
         private void OnDisable()
         {
             //stop the interlace coroutine
-            StopCoroutine(_interlaceCoroutine);
+            if (_interlaceCoroutine != null)
+            {
+                StopCoroutine(_interlaceCoroutine);
+                _interlaceCoroutine = null;
+            }
         }
         
         private IEnumerator InterlaceCoroutine()
