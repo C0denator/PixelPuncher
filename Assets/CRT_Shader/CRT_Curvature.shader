@@ -15,7 +15,7 @@ Shader "Custom/CRT_Curvature"
 
         Pass
         {
-            CGPROGRAM
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
 
@@ -54,20 +54,26 @@ Shader "Custom/CRT_Curvature"
                 uv = uv * 2.0 - 1.0; // Transform UV coordinates from [0, 1] to [-1, 1]
                 float dist = length(uv); // Calculate the distance from the center
                 float theta = atan2(uv.y, uv.x);// Calculate the angle from the center
-                float curvature = lerp(_CurvatureCenter, _CurvatureEdge, dist);
-                dist = pow(dist, 1.0 + curvature * 0.5);
-                uv = dist * float2(cos(theta), sin(theta));
-                uv = (uv + 1.0) * 0.5; // Transform UV coordinates back to [0, 1]
+                float curvature = lerp(_CurvatureCenter, _CurvatureEdge, dist); //Lerp the curvature based on the distance from the center
+                dist = pow(dist, 1.0 + curvature * 0.5); // Increase the distance from the center by a power function
+                uv = dist * float2(cos(theta), sin(theta)); // Apply the curvature effect by changing the UV coordinates in direction of the angle
+                uv = (uv + 1.0) * 0.5; // Transform UV coordinates back to [0, 1] for texture sampling
                 return uv;
             }
 
             // apply a vignette effect to the image
             float4 ApplyVignette(float4 color, float2 uv)
             {
+                // calculate the distance from the center of the screen
                 float2 position = uv * 2.0 - 1.0;
                 float dist = length(position);
+                
+                //increase the distance from the center by a power function
                 dist = pow(dist, _VignetteExponent) * _VignetteFactor;
+                
+                //apply the vignette effect
                 color.rgb *= 1.0 - dist;
+                
                 return color;
             }
 
@@ -107,7 +113,7 @@ Shader "Custom/CRT_Curvature"
                 
                 return color;
             }
-            ENDCG
+            ENDHLSL
         }
     }
     FallBack "Diffuse"

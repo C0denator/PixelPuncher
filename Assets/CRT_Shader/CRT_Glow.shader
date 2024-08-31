@@ -51,6 +51,7 @@ Shader "Custom/CRT_Glow"
 
             float4 ApplyGlow(float4 color, float2 uv)
             {
+                //if the radius is 0, return the original color
                 if(_Radius == 0) return color;
                 
                 // pixelSize = 1/1080 of the screen width
@@ -89,7 +90,7 @@ Shader "Custom/CRT_Glow"
                 //Calculate the average color
                 averageColor /= sampleCount;
                 
-
+                //if the color is brighter than the threshold, apply the glow color
                 float isGlowColor = step(_Threshold, color.r + color.g + color.b);
                 return lerp(averageColor, color, isGlowColor);
                 
@@ -99,8 +100,7 @@ Shader "Custom/CRT_Glow"
             {
                 float4 color = tex2D(_MainTex, i.uv);
                 
-                color = ApplyGlow(color, i.uv);
-                return color;
+                return ApplyGlow(color, i.uv);
             }
             ENDHLSL
         }

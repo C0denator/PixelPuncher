@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-namespace General
+namespace CRT_Shader
 {
     /// <summary>
-    /// Post processing effect that simulates a CRT screen
+    /// Post-processing effect that simulates a CRT screen
     /// </summary>
+    /// <remarks>
+    /// This script applies a series of post processing effects to the camera to simulate a CRT screen. It must be attached to the camera that will render the scene.
+    /// </remarks>
     [ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]
 
@@ -15,13 +18,12 @@ namespace General
         public Material crtCurvatureMat;
         public Material crtGlowMat;
         public Material crtChromMat;
-        private static readonly int VignetteFactor = Shader.PropertyToID("_VignetteFactor");
-        private static readonly int VignetteExponent = Shader.PropertyToID("_VignetteExponent");
-        internal static readonly int InterlaceFrequency = Shader.PropertyToID("_InterlaceFrequency");
+        
+        private static readonly int InterlaceFrequency = Shader.PropertyToID("_InterlaceFrequency");
+        private static readonly int Interlace = Shader.PropertyToID("_Interlace");
         
         private Coroutine _interlaceCoroutine;
-        private bool _interlacingBool = false;
-        private static readonly int Interlace = Shader.PropertyToID("_Interlace");
+        private bool _interlacingBool;
 
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
@@ -51,6 +53,30 @@ namespace General
             {
                 Graphics.Blit(source, destination);
                 Debug.LogError("CRT shader materials not set in ShaderController");
+            }
+        }
+        
+        private void Awake()
+        {
+            //error checking
+            if (crtScanlinesMat == null)
+            {
+                Debug.LogError("CRT Scanlines material not set in ShaderController");
+            }
+            
+            if (crtCurvatureMat == null)
+            {
+                Debug.LogError("CRT Curvature material not set in ShaderController");
+            }
+            
+            if (crtGlowMat == null)
+            {
+                Debug.LogError("CRT Glow material not set in ShaderController");
+            }
+            
+            if (crtChromMat == null)
+            {
+                Debug.LogError("CRT Chromatic Aberration material not set in ShaderController");
             }
         }
 
@@ -93,6 +119,8 @@ namespace General
                     yield return new WaitForSecondsRealtime(1f / frequency);
                 }
             }
+            
+            // ReSharper disable once IteratorNeverReturns
         }
     }
 }

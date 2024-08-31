@@ -47,14 +47,15 @@ Shader "Custom/CRT_Chrom"
 
             float4 ApplyChromaticAberration(float4 color, float2 uv)
             {
+                //calculate the distance from the center of the screen
                 float2 position = uv * 2.0 - 1.0;
                 float dist = length(position);
-                float factor = pow(dist* _ChromaticAberrationFactor, _ChromaticAberrationExponent) ;
+                float strength = pow(dist* _ChromaticAberrationFactor, _ChromaticAberrationExponent) ;
 
                 //move uv coordinates of each channel by a different amount
-                float2 uvRed = uv + position * factor; 
-                float2 uvGreen = uv;                           
-                float2 uvBlue = uv - position * factor;
+                float2 uvRed = uv + position * strength;  //red channel to the outside   
+                float2 uvGreen = uv;                      //green channel stays in the center
+                float2 uvBlue = uv - position * strength; //blue channel to the inside
 
                 //sample the texture at the new uv coordinates
                 float4 colorRed = tex2D(_MainTex, uvRed);
@@ -68,16 +69,15 @@ Shader "Custom/CRT_Chrom"
                 newColor.g = colorGreen.g;
                 newColor.b = colorBlue.b;
 
+                //apply the strength factor and return the new color
                 return lerp(color, newColor, _ChromaticAberrationStrength);
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 color = tex2D(_MainTex, i.uv);
-
-                color = ApplyChromaticAberration(color, i.uv);
                 
-                return color;
+                return ApplyChromaticAberration(color, i.uv);
             }
             ENDHLSL
         }
