@@ -66,7 +66,7 @@ Material:
     - _ChromaticAberrationExponent: 0.684
     - _ChromaticAberrationFactor: 0.0028
     - _ChromaticAberrationStrength: 1
-    - _ColStrength: 0.12821515
+    - _ColStrength: 0.06308176
     - _Cols: 480
     - _Curvature: 0.324
     - _CurvatureCenter: 0
@@ -89,15 +89,15 @@ Material:
     - _HorizontalMinValue: 0.649
     - _HorizontalScanlines: 132
     - _HorizontalStrength: 0.2844167
-    - _Interlace: 0
+    - _Interlace: 1
     - _InterlaceFrequency: 50
     - _InterlacingBool: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Offset: 1.1097955
+    - _Offset: 1
     - _Parallax: 0.02
-    - _RowStrength: 0.5429757
+    - _RowStrength: 0.3023703
     - _Rows: 640
     - _ScanlineIntensity: 0.67
     - _ScanlineMinValue: 0.779

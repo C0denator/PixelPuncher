@@ -8,6 +8,7 @@ Shader "Custom/CRT_Image"
         _RowStrength ("Horizontal Strength", Range(0, 1)) = 0.0
         _ColStrength ("Vertical Strength", Range(0, 1)) = 0.0
         _Interlace ("Interlacing", Range(0, 1)) = 0.0
+        _InterlaceFrequency ("Interlacing Frequency", Range(0, 120)) = 50.0
         _Offset ("Scanline Offset", Range(0, 4)) = 1.0
     }
     SubShader

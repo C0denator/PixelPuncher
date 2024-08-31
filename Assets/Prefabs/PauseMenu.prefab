@@ -11330,6 +11330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controller: {fileID: 0}
+  crtScanlinesMat: {fileID: 2100000, guid: 491b97ced486f5543aafe0370d9510a7, type: 2}
 --- !u!1 &8547594199921100443
 GameObject:
   m_ObjectHideFlags: 0

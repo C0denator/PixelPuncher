@@ -15,9 +15,9 @@ namespace General
         public Material crtCurvatureMat;
         public Material crtGlowMat;
         public Material crtChromMat;
-        public float InterlaceFrequency = 50;
         private static readonly int VignetteFactor = Shader.PropertyToID("_VignetteFactor");
         private static readonly int VignetteExponent = Shader.PropertyToID("_VignetteExponent");
+        internal static readonly int InterlaceFrequency = Shader.PropertyToID("_InterlaceFrequency");
         
         private Coroutine _interlaceCoroutine;
         private bool _interlacingBool = false;
@@ -78,17 +78,19 @@ namespace General
             
             while (true)
             {
-                if(InterlaceFrequency!=0) _interlacingBool = !_interlacingBool;
+                float frequency = crtScanlinesMat.GetFloat(InterlaceFrequency);
+                
+                if(frequency!=0) _interlacingBool = !_interlacingBool;
                 
                 crtScanlinesMat.SetFloat(Interlace, _interlacingBool ? 1 : 0);
 
-                if (InterlaceFrequency == 0)
+                if (frequency == 0)
                 {
                     yield return new WaitForSecondsRealtime(0.5f);
                 }
                 else
                 {
-                    yield return new WaitForSecondsRealtime(1f / InterlaceFrequency);
+                    yield return new WaitForSecondsRealtime(1f / frequency);
                 }
             }
         }

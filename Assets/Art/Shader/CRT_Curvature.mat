@@ -61,7 +61,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BorderThickness: 0.006134263
+    - _BorderThickness: 0.008948775
     - _BumpScale: 1
     - _CurvatureCenter: 0
     - _CurvatureEdge: 0.16400002

@@ -6,7 +6,8 @@ public class InterlaceSlider : MonoBehaviour
     [SerializeField] private ShaderController _controller;
     private TMPro.TMP_Text _text;
     private UnityEngine.UI.Slider _slider;
-    
+    public Material crtScanlinesMat;
+    private static readonly int InterlaceFrequency = Shader.PropertyToID("_InterlaceFrequency");
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,7 +35,12 @@ public class InterlaceSlider : MonoBehaviour
             }
         }
         
-        _slider.value = _controller.InterlaceFrequency;
+        if(crtScanlinesMat == null)
+        {
+            Debug.LogError("CRT Scanlines material not set in InterlaceSlider");
+        }
+        
+        _slider.value = crtScanlinesMat.GetFloat(InterlaceFrequency);
         ShowText(_slider.value);
     }
     
@@ -51,7 +57,7 @@ public class InterlaceSlider : MonoBehaviour
     private void OnValueChanged(float value)
     {
         ShowText(value);
-        _controller.InterlaceFrequency = value;
+        crtScanlinesMat.SetFloat(InterlaceFrequency, value);
     }
 
     private void ShowText(float value)
