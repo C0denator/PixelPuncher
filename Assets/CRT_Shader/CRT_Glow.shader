@@ -34,9 +34,9 @@ Shader "Custom/CRT_Glow"
             float _Strength;
             float _Radius;
             float _Threshold;
-            float _f;
-            float _e;
-            float _a;
+            float _f; //factor
+            float _e; //exponent
+            float _a; //additive
             
 
             v2f vert (appdata_full v)
@@ -76,6 +76,7 @@ Shader "Custom/CRT_Glow"
 
                         //calculate the distance to the center; the closer the pixel, the more weight it has
                         distance = length(float2(x, y)) + 1;
+                        //calculate the weight of the sample based on the distance
                         weight = pow((distance- _a) * _f, -_e) ;
 
                         //clamp the weight to [0, 1]
