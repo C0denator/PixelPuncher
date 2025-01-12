@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using GameProg.Player;
 using Sound;
 using UnityEngine;
 using UnityEngine.InputSystem;

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CRT_Material
-  m_Shader: {fileID: 4800000, guid: a6edf2640174ead4d883e757f176620a, type: 3}
+  m_Name: CRT_Glow
+  m_Shader: {fileID: 4800000, guid: 25cb45cb6ed5e0c45843647b7475d109, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -62,33 +62,33 @@ Material:
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
-    - _Curvature: 0.324
-    - _CurvatureCenter: 0.04
-    - _CurvatureEdge: 0.192
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _Distortion: 0.464
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Glow: 0.161
+    - _GlowAdditive: 1
+    - _GlowExponent: 2.1
+    - _GlowFactor: 0.451
+    - _GlowRadius: 10
+    - _GlowStrength: 1
+    - _GlowThreshold: 0.26
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ScanlineIntensity: 0.392
-    - _ScanlineSpeed: 10
-    - _ScanlineTime: 0.47709194
+    - _Radius: 10
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Time: 2
+    - _Strength: 1
+    - _Threshold: 0.3
     - _UVSec: 0
-    - _Vignette: 0.449
-    - _VignetteIntensity: 1
-    - _VignetteSmoothness: 0.254
     - _ZWrite: 1
+    - _a: -0
+    - _e: 3.69
+    - _f: 0.228
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

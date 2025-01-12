@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d069638fd8d7e3e42a472a380719686c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - crtScanlinesMat: {fileID: 2100000, guid: 491b97ced486f5543aafe0370d9510a7, type: 2}
+  - crtCurvatureMat: {fileID: 2100000, guid: a2719c68fa47efe419141fc3c54ffee6, type: 2}
+  - crtGlowMat: {fileID: 2100000, guid: 6ef403029e656434f8ce19c673340fb7, type: 2}
+  - crtChromMat: {fileID: 2100000, guid: 933fff718f5342643a0675c489721ea3, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
